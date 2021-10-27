@@ -15,18 +15,23 @@ const useStyles = makeStyles((theme) => ({
         padding: '0 1rem'
     },
     title: {
-        paddingBottom: '0.3rem'
+        paddingBottom: '0.3rem',
+        cursor: 'pointer',
     }
 }));
 
 const Nav = () => {
     const classes = useStyles();
 
+    const refresh = () => {
+        window.location.reload();
+    }
+
     return (
         <>
             <AppBar className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
-                    <h3 className={classes.title}>App</h3>
+                    <h3 className={classes.title} onClick={refresh}>App</h3>
                 </Toolbar>
             </AppBar>
         </>
