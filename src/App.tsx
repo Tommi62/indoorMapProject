@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Nav from './Components/Nav';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { useReservations } from './Hooks/ApiHooks';
 
 const useStyles = makeStyles(() => ({
   root: {
-    marginTop: '3rem'
   }
 }));
 
 const App = () => {
   const classes = useStyles();
+  const { postGetReservationsByStudentGroup } = useReservations();
+
+  useEffect(() => {
+    (async () => {
+      try {
+
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    })();
+  }, []);
 
   return (
     <>
