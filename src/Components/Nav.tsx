@@ -58,10 +58,23 @@ const Nav = () => {
     const classes = useStyles();
 
     const doSearch = async () => {
-        console.log('SEARCHTERM', inputs.searchTerm);
+        try {
+            if (inputs.searchTerm !== '') {
+                const str = inputs.searchTerm.replace(/ /g, "");
+                const upperCaseStr = str.toUpperCase();
+                if (upperCaseStr.startsWith('KM')) {
+                    console.log('ROOM', upperCaseStr);
+                } else {
+                    console.log('GROUP', upperCaseStr);
+                }
+                setInputs({ searchTerm: '' });
+            }
+        } catch (error: any) {
+            console.log(error.message);
+        }
     };
 
-    const { inputs, handleInputChange, handleSubmit } = useForm(doSearch, {
+    const { inputs, setInputs, handleInputChange, handleSubmit } = useForm(doSearch, {
         searchTerm: '',
     });
 
