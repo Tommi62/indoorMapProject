@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.css';
+import RouteFinder from './Components/RouteFinder';
 import Nav from './Components/Nav';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import { useReservations } from './Hooks/ApiHooks';
@@ -31,6 +32,7 @@ const App = () => {
         <Grid container item justifyContent="center" >
           <Typography component="h2" variant="h2" style={{ textAlign: 'center' }}>
             Hello World!
+            <RouteFinder/>
           </Typography>
         </Grid>
       </Grid>

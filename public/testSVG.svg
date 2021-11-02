@@ -1,0 +1,67 @@
+<svg viewBox="0 0 500 500" width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+    <rect x="68.087" y="50.125" width="298.246" height="356.307" style="fill: rgb(253,253,253);"/>
+    <line id="_ASTART_STARTA" style="stroke: rgb(0,0,0); visibility: hidden" x1="309.94151355360793"
+          y1="112.03935798678319" x2="306.599826075941" y2="169.2657560418294"/>
+    <line id="_AB_BA_" style="stroke: rgb(0,0,0); visibility: hidden" x1="306.18211514123266" y1="170.10117791124614"
+          x2="233.91812343668522" y2="196.41696679787322"/>
+    <line id="_BC_CB_" style="stroke: rgb(0,0,0); visibility: hidden" x1="235.5889671755187" y1="198.08781053670668"
+          x2="342.94067739556885" y2="271.6049350453792"/>
+    <line id="_CD_DC_" style="stroke: rgb(0,0,0); visibility: hidden" x1="342.94067739556885" y1="272.4403569147959"
+          x2="236.42438904493542" y2="361.8304969423864"/>
+    <line id="_BE_EB_" style="stroke: rgb(0,0,0); visibility: hidden" x1="234.33583437139356" y1="196.927495656878"
+          x2="124.4778585430932" y2="211.54737837167085"/>
+    <line id="_EFINISH_FINISHE_" style="stroke: rgb(0,0,0); visibility: hidden" x1="124.06014760838484"
+          y1="211.96508930637918" x2="185.04594407580635" y2="327.6710182205967"/>
+    <line id="_GD_DG_" style="stroke: rgb(0, 0, 0); visibility: hidden" x1="235.1712562408103" y1="362.34102580139114"
+          x2="232.24727969785175" y2="226.16726108646367"/>
+    <line id="_FINISHG_GFINISH_" style="stroke: rgb(0, 0, 0); visibility: hidden" x1="232.24727969785175"
+          y1="226.16726108646367" x2="186.29907687993142" y2="328.0887291553051"/>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="309.524" y="105.031">start
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="314.536" y="168.941">A
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="218.881" y="190.244">B
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="350.042" y="268.774">C
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="230.994" y="367.354">D
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="112.782" y="208.623">E
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="180.869" y="332.266">Finish
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="224.728" y="221.155">G
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="310.777" y="135.524">1
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="274.436" y="185.232">2
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="285.297" y="229.927">3
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="303.676" y="312.216">4
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="176.274" y="201.522">5
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="143.275" y="264.179">6
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="234.754" y="279.634">7
+    </text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 11.7px;"
+          x="205.514" y="276.71">8
+    </text>
+</svg>
