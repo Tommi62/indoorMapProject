@@ -10,6 +10,7 @@ function RouteFinder() {
         return divElement.getTotalLength()
     };
 
+    // Setting the logic for each point so the algorithm knows from which point can you go to which
     let graph: any = {
         START: {A: 1},
         A: {START: 1, B: 1},
@@ -21,6 +22,7 @@ function RouteFinder() {
         FINISH: {G: 1, E: 1},
     };
 
+    // Making refs to all the lines from svg so we can use them later to display and hide lines by their id
     const STARTA: any = useRef();
     const AB: any = useRef();
     const BC: any = useRef();
@@ -30,6 +32,7 @@ function RouteFinder() {
     const DG: any = useRef();
     const GFINISH: any = useRef();
 
+    // Putting all lines to Object so we can iterate trough them and get lines by their id
     const lines: any = {
         STARTA: STARTA,
         AB: AB,
@@ -41,7 +44,7 @@ function RouteFinder() {
         GFINISH: GFINISH
     }
 
-// Iterate trough object and change the vector lengths to match the lines
+    // Iterate trough object and change the line lengths to match the vectors' lengths
     let objIterator = (obj: Object) => {
         for (const [key, value] of Object.entries(obj)) {
             let tempObj: any = {};
@@ -59,7 +62,7 @@ function RouteFinder() {
         console.log(graph)
     };
 
-
+    // Part of djikstra, finds shortest distance to next nodes that haven't been visited yet
     let shortestDistanceNode = (distances: any, visited: Array<any>) => {
         // create a default value for shortest
         let shortest: any = null;
@@ -80,6 +83,7 @@ function RouteFinder() {
         return shortest;
     };
 
+    // Main function including djikstra's algorithm so we find shortest path from given "map" with start and end points
     let findShortestPath = (graph: any, startNode: string, endNode: string) => {
         // track distances from the start node using a hash object
         let distances: any = {};
@@ -137,60 +141,34 @@ function RouteFinder() {
         }
         shortestPath.reverse();
         for (let i = 0; i < shortestPath.length - 1; i++) {
+            // String combinations that include each line's start and end point and combines them to make it line name
             let tempString: string = shortestPath[i]
             let tempString1: string = shortestPath[i + 1]
             let finalName: string
             let tempName: any = tempString.concat(tempString1)
             let tempName1: any = tempString1.concat(tempString)
+            // Check line name both ways ea. AB and BA to find the line
             if (Object.keys(lines).includes(tempName)) {
                 finalName = tempName;
             } else finalName = tempName1
-            /**
-             * TODO: get correct selector for SVG lines and make them visible
-             **/
-            console.log("Tempname: " + finalName)
             const divElement: SVGGeometryElement = lines[finalName].current;
+            // Make lines on the shortest path visible
             divElement.style.visibility = "visible"
-
-
         }
-        //this is the shortest path
+        // this is the shortest path
         let results = {
             distance: distances[endNode],
             path: shortestPath,
         };
         console.log(results);
-        // return the shortest path & the end node's distance from the start node
+        // Log the shortest path & the end node's distance from the start node
     };
-
-
-    /**
-     * check line names ea. AB and if it's not in testArr (that includes all lines), reverse them (=BA) and check again.
-     * Add the matching line to lines and in the end loop trough all of them and set visibility to "visible" while all others are "none"
-     */
-
-
-
-    const pathLooper = () => {
-        for (let i = 0; i < lines.length; i++) {
-            const divElement: SVGGeometryElement = lines[i].current;
-            console.log(divElement.getTotalLength())
-            divElement.style.visibility = "visible"
-        }
-    }
-
-
-    useEffect(() => {
-        pathLooper()
-        objIterator(graph);
-        findShortestPath(graph, "FINISH", "START")
-    }, []);
-
 
     useEffect(() => {
         (async () => {
             try {
-                // findShortestPath(graph, "A", "D")
+                objIterator(graph);
+                findShortestPath(graph, "FINISH", "START")
             } catch (error: any) {
                 console.log(error.message);
             }
