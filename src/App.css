@@ -7,6 +7,18 @@
   pointer-events: none;
 }
 
+.map {
+  height: calc(100vh - 64px);
+}
+
+div[role="navigation"] {
+  display: none;
+}
+
+#prefix__hissiviiva {
+  stroke: #a6ff0075;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

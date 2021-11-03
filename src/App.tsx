@@ -4,12 +4,12 @@ import RouteFinder from './Components/RouteFinder';
 import Nav from './Components/Nav';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import { useReservations } from './Hooks/ApiHooks';
+import MapViewer from './Components/MapViewer';
 
 const useStyles = makeStyles(() => ({
   root: {
   }
 }));
-
 
 const App = () => {
   const classes = useStyles();
@@ -34,6 +34,7 @@ const App = () => {
             Hello World!
             <RouteFinder/>
           </Typography>
+          <MapViewer/>
         </Grid>
       </Grid>
     </>

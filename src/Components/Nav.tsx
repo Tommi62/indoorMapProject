@@ -86,7 +86,7 @@ const Nav = () => {
     return (
         <>
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="static" style={{height:'64px'}}>
                     <Toolbar>
                         <Typography onClick={refresh} className={classes.title} variant="h6" color="inherit" noWrap>
                             App
