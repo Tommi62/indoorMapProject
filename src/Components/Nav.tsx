@@ -8,6 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { alpha } from '@material-ui/core/styles/colorManipulator';
 import SearchIcon from '@material-ui/icons/Search';
 import useForm from '../Hooks/FormHooks';
+import { useReservations } from '../Hooks/ApiHooks';
+import { useEffect } from 'react';
+import { TuneTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,8 +57,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Nav = () => {
+interface propTypes {
+    setModalOpen: Function,
+    setModalContent: Function,
+}
+
+const Nav = ({ setModalOpen, setModalContent }: propTypes) => {
     const classes = useStyles();
+    const { postGetReservationsByStudentGroup } = useReservations();
 
     const doSearch = async () => {
         try {
@@ -66,6 +75,17 @@ const Nav = () => {
                     console.log('ROOM', upperCaseStr);
                 } else {
                     console.log('GROUP', upperCaseStr);
+                    if (upperCaseStr === 'TVT19-M') {
+                        const modalContentArray = [{
+                            success: true,
+                            name: 'Mediapalvelut-projekti TX00CG61-3007',
+                            room: 'TVT19-M',
+                            startDate: '2021-11-08T09:00:00',
+                            endDate: '2021-11-08T12:00:00',
+                        }];
+                        setModalContent(modalContentArray);
+                    }
+                    setModalOpen(true);
                 }
                 setInputs({ searchTerm: '' });
             }
@@ -81,6 +101,17 @@ const Nav = () => {
     const refresh = () => {
         window.location.reload();
     }
+
+    useEffect(() => {
+        (async () => {
+            try {
+                //const reservations = await postGetReservationsByStudentGroup('TVT19-M');
+                //console.log('RESERVATIONS', reservations);
+            } catch (error: any) {
+                console.log(error.message);
+            }
+        })();
+    }, []);
 
     return (
         <>

@@ -32,7 +32,7 @@ const useReservations = () => {
             },
         };
         try {
-            const result = await doFetch(ApiConfig.proxyUrl + '/r1/reservation/search', fetchOptions);
+            const result = await doFetch(ApiConfig.apiUrl, fetchOptions);
             console.log('Result', result);
             return result;
         } catch (error: any) {

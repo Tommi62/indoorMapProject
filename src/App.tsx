@@ -1,31 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Nav from './Components/Nav';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
-import { useReservations } from './Hooks/ApiHooks';
+import Modal from './Components/Modal';
 
 const useStyles = makeStyles(() => ({
   root: {
   }
 }));
 
+interface modalContentArray {
+  success: boolean,
+  name: string,
+  room: string,
+  startDate: string,
+  endDate: string,
+}
+
 const App = () => {
   const classes = useStyles();
-  const { postGetReservationsByStudentGroup } = useReservations();
-
-  useEffect(() => {
-    (async () => {
-      try {
-
-      } catch (error: any) {
-        console.log(error.message);
-      }
-    })();
-  }, []);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<modalContentArray[]>([{
+    success: false,
+    name: '',
+    room: '',
+    startDate: '',
+    endDate: ''
+  }]);
 
   return (
     <>
-      <Nav />
+      <Nav setModalOpen={setModalOpen} setModalContent={setModalContent} />
       <Grid className={classes.root} container justifyContent="center">
         <Grid container item justifyContent="center" >
           <Typography component="h2" variant="h2" style={{ textAlign: 'center' }}>
@@ -33,6 +38,7 @@ const App = () => {
           </Typography>
         </Grid>
       </Grid>
+      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} modalContent={modalContent} setModalContent={setModalContent} />
     </>
   );
 }
