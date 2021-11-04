@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import RouteFinder from './Components/RouteFinder';
 import Nav from './Components/Nav';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Modal from './Components/Modal';
+import MapViewer from './Components/MapViewer';
 
 const useStyles = makeStyles(() => ({
-  root: {
-  }
+  root: {}
 }));
 
 interface modalContentArray {
@@ -35,7 +36,9 @@ const App = () => {
         <Grid container item justifyContent="center" >
           <Typography component="h2" variant="h2" style={{ textAlign: 'center' }}>
             Hello World!
+            <RouteFinder />
           </Typography>
+          <MapViewer />
         </Grid>
       </Grid>
       <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} modalContent={modalContent} setModalContent={setModalContent} />
