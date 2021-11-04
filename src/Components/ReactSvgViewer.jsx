@@ -1,4 +1,4 @@
-import {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import { INITIAL_VALUE, pan, ReactSVGPanZoom, TOOL_PAN, fitToViewer, changeTool } from 'react-svg-pan-zoom';
 
 import {useWindowSize} from '@react-hook/window-size';
