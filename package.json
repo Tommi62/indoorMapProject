@@ -21,8 +21,6 @@
     "react-scripts": "4.0.3",
     "react-svg-pan-zoom": "^3.10.0",
     "typescript": "^4.4.4",
-    "viewerjs": "^1.10.2",
-    "viewerjs-react": "^1.0.2",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",

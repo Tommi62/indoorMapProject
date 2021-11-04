@@ -1,5 +1,3 @@
-import RViewerJS from 'viewerjs-react'
-import 'viewerjs-react/dist/index.css'
 import Floor7 from '../Media/FloorImages/7._kerros-_reitit_kartalla.svg';
 import Routes7 from '../Media/FloorPaths/7._kerros-_reitit.svg';
 import Floor7SVG from './Floor7SVG';
