@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 interface modalContentArray {
     success: boolean,
     name: string,
+    group: string,
     room: string,
     startDate: string,
     endDate: string,
@@ -49,6 +50,7 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
         setModalContent([{
             success: false,
             name: '',
+            group: '',
             room: '',
             startDate: '',
             endDate: ''
@@ -100,7 +102,7 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
                             allDaySlot={false}
                             slotLabelFormat={[{ hour: 'numeric', minute: '2-digit' }]}
                             slotMinTime='08:00:00'
-                            slotMaxTime='18:00:00'
+                            slotMaxTime='21:00:00'
                             height={480}
                             views={{
                                 timeGrid: {
@@ -114,6 +116,8 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
                                 return {
                                     title:
                                         data.name +
+                                        ' - ' +
+                                        data.group +
                                         ' - ' +
                                         data.room,
                                     start: new Date(data.startDate),

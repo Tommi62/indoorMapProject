@@ -16,9 +16,17 @@ const doFetch = async (url: string, options = {}) => {
     }
 };
 
+interface requestObj {
+    code: string,
+    startDate: string,
+    endDate: string,
+    apiKey: string,
+    apiUrl: string,
+}
+
 const useReservations = () => {
 
-    const postGetReservationsByStudentGroup = async (code: string) => {
+    /*const postGetReservationsByStudentGroup = async (code: string) => {
         const fetchOptions = {
             method: 'POST',
             headers: {
@@ -38,7 +46,27 @@ const useReservations = () => {
         } catch (error: any) {
             alert(error.message);
         }
-    }
+    }*/
+
+    const postGetReservationsByStudentGroup = async (requestObject: requestObj) => {
+        requestObject.apiKey = ApiConfig.apiKey;
+        requestObject.apiUrl = ApiConfig.apiUrl;
+
+        const fetchOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestObject),
+        };
+        try {
+            const result = await doFetch(ApiConfig.backendUrl + '/', fetchOptions);
+            return result;
+        } catch (e: any) {
+            alert(e.message);
+        }
+    };
+
     return { postGetReservationsByStudentGroup };
 };
 

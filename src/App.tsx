@@ -13,6 +13,7 @@ const useStyles = makeStyles(() => ({
 interface modalContentArray {
   success: boolean,
   name: string,
+  group: string,
   room: string,
   startDate: string,
   endDate: string,
@@ -24,6 +25,7 @@ const App = () => {
   const [modalContent, setModalContent] = useState<modalContentArray[]>([{
     success: false,
     name: '',
+    group: '',
     room: '',
     startDate: '',
     endDate: ''

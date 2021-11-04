@@ -9,6 +9,7 @@ import { alpha } from '@material-ui/core/styles/colorManipulator';
 import SearchIcon from '@material-ui/icons/Search';
 import useForm from '../Hooks/FormHooks';
 import { useReservations } from '../Hooks/ApiHooks';
+import moment from 'moment';
 import { useEffect } from 'react';
 import { TuneTwoTone } from '@material-ui/icons';
 
@@ -62,6 +63,14 @@ interface propTypes {
     setModalContent: Function,
 }
 
+interface requestObj {
+    code: string,
+    startDate: string,
+    endDate: string,
+    apiKey: string,
+    apiUrl: string,
+}
+
 const Nav = ({ setModalOpen, setModalContent }: propTypes) => {
     const classes = useStyles();
     const { postGetReservationsByStudentGroup } = useReservations();
@@ -75,7 +84,34 @@ const Nav = ({ setModalOpen, setModalContent }: propTypes) => {
                     console.log('ROOM', upperCaseStr);
                 } else {
                     console.log('GROUP', upperCaseStr);
-                    if (upperCaseStr === 'TVT19-M') {
+                    const today = moment().format('YYYY-MM-DD');
+                    const todayStart = today + 'T08:00:00'
+                    const requestObject: requestObj = {
+                        code: upperCaseStr,
+                        startDate: todayStart,
+                        endDate: '',
+                        apiKey: '',
+                        apiUrl: '',
+                    }
+                    const reservations = await postGetReservationsByStudentGroup(requestObject);
+                    console.log('RESERVATIONS', reservations);
+                    if (reservations.reservations.length !== 0) {
+                        let reservationsArray = [];
+                        for (let i = 0; i < reservations.reservations.length; i++) {
+                            const reservationObject = {
+                                success: true,
+                                name: reservations.reservations[i].subject,
+                                group: reservations.reservations[i].resources[1].code,
+                                room: reservations.reservations[i].resources[2].code,
+                                startDate: reservations.reservations[i].startDate,
+                                endDate: reservations.reservations[i].endDate,
+                            }
+                            reservationsArray.push(reservationObject);
+                        }
+                        setModalContent(reservationsArray);
+                        setModalOpen(true);
+                    }
+                    /*if (upperCaseStr === 'TVT19-M') {
                         const modalContentArray = [{
                             success: true,
                             name: 'Mediapalvelut-projekti TX00CG61-3007',
@@ -85,7 +121,7 @@ const Nav = ({ setModalOpen, setModalContent }: propTypes) => {
                         }];
                         setModalContent(modalContentArray);
                     }
-                    setModalOpen(true);
+                    setModalOpen(true);*/
                 }
                 setInputs({ searchTerm: '' });
             }
@@ -101,17 +137,6 @@ const Nav = ({ setModalOpen, setModalContent }: propTypes) => {
     const refresh = () => {
         window.location.reload();
     }
-
-    useEffect(() => {
-        (async () => {
-            try {
-                //const reservations = await postGetReservationsByStudentGroup('TVT19-M');
-                //console.log('RESERVATIONS', reservations);
-            } catch (error: any) {
-                console.log(error.message);
-            }
-        })();
-    }, []);
 
     return (
         <>
