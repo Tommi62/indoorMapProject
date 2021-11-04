@@ -62,7 +62,7 @@ function RouteFinder() {
         console.log(graph)
     };
 
-    // Part of djikstra, finds shortest distance to next nodes that haven't been visited yet
+    // Part of dijkstra, finds shortest distance to next nodes that haven't been visited yet
     let shortestDistanceNode = (distances: any, visited: Array<any>) => {
         // create a default value for shortest
         let shortest: any = null;
@@ -83,7 +83,7 @@ function RouteFinder() {
         return shortest;
     };
 
-    // Main function including djikstra's algorithm so we find shortest path from given "map" with start and end points
+    // Main function including dijkstra's algorithm so we find shortest path from given "map" with start and end points
     let findShortestPath = (graph: any, startNode: string, endNode: string) => {
         // track distances from the start node using a hash object
         let distances: any = {};

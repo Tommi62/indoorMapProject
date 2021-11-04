@@ -3,8 +3,9 @@ import { INITIAL_VALUE, pan, ReactSVGPanZoom, TOOL_PAN, fitToViewer, changeTool 
 
 import {useWindowSize} from '@react-hook/window-size';
 
-
 const ReactSvgViewer = () => {
+
+
   const Viewer = useRef(null);
   const [width, height] = useWindowSize({initialWidth: 400, initialHeight: 400})
   const [tool, setTool] = useState(TOOL_PAN)
