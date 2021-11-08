@@ -98,11 +98,17 @@ const Nav = ({ setModalOpen, setModalContent }: propTypes) => {
                     if (reservations.reservations.length !== 0) {
                         let reservationsArray = [];
                         for (let i = 0; i < reservations.reservations.length; i++) {
+                            let room;
+                            if (reservations.reservations[i].resources[0].type === 'room') {
+                                room = reservations.reservations[i].resources[0].code;
+                            } else {
+                                room = reservations.reservations[i].resources[2].code;
+                            }
                             const reservationObject = {
                                 success: true,
                                 name: reservations.reservations[i].subject,
                                 group: reservations.reservations[i].resources[1].code,
-                                room: reservations.reservations[i].resources[2].code,
+                                room: room,
                                 startDate: reservations.reservations[i].startDate,
                                 endDate: reservations.reservations[i].endDate,
                             }
@@ -111,17 +117,6 @@ const Nav = ({ setModalOpen, setModalContent }: propTypes) => {
                         setModalContent(reservationsArray);
                         setModalOpen(true);
                     }
-                    /*if (upperCaseStr === 'TVT19-M') {
-                        const modalContentArray = [{
-                            success: true,
-                            name: 'Mediapalvelut-projekti TX00CG61-3007',
-                            room: 'TVT19-M',
-                            startDate: '2021-11-08T09:00:00',
-                            endDate: '2021-11-08T12:00:00',
-                        }];
-                        setModalContent(modalContentArray);
-                    }
-                    setModalOpen(true);*/
                 }
                 setInputs({ searchTerm: '' });
             }

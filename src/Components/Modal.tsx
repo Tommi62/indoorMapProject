@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     box: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down(1000)]: {
             width: '80vw!important',
         },
     },
@@ -59,11 +59,10 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
 
     useEffect(() => {
         try {
-            const calendarStart = moment(modalContent[0].startDate).format('YYYY-MM-DD');
-            const calendarEnd = moment(modalContent[0].endDate).format('YYYY-MM-DD');
+            const today = moment().format('YYYY-MM-DD');
             setCalendarStartAndEnd({
-                start: calendarStart,
-                end: calendarEnd,
+                start: today,
+                end: today,
             });
         } catch (error: any) {
             console.log(error.message);
@@ -97,13 +96,17 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
                             locale='fi'
                             dayHeaderContent={false}
                             plugins={[timeGridPlugin, interactionPlugin]}
-                            initialView='timeGrid'
-                            headerToolbar={false}
+                            headerToolbar={{
+                                left: 'prev',
+                                center: 'title',
+                                right: 'next'
+                            }}
+                            initialView='timeGridDay'
                             allDaySlot={false}
                             slotLabelFormat={[{ hour: 'numeric', minute: '2-digit' }]}
                             slotMinTime='08:00:00'
                             slotMaxTime='21:00:00'
-                            height={480}
+                            height={600}
                             views={{
                                 timeGrid: {
                                     visibleRange: {
@@ -116,15 +119,16 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
                                 return {
                                     title:
                                         data.name +
-                                        ' - ' +
+                                        ' ' +
                                         data.group +
-                                        ' - ' +
+                                        ' ' +
                                         data.room,
                                     start: new Date(data.startDate),
                                     end: new Date(data.endDate),
-                                    url: ``,
+                                    room: data.room,
                                 }
                             })}
+                            eventClick={(e) => console.log(e.event._def.extendedProps.room)}
                         />
                     </>
                 ) : (
