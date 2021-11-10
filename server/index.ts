@@ -9,9 +9,9 @@ server.register(require('fastify-cors'), {
 
 type postRequest = FastifyRequest<{
     Body: {
-        code: string,
+        group: string,
+        room: string,
         startDate: string,
-        endDate: string
         apiKey: string,
         apiUrl: string,
     }
@@ -33,21 +33,35 @@ const doFetch = async (url: string, options = {}) => {
     }
 };
 
-server.post('/', async (req: postRequest, reply) => {
-    const { code, startDate, endDate, apiKey, apiUrl } = req.body
-    console.log('apiUrl', apiUrl);
+server.post('/metropolia-data', async (req: postRequest, reply) => {
+    const { group, room, startDate, apiKey, apiUrl } = req.body
+    console.log('grouo', group, room);
+    let body;
+
+    if (group === '') {
+        body = {
+            "startDate": startDate,
+            "room": [room],
+            "building": ["KAAPO"],
+        }
+    } else {
+        body = {
+            "startDate": startDate,
+            "studentGroup": [group],
+            "building": ["KAAPO"],
+        }
+    }
+
+    console.log('BODY', body);
 
     const fetchOptions = {
         method: 'POST',
         headers: {
             'Authorization': 'Basic ' + Buffer.from(`${apiKey}:`).toString('base64'),
         },
-        body: JSON.stringify({
-            "startDate": startDate,
-            "studentGroup": [code],
-            "building": ["KAAPO"]
-        }),
+        body: JSON.stringify(body),
     };
+
     try {
         const result = await doFetch(apiUrl, fetchOptions);
         console.log('Result', result);

@@ -26,19 +26,31 @@ const doFetch = async (url, options = {}) => {
         return json;
     }
 };
-server.post('/', async (req, reply) => {
-    const { code, startDate, endDate, apiKey, apiUrl } = req.body;
-    console.log('apiUrl', apiUrl);
+server.post('/metropolia-data', async (req, reply) => {
+    const { group, room, startDate, apiKey, apiUrl } = req.body;
+    console.log('grouo', group, room);
+    let body;
+    if (group === '') {
+        body = {
+            "startDate": startDate,
+            "room": [room],
+            "building": ["KAAPO"],
+        };
+    }
+    else {
+        body = {
+            "startDate": startDate,
+            "studentGroup": [group],
+            "building": ["KAAPO"],
+        };
+    }
+    console.log('BODY', body);
     const fetchOptions = {
         method: 'POST',
         headers: {
             'Authorization': 'Basic ' + Buffer.from(`${apiKey}:`).toString('base64'),
         },
-        body: JSON.stringify({
-            "startDate": startDate,
-            "studentGroup": [code],
-            "building": ["KAAPO"]
-        }),
+        body: JSON.stringify(body),
     };
     try {
         const result = await doFetch(apiUrl, fetchOptions);

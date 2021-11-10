@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Tooltip, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import MuiModal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
@@ -106,7 +106,7 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
                             slotLabelFormat={[{ hour: 'numeric', minute: '2-digit' }]}
                             slotMinTime='08:00:00'
                             slotMaxTime='21:00:00'
-                            height={600}
+                            height={'70vh'}
                             views={{
                                 timeGrid: {
                                     visibleRange: {
@@ -129,11 +129,12 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
                                 }
                             })}
                             eventClick={(e) => console.log(e.event._def.extendedProps.room)}
+                            nowIndicator={true}
                         />
                     </>
                 ) : (
                     <>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                        <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
                             No search results found
                         </Typography>
                     </>
