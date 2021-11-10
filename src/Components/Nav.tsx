@@ -8,7 +8,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { alpha } from '@material-ui/core/styles/colorManipulator';
 import SearchIcon from '@material-ui/icons/Search';
 import useForm from '../Hooks/FormHooks';
-import React from "react";
+import { useReservations } from '../Hooks/ApiHooks';
+import moment from 'moment';
+import { useEffect } from 'react';
+import { TuneTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,8 +58,22 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Nav = () => {
+interface propTypes {
+    setModalOpen: Function,
+    setModalContent: Function,
+}
+
+interface requestObj {
+    code: string,
+    startDate: string,
+    endDate: string,
+    apiKey: string,
+    apiUrl: string,
+}
+
+const Nav = ({ setModalOpen, setModalContent }: propTypes) => {
     const classes = useStyles();
+    const { postGetReservationsByStudentGroup } = useReservations();
 
     const doSearch = async () => {
         try {
@@ -67,6 +84,39 @@ const Nav = () => {
                     console.log('ROOM', upperCaseStr);
                 } else {
                     console.log('GROUP', upperCaseStr);
+                    const today = moment().format('YYYY-MM-DD');
+                    const todayStart = today + 'T08:00:00'
+                    const requestObject: requestObj = {
+                        code: upperCaseStr,
+                        startDate: todayStart,
+                        endDate: '',
+                        apiKey: '',
+                        apiUrl: '',
+                    }
+                    const reservations = await postGetReservationsByStudentGroup(requestObject);
+                    console.log('RESERVATIONS', reservations);
+                    if (reservations.reservations.length !== 0) {
+                        let reservationsArray = [];
+                        for (let i = 0; i < reservations.reservations.length; i++) {
+                            let room;
+                            if (reservations.reservations[i].resources[0].type === 'room') {
+                                room = reservations.reservations[i].resources[0].code;
+                            } else {
+                                room = reservations.reservations[i].resources[2].code;
+                            }
+                            const reservationObject = {
+                                success: true,
+                                name: reservations.reservations[i].subject,
+                                group: reservations.reservations[i].resources[1].code,
+                                room: room,
+                                startDate: reservations.reservations[i].startDate,
+                                endDate: reservations.reservations[i].endDate,
+                            }
+                            reservationsArray.push(reservationObject);
+                        }
+                        setModalContent(reservationsArray);
+                        setModalOpen(true);
+                    }
                 }
                 setInputs({ searchTerm: '' });
             }
@@ -86,7 +136,7 @@ const Nav = () => {
     return (
         <>
             <div className={classes.root}>
-                <AppBar position="static" style={{height:'64px'}}>
+                <AppBar position="static" style={{ height: '64px' }}>
                     <Toolbar>
                         <Typography onClick={refresh} className={classes.title} variant="h6" color="inherit" noWrap>
                             App
