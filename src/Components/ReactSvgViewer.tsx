@@ -1,24 +1,25 @@
-import {useRef, useState, useEffect} from 'react';
-import { INITIAL_VALUE, pan, ReactSVGPanZoom, TOOL_PAN, fitToViewer, changeTool } from 'react-svg-pan-zoom';
+import { useRef, useState, useEffect } from 'react';
+import { INITIAL_VALUE, ReactSVGPanZoom, TOOL_PAN } from 'react-svg-pan-zoom';
 
-import {useWindowSize} from '@react-hook/window-size';
+import { useWindowSize } from '@react-hook/window-size';
 
 const ReactSvgViewer = () => {
 
 
-  const Viewer = useRef(null);
-  const [width, height] = useWindowSize({initialWidth: 400, initialHeight: 400})
+  const Viewer = useRef<any>(null);
+  const [width, height] = useWindowSize({ initialWidth: 400, initialHeight: 400 })
   const [tool, setTool] = useState(TOOL_PAN)
   const [value, setValue] = useState(INITIAL_VALUE)
 
   const zoomTransition = () => {
     //TODO: make zoom smooth by applying transition class to the svg
+    //MUISTA TEHDÄ ONZOOM-TRANSITIO!!!!!! t.Tommi (:D)
   };
 
   useEffect(() => {
-      if (Viewer.current !== null) {
-            Viewer.current.fitToViewer('center', 'top');
-        }
+    if (Viewer.current !== null) {
+      Viewer.current.fitToViewer('center', 'top');
+    }
   }, []);
 
   return (
@@ -32,8 +33,8 @@ const ReactSvgViewer = () => {
         value={value} onChangeValue={setValue}
         onClick={event => console.log('click', event.x, event.y, event.originalEvent)}
         detectAutoPan={false}
-        onZoom={zoomTransition()}
-        toolbarProps={{SVGAlignX: 'center'}}
+        //onZoom={zoomTransition()}
+        toolbarProps={{ SVGAlignX: 'center' }}
         scaleFactorMax={1}
         scaleFactorMin={0.1}
         scaleFactorOnWheel={1.2}

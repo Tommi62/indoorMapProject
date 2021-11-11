@@ -53,6 +53,11 @@ div[role="navigation"] {
   cursor: pointer!important;
 }
 
+.tippy-box[data-theme~='calendar'] {
+  background-color: #3788d8;
+  color: white;
+}
+
 @media only screen and (max-width: 1200px) {
   .fc-toolbar-title {
     font-size: 1.5rem!important;
