@@ -48,3 +48,29 @@ div[role="navigation"] {
     transform: rotate(360deg);
   }
 }
+
+.fc-timegrid-event {
+  cursor: pointer!important;
+}
+
+.tippy-box[data-theme~='calendar'] {
+  background-color: #3788d8;
+  color: white;
+}
+
+@media only screen and (max-width: 1200px) {
+  .fc-toolbar-title {
+    font-size: 1.5rem!important;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .fc-toolbar-title {
+    font-size: 0.9rem!important;
+  }
+
+  .fc-button {
+    padding: 0!important;
+    line-height: 0!important;
+  }
+}
