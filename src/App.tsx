@@ -22,6 +22,7 @@ interface modalContentArray {
 const App = () => {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
+  const [keyWord, setKeyWord] = useState('');
   const [modalContent, setModalContent] = useState<modalContentArray[]>([{
     success: false,
     name: '',
@@ -33,7 +34,7 @@ const App = () => {
 
   return (
     <>
-      <Nav setModalOpen={setModalOpen} setModalContent={setModalContent} />
+      <Nav setModalOpen={setModalOpen} setModalContent={setModalContent} setKeyWord={setKeyWord} />
       <Grid className={classes.root} container justifyContent="center">
         <Grid container item justifyContent="center" >
           <Typography component="h2" variant="h2" style={{ textAlign: 'center' }}>
@@ -43,7 +44,7 @@ const App = () => {
           <MapViewer />
         </Grid>
       </Grid>
-      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} modalContent={modalContent} setModalContent={setModalContent} />
+      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} modalContent={modalContent} setModalContent={setModalContent} keyWord={keyWord} />
     </>
   );
 }

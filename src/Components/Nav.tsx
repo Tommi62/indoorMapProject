@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 interface propTypes {
     setModalOpen: Function,
     setModalContent: Function,
+    setKeyWord: Function,
 }
 
 interface requestObj {
@@ -71,7 +72,7 @@ interface requestObj {
     apiUrl: string,
 }
 
-const Nav = ({ setModalOpen, setModalContent }: propTypes) => {
+const Nav = ({ setModalOpen, setModalContent, setKeyWord }: propTypes) => {
     const classes = useStyles();
     const { postGetMetropoliaData } = useReservations();
 
@@ -128,6 +129,7 @@ const Nav = ({ setModalOpen, setModalContent }: propTypes) => {
                     }
                     setModalContent(reservationsArray);
                 }
+                setKeyWord(upperCaseStr);
                 setModalOpen(true);
                 setInputs({ searchTerm: '' });
             }
