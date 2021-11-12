@@ -7,8 +7,10 @@ import {
   fitToViewer,
   changeTool,
 } from 'react-svg-pan-zoom';
+import { useRef, useState, useEffect } from 'react';
+import { INITIAL_VALUE, ReactSVGPanZoom, TOOL_PAN } from 'react-svg-pan-zoom';
 
-import {useWindowSize} from '@react-hook/window-size';
+import { useWindowSize } from '@react-hook/window-size';
 import { RouteFinder } from './RouteFinder';
 import {Typography} from '@material-ui/core';
 
@@ -19,16 +21,16 @@ interface paramObj {
 
 const ReactSvgViewer = ({update}: {update: paramObj}) => {
 
-  const Viewer = useRef(null);
+  const Viewer = useRef<any>(null);
   const [width, height] = useWindowSize(
-      {initialWidth: 400, initialHeight: 400});
+      { initialWidth: 400, initialHeight: 400 });
   const [tool, setTool] = useState(TOOL_PAN);
   const [value, setValue] = useState(INITIAL_VALUE);
 
   const zoomTransition = () => {
     //TODO: make zoom smooth by applying transition class to the svg
+    //MUISTA TEHDÄ ONZOOM-TRANSITIO!!!!!! t.Tommi (:D)
   };
-
 
   useEffect(() => {
     if (Viewer.current !== null) {
@@ -48,7 +50,7 @@ const ReactSvgViewer = ({update}: {update: paramObj}) => {
             onClick={event => console.log('click', event.x, event.y,
                 event.originalEvent)}
             detectAutoPan={false}
-            onZoom={zoomTransition()}
+            //onZoom={zoomTransition()}
             toolbarProps={{SVGAlignX: 'center'}}
             scaleFactorMax={1}
             scaleFactorMin={0.1}

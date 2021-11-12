@@ -8,6 +8,9 @@ import interactionPlugin from '@fullcalendar/interaction';
 import fiLocale from '@fullcalendar/core/locales/fi';
 import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
+import tippy, { followCursor } from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/animations/scale.css';
 
 const useStyles = makeStyles((theme) => ({
     box: {
@@ -106,7 +109,7 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
                             slotLabelFormat={[{ hour: 'numeric', minute: '2-digit' }]}
                             slotMinTime='08:00:00'
                             slotMaxTime='21:00:00'
-                            height={600}
+                            height={'70vh'}
                             views={{
                                 timeGrid: {
                                     visibleRange: {
@@ -125,15 +128,31 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
                                         data.room,
                                     start: new Date(data.startDate),
                                     end: new Date(data.endDate),
-                                    room: data.room,
+                                    extendedProps: {
+                                        subject: data.name,
+                                        group: data.group,
+                                        room: data.room,
+                                    }
                                 }
                             })}
                             eventClick={(e) => console.log(e.event._def.extendedProps.room)}
+                            nowIndicator={true}
+                            eventMouseEnter={(arg) => {
+                                tippy(arg.el, {
+                                    content: 'Aihe: ' + arg.event._def.extendedProps.subject + '<br>' + 'Ryhmä(t): ' + arg.event._def.extendedProps.group + '<br>' + 'Tila: ' + arg.event._def.extendedProps.room,
+                                    allowHTML: true,
+                                    theme: 'calendar',
+                                    animation: 'scale',
+                                    arrow: false,
+                                    followCursor: true,
+                                    plugins: [followCursor],
+                                });
+                            }}
                         />
                     </>
                 ) : (
                     <>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                        <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
                             No search results found
                         </Typography>
                     </>
