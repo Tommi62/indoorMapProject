@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 912.36 2255.97"><defs><style>.cls-1,.cls-2{fill:#b1b1b1;}.cls-2,.cls-3,.cls-4,.cls-5,.cls-6{stroke:#7f7f7f;stroke-width:3px;}.cls-2,.cls-3,.cls-4,.cls-5,.cls-6,.cls-9{stroke-linecap:round;stroke-linejoin:round;}.cls-3,.cls-9{fill:none;}.cls-4{fill:#00aeef;}.cls-5{fill:#ffc60b;}.cls-6,.cls-7{fill:#ec008c;}.cls-8{fill:#fff;stroke:#f55;stroke-miterlimit:10;stroke-width:4px;}.cls-9{stroke:#ee2d2b;stroke-width:8px;}</style></defs><g id="Layer_3" data-name="Layer 3">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 912.36 2255.97"><defs><style>.cls-1,.cls-2{fill:#b1b1b1;}.cls-2,.cls-3,.cls-4,.cls-5,.cls-6{stroke:#7f7f7f;stroke-width:3px;}.cls-2,.cls-3,.cls-4,.cls-5,.cls-6,.cls-9{stroke-linecap:round;stroke-linejoin:round;}.cls-3,.cls-9{fill:none;}.cls-4{fill:#00aeef;}.cls-5{fill:#ffc60b;}.cls-6,.cls-7{fill:#ec008c;}.cls-8{fill:#fff;stroke:#f55;stroke-miterlimit:10;stroke-width:4px;}.cls-9{stroke:#ee2d2b;stroke-width:8px;}</style></defs><g id="Layer_3" >
 <g id="etc">
 <polygon class="cls-1" points="70.07 616.27 243.35 616.27 243.35 636.84 70.33 636.84 70.07 616.27"/>
 <polygon class="cls-1" points="232 210.97 323.42 210.97 420.17 114.23 420.17 1.5 232.53 1.5 232 210.97"/>
@@ -28,7 +28,7 @@
 <polygon class="cls-5" points="340.93 580.27 386.52 625.86 531.02 481.37 485.27 435.63 340.93 580.27"/>
 <polygon class="cls-5" points="244.2 1916.42 411.61 1916.42 457.86 1962.68 432.38 1988.16 244.1 1988.16 244.2 1916.42"/>
 </g>
-<g id="stairs_elevator" data-name="stairs &amp; elevator">
+<g id="stairs_elevator">
 <polyline class="cls-6" points="69.94 636.84 69.94 605.06 1.5 605.06 1.5 752.36 243.61 752.36 243.61 662.42 243.61 646.34 243.61 636.84 69.94 636.84 69.94 616.27"/>
 <polygon class="cls-6" points="178.73 829.37 244.93 829.37 244.93 998.16 177.94 998.16 178.73 829.37"/>
 <rect class="cls-7" x="73.1" y="2069.32" width="99.69" height="184.95"/>
@@ -75,7 +75,7 @@
 <line class="cls-8" x1="353.54" y1="1695.8" x2="340.97" y2="1683.19"/>
 <line class="cls-8" x1="512.18" y1="1908.96" x2="524.8" y2="1896.39"/>
 </g></g>
-<g id="Layer_2" data-name="Layer 2">
+<g id="Layer_2">
 <line class="cls-9" x1="236.49" y1="567.21" x2="263.39" y2="567.21"/>
 <line class="cls-9" x1="265.62" y1="385.24" x2="265.62" y2="567.08"/>
 <line class="cls-9" x1="237.28" y1="382.47" x2="263.39" y2="382.47"/>

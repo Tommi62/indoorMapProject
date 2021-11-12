@@ -16,30 +16,36 @@ const doFetch = async (url: string, options = {}) => {
     }
 };
 
+interface requestObj {
+    group: string,
+    room: string,
+    startDate: string,
+    apiKey: string,
+    apiUrl: string,
+}
+
 const useReservations = () => {
 
-    const postGetReservationsByStudentGroup = async (code: string) => {
+    const postGetMetropoliaData = async (requestObject: requestObj) => {
+        requestObject.apiKey = ApiConfig.apiKey;
+        requestObject.apiUrl = ApiConfig.apiUrl;
+
         const fetchOptions = {
             method: 'POST',
             headers: {
-                'Authorization': 'Basic ' + btoa(`${ApiConfig.apiKey}:`),
+                'Content-Type': 'application/json',
             },
-            body: {
-                "startDate": "2021-11-01T08:00",
-                "endDate": "2021-11-05T21:00",
-                "studentGroup": [code],
-                "building": ["KAAPO"]
-            },
+            body: JSON.stringify(requestObject),
         };
         try {
-            const result = await doFetch(ApiConfig.proxyUrl + '/r1/reservation/search', fetchOptions);
-            console.log('Result', result);
+            const result = await doFetch(ApiConfig.backendUrl + '/metropolia-data', fetchOptions);
             return result;
-        } catch (error: any) {
-            alert(error.message);
+        } catch (e: any) {
+            alert(e.message);
         }
-    }
-    return { postGetReservationsByStudentGroup };
+    };
+
+    return { postGetMetropoliaData };
 };
 
 export { useReservations };

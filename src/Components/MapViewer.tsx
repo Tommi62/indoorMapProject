@@ -2,6 +2,7 @@ import Floor7 from '../Media/FloorImages/7._kerros-_reitit_kartalla.svg';
 import Routes7 from '../Media/FloorPaths/7._kerros-_reitit.svg';
 import Floor7SVG from './Floor7SVG';
 import ReactSvgViewer from './ReactSvgViewer';
+import React from "react";
 
 
 const options = {
@@ -17,7 +18,16 @@ const options = {
     toggleOnDblclick: false,
 }
 
-const MapViewer = () => {
+interface propTypes {
+    update: paramObj
+}
+
+interface paramObj {
+    startNode: string,
+    endNode: string
+}
+
+const MapViewer = ({update}: propTypes) => {
   return(
   <>
     {/* <RViewerJS options={options} className='map'>
@@ -34,7 +44,7 @@ const MapViewer = () => {
         pointerEvents: 'none',
         }}
         className='viewer-move viewer-transition'/> */}
-        <ReactSvgViewer/>
+        <ReactSvgViewer update={update}/>
     </>
   );
 };
