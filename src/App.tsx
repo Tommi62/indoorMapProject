@@ -29,11 +29,8 @@ const App = () => {
             <Nav/>
             <Grid className={classes.root} container justifyContent="center">
                 <Grid container item justifyContent="center">
-                    <Typography component="h2" variant="h2" style={{textAlign: 'center'}}>
-                        Hello World!
-                        <RouteFinder/>
-                    </Typography>
                     <MapViewer/>
+                    <RouteFinder/>
                 </Grid>
             </Grid>
         </>
