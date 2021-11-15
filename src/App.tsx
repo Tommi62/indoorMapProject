@@ -23,6 +23,8 @@ interface modalContentArray {
 const App = () => {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
+  const [keyWord, setKeyWord] = useState('');
+  const [updateShortcuts, setUpdateShortcuts] = useState(Date.now());
   const [modalContent, setModalContent] = useState<modalContentArray[]>([{
     success: false,
     name: '',
@@ -46,7 +48,7 @@ const App = () => {
 
   return (
     <>
-      <Nav setModalOpen={setModalOpen} setModalContent={setModalContent} />
+      <Nav setModalOpen={setModalOpen} setModalContent={setModalContent} setKeyWord={setKeyWord} updateShortcuts={updateShortcuts} />
       <Grid className={classes.root} container justifyContent="center">
         <Grid container item justifyContent="center" >
           <Button onClick={ button }>
@@ -56,7 +58,7 @@ const App = () => {
           <MapViewer update={update}/>
         </Grid>
       </Grid>
-      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} modalContent={modalContent} setModalContent={setModalContent} />
+      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} modalContent={modalContent} setModalContent={setModalContent} keyWord={keyWord} setUpdateShortcuts={setUpdateShortcuts} />
     </>
   );
 }
