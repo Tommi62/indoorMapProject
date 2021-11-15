@@ -30,20 +30,6 @@ interface paramObj {
 const MapViewer = ({update}: propTypes) => {
   return(
   <>
-    {/* <RViewerJS options={options} className='map'>
-      <img src={Floor7} alt="Floor 7" style={{
-          visibility: 'hidden',
-          display: 'none'
-          }}/>
-          <Floor7SVG active={true}/>
-    </RViewerJS> */}
-    {/* <img src={Routes7} alt="Floor 7 Routes"
-    style={{
-        position: 'absolute',
-        height: 'calc(100vh - 64px)',
-        pointerEvents: 'none',
-        }}
-        className='viewer-move viewer-transition'/> */}
         <ReactSvgViewer update={update}/>
     </>
   );

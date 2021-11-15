@@ -44,8 +44,7 @@ const ReactSvgViewer = ({update}: {update: paramObj}) => {
             SVGBackground={'#ffffff00'}
             tool={tool} onChangeTool={setTool}
             value={value} onChangeValue={setValue}
-            onClick={event => console.log('click', event.x, event.y,
-                event.originalEvent)}
+            onClick={event => console.log()}
             detectAutoPan={false}
             //onZoom={zoomTransition()}
             toolbarProps={{SVGAlignX: 'center'}}
