@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import RouteFinder from './Components/RouteFinder';
+// import RouteFinder from './Components/RouteFinder';
 import Nav from './Components/Nav';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Modal from './Components/Modal';
 import MapViewer from './Components/MapViewer';
+import {Button} from "@mui/material";
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -33,16 +34,28 @@ const App = () => {
     endDate: ''
   }]);
 
+  const [update, setUpdate] = useState({
+    startNode: "",
+    endNode: ""
+  })
+
+  const button = () => {
+    setUpdate({
+      startNode: "H1",
+      endNode: "E7611"
+    })
+  }
+
   return (
     <>
       <Nav setModalOpen={setModalOpen} setModalContent={setModalContent} setKeyWord={setKeyWord} updateShortcuts={updateShortcuts} />
       <Grid className={classes.root} container justifyContent="center">
         <Grid container item justifyContent="center" >
-          <Typography component="h2" variant="h2" style={{ textAlign: 'center' }}>
-            Hello World!
-            <RouteFinder />
-          </Typography>
-          <MapViewer />
+          <Button onClick={ button }>
+            Click me
+          </Button>
+
+          <MapViewer update={update}/>
         </Grid>
       </Grid>
       <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} modalContent={modalContent} setModalContent={setModalContent} keyWord={keyWord} setUpdateShortcuts={setUpdateShortcuts} />
