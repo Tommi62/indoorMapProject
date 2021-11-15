@@ -23,6 +23,7 @@ const App = () => {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
   const [keyWord, setKeyWord] = useState('');
+  const [updateShortcuts, setUpdateShortcuts] = useState(Date.now());
   const [modalContent, setModalContent] = useState<modalContentArray[]>([{
     success: false,
     name: '',
@@ -34,7 +35,7 @@ const App = () => {
 
   return (
     <>
-      <Nav setModalOpen={setModalOpen} setModalContent={setModalContent} setKeyWord={setKeyWord} />
+      <Nav setModalOpen={setModalOpen} setModalContent={setModalContent} setKeyWord={setKeyWord} updateShortcuts={updateShortcuts} />
       <Grid className={classes.root} container justifyContent="center">
         <Grid container item justifyContent="center" >
           <Typography component="h2" variant="h2" style={{ textAlign: 'center' }}>
@@ -44,7 +45,7 @@ const App = () => {
           <MapViewer />
         </Grid>
       </Grid>
-      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} modalContent={modalContent} setModalContent={setModalContent} keyWord={keyWord} />
+      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} modalContent={modalContent} setModalContent={setModalContent} keyWord={keyWord} setUpdateShortcuts={setUpdateShortcuts} />
     </>
   );
 }

@@ -43,9 +43,10 @@ interface propTypes {
     modalContent: modalContentArray[],
     setModalContent: Function,
     keyWord: string,
+    setUpdateShortcuts: Function,
 }
 
-const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord }: propTypes) => {
+const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord, setUpdateShortcuts }: propTypes) => {
     const classes = useStyles();
     const [isShortcut, setIsShortcut] = useState(false);
     const [calendarStartAndEnd, setCalendarStartAndEnd] = useState<startEndObject>({
@@ -75,6 +76,7 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord
             localStorage.setItem('shortcuts', JSON.stringify(shortcutArray));
         }
         setIsShortcut(true);
+        setUpdateShortcuts(Date.now());
     };
 
     const removeShortcut = () => {
@@ -89,6 +91,7 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord
             }
         }
         setIsShortcut(false);
+        setUpdateShortcuts(Date.now());
     }
 
     useEffect(() => {
