@@ -11,8 +11,9 @@ import useForm from '../Hooks/FormHooks';
 import { useEffect, useState } from 'react';
 import ShortcutButton from './ShortcutButton';
 import { useModalData } from '../Hooks/ModalDataHooks';
-import { Button, Menu } from '@mui/material';
+import { Button, IconButton, Menu, Drawer, Box } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import MenuIcon from "@material-ui/icons/Menu";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: alpha(theme.palette.common.white, 0.15) + '!important',
         },
+        [theme.breakpoints.down('xs')]: {
+            display: 'none!important',
+        },
     },
 }));
 
@@ -77,8 +81,16 @@ const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts }: pro
     const classes = useStyles();
     const { getModalData } = useModalData();
     const [shortcutArray, setShortcutArray] = useState([]);
+    const [openDrawer, setOpenDrawer] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
+    const toggleDrawer = (openDrawer: boolean) => (event: any) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setOpenDrawer(openDrawer);
+    };
 
     const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
@@ -127,8 +139,39 @@ const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts }: pro
     return (
         <>
             <div className={classes.root}>
-                <AppBar position="static" style={{ height: '64px' }}>
+                <AppBar position="static" >
                     <Toolbar>
+                        <IconButton edge="start" color="inherit" aria-label="open drawer" onClick={toggleDrawer(true)}
+                            sx={{ mr: 2, display: { xs: 'block', sm: 'none', }, }}>
+                            <MenuIcon />
+                        </IconButton>
+
+                        {/* The outside of the drawer */}
+                        <Drawer
+
+                            anchor="left" //from which side the drawer slides in
+
+                            variant="temporary" //if and how easily the drawer can be closed
+
+                            open={openDrawer} //if open is true, drawer is shown
+
+                            onClose={toggleDrawer(false)} //function that is called when the drawer should close
+                        >
+
+                            <Box>
+                                {shortcutArray.map((item) => (
+                                    <ShortcutButton
+                                        name={item}
+                                        type='drawer'
+                                        setModalContent={setModalContent}
+                                        setModalOpen={setModalOpen}
+                                        setKeyWord={setKeyWord}
+                                        handleClose={handleClose}
+                                        setOpenDrawer={setOpenDrawer}
+                                    />
+                                ))}{' '}
+                            </Box>
+                        </Drawer>
                         <Typography onClick={refresh} className={classes.title} variant="h6" color="inherit" noWrap>
                             App
                         </Typography>
@@ -160,10 +203,12 @@ const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts }: pro
                                     {shortcutArray.map((item) => (
                                         <ShortcutButton
                                             name={item}
+                                            type='dropdown'
                                             setModalContent={setModalContent}
                                             setModalOpen={setModalOpen}
                                             setKeyWord={setKeyWord}
                                             handleClose={handleClose}
+                                            setOpenDrawer={setOpenDrawer}
                                         />
                                     ))}{' '}
                                 </Menu>

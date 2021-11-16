@@ -43,12 +43,14 @@ interface propTypes {
     modalContent: modalContentArray[],
     setModalContent: Function,
     keyWord: string,
+    updateShortcuts: number,
     setUpdateShortcuts: Function,
 }
 
-const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord, setUpdateShortcuts }: propTypes) => {
+const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord, updateShortcuts, setUpdateShortcuts }: propTypes) => {
     const classes = useStyles();
     const [isShortcut, setIsShortcut] = useState(false);
+    const [shortcutLimiter, setShortcutLimiter] = useState(false);
     const [calendarStartAndEnd, setCalendarStartAndEnd] = useState<startEndObject>({
         start: '',
         end: '',
@@ -92,7 +94,7 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord
         }
         setIsShortcut(false);
         setUpdateShortcuts(Date.now());
-    }
+    };
 
     useEffect(() => {
         try {
@@ -100,6 +102,11 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord
             setIsShortcut(false);
             if (localStorage.getItem('shortcuts') !== null) {
                 const shortcutArray = JSON.parse(localStorage.getItem('shortcuts')!);
+                if (shortcutArray.length >= 15) {
+                    setShortcutLimiter(true);
+                } else {
+                    setShortcutLimiter(false);
+                }
                 for (let i = 0; i < shortcutArray.length; i++) {
                     if (shortcutArray[i] === keyWord) {
                         setIsShortcut(true);
@@ -115,7 +122,7 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord
         } catch (error: any) {
             console.log(error.message);
         }
-    }, [keyWord]);
+    }, [keyWord, updateShortcuts]);
 
     return (
         <MuiModal
@@ -198,7 +205,11 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord
                             {isShortcut ? (
                                 <Button onClick={removeShortcut}>Remove shortcut</Button>
                             ) : (
-                                <Button onClick={addShortcut}>Add shortcut</Button>
+                                <>
+                                    {!shortcutLimiter &&
+                                        <Button onClick={addShortcut}>Add shortcut</Button>
+                                    }
+                                </>
                             )}
                         </Grid>
                     </>
