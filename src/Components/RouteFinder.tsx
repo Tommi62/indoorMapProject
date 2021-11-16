@@ -6,9 +6,18 @@ import "tippy.js/animations/scale.css";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import ModalButton from "./ModalButton";
+import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
+import { useModalData } from "../Hooks/ModalDataHooks";
+import InfoIcon from "@mui/icons-material/Info";
+import RoomIcon from "@mui/icons-material/Room";
 
 interface propTypes {
   update: paramObj;
+  setModalOpen: Function;
+  setModalContent: Function;
+  setKeyWord: Function;
+  marker: string;
 }
 
 interface paramObj {
@@ -77,10 +86,17 @@ let graph: any = {
   R2: { K12: 1 },
 };
 
-function RouteFinder({ update }: propTypes) {
+function RouteFinder({
+  setModalOpen,
+  setModalContent,
+  setKeyWord,
+  update,
+  marker,
+}: propTypes) {
   const [open, setOpen] = useState(false);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
+  const [showNav, setShowNav] = useState(false);
 
   const handleTooltipClose = () => {
     setOpen(false);
@@ -403,15 +419,44 @@ function RouteFinder({ update }: propTypes) {
     }
   }, [start, end]);
 
+  const showNavigationButtons = () => {
+    setShowNav(true);
+  };
+  const hideNavigationButtons = () => {
+    setTimeout(function () {
+      setShowNav(false);
+    }, 100);
+  };
+
+  const { getModalData } = useModalData();
+
   const buttonGroup = (id: string) => {
+    const getDataAndOpenModal = async () => {
+      const modalData = await getModalData("KM" + id);
+      if (modalData.length !== 0) {
+        setModalContent(modalData);
+      }
+      setKeyWord("KM" + id);
+      setModalOpen(true);
+    };
     return (
       <>
         <Typography>{id}</Typography>
-        <ButtonGroup>
-          <Button>Info</Button>
-          <Button onClick={navigateFrom.bind(id, id)}>Navigate from</Button>
-          <Button onClick={navigateTo.bind(id, id)}>Navigate to</Button>
-        </ButtonGroup>
+        {!showNav ? (
+          <ButtonGroup>
+            <Button onClick={getDataAndOpenModal}>
+              <InfoIcon />
+            </Button>
+            <Button onClick={showNavigationButtons}>
+              <AssistantDirectionIcon></AssistantDirectionIcon>
+            </Button>
+          </ButtonGroup>
+        ) : (
+          <ButtonGroup>
+            <Button onClick={navigateFrom.bind(id, id)}>Navigate from</Button>
+            <Button onClick={navigateTo.bind(id, id)}>Navigate to</Button>
+          </ButtonGroup>
+        )}
       </>
     );
   };
@@ -485,33 +530,43 @@ function RouteFinder({ update }: propTypes) {
             style={{ fill: "#b1b1b1" }}
           />
         </g>
-        <g
-          id="classes" /* onClick={(e: any) => {
-                                tippy('.cls-4', {
-                                    content: ((e.target.id).slice(0, -1))+buttonGroup,
-                                    allowHTML: true,
-                                    animation: 'scale',
-                                    trigger: 'click',
-                                    interactive: true,
-                                    appendTo: document.body,
-                                });
-                            }} */
-        >
-          <Tooltip title={buttonGroup("D758")} arrow>
+        <g id="classes">
+          <Tooltip
+            title={buttonGroup("D758")}
+            arrow
+            enterNextDelay={100}
+            leaveDelay={100}
+            enterTouchDelay={1}
+            onClose={hideNavigationButtons}
+          >
             <path
               className="cls-4"
               id="D7581"
               d="M419.79 114.91L323.52 211.17 231.74 211.17 231.74 280.4 244.2 292.86 237.54 299.52 237.54 339.25 288.46 339.25 338.91 288.8 510.51 460.4 632.03 338.88 420.05 126.91 419.79 114.91z"
-            />
+            ></path>
           </Tooltip>
-          <Tooltip title={buttonGroup("D759")} arrow>
+          <Tooltip
+            title={buttonGroup("D759")}
+            arrow
+            enterNextDelay={100}
+            leaveDelay={100}
+            onClose={hideNavigationButtons}
+            enterTouchDelay={1}
+          >
             <path
               className="cls-4"
               id="D7591"
               d="M237.54 299.52L237.54 616.47 70.14 616.47 70.33 280.4 231.74 280.4 244 292.67 237.38 299.29"
             />
           </Tooltip>
-          <Tooltip title={buttonGroup("E761")} arrow>
+          <Tooltip
+            title={buttonGroup("E761")}
+            arrow
+            enterNextDelay={100}
+            onClose={hideNavigationButtons}
+            leaveDelay={100}
+            enterTouchDelay={1}
+          >
             <path
               className="cls-4"
               id={"E7611"}
@@ -519,14 +574,28 @@ function RouteFinder({ update }: propTypes) {
               d="M1629.96 1646.12h352.47v229.52h-352.47z"
             />
           </Tooltip>
-          <Tooltip title={buttonGroup("E761")} arrow>
+          <Tooltip
+            title={buttonGroup("E761")}
+            arrow
+            enterNextDelay={100}
+            onClose={hideNavigationButtons}
+            enterTouchDelay={1}
+            leaveDelay={100}
+          >
             <path
               className="cls-4"
               id={"E7621"}
               d="M416.49 1259.92l-170.31 170.3v157.85l81.99 81.99 249.13-249.13-160.81-161.01z"
             />
           </Tooltip>
-          <Tooltip title={buttonGroup("E759")} arrow>
+          <Tooltip
+            title={buttonGroup("E759")}
+            arrow
+            enterNextDelay={100}
+            onClose={hideNavigationButtons}
+            enterTouchDelay={1}
+            leaveDelay={100}
+          >
             <path
               className="cls-4"
               id={"E7591"}
@@ -534,28 +603,56 @@ function RouteFinder({ update }: propTypes) {
               d="M1859.06 1780.75h279.36v241.97h-279.36z"
             />
           </Tooltip>
-          <Tooltip title={buttonGroup("E751")} arrow>
+          <Tooltip
+            title={buttonGroup("E751")}
+            arrow
+            enterNextDelay={100}
+            enterTouchDelay={1}
+            onClose={hideNavigationButtons}
+            leaveDelay={100}
+          >
             <path
               className="cls-4"
               id={"E7511"}
               d="M713.26 1951.76l-297.89 297.89-121.78-121.78 101.14-101.14v-38.24h40.35l157.45-157.45 120.73 120.72z"
             />
           </Tooltip>
-          <Tooltip title={buttonGroup("E790")} arrow>
+          <Tooltip
+            title={buttonGroup("E790")}
+            arrow
+            enterTouchDelay={1}
+            onClose={hideNavigationButtons}
+            enterNextDelay={100}
+            leaveDelay={100}
+          >
             <path
               className="cls-4"
               id={"E7901"}
               d="M416.19 1257.64L371 1302.84 280.9 1302.84 280.9 1068.15 373.57 1068.15 416.21 1110.79 416.19 1257.64z"
             />
           </Tooltip>
-          <Tooltip title={buttonGroup("D750")} arrow>
+          <Tooltip
+            title={buttonGroup("D750")}
+            arrow
+            enterTouchDelay={1}
+            onClose={hideNavigationButtons}
+            enterNextDelay={100}
+            leaveDelay={100}
+          >
             <path
               className="cls-4"
               id={"D7501"}
               d="M333.2 853.16L407 779.65 577.17 949.83 416.55 1110.44 307.3 1001.19 307.3 878.95 320.58 865.72"
             />
           </Tooltip>
-          <Tooltip title={buttonGroup("D751")} arrow>
+          <Tooltip
+            title={buttonGroup("D751")}
+            arrow
+            enterTouchDelay={1}
+            enterNextDelay={100}
+            onClose={hideNavigationButtons}
+            leaveDelay={100}
+          >
             <path
               className="cls-4"
               id={"D7511"}
@@ -563,14 +660,28 @@ function RouteFinder({ update }: propTypes) {
               d="M1725.09 783.96H1993.08V1024.6H1725.09z"
             />
           </Tooltip>
-          <Tooltip title={buttonGroup("D757")} arrow>
+          <Tooltip
+            title={buttonGroup("D757")}
+            arrow
+            enterTouchDelay={1}
+            onClose={hideNavigationButtons}
+            enterNextDelay={100}
+            leaveDelay={100}
+          >
             <path
               className="cls-4"
               id={"D7571"}
               d="M618.12 568.27L596.36 590.03 766.65 760.32 910.05 616.91 632.03 338.88 510.38 460.53 618.12 568.27z"
             />
           </Tooltip>
-          <Tooltip title={buttonGroup("E770")} arrow>
+          <Tooltip
+            title={buttonGroup("E770")}
+            arrow
+            onClose={hideNavigationButtons}
+            enterTouchDelay={1}
+            enterNextDelay={100}
+            leaveDelay={100}
+          >
             <path
               className="cls-4"
               id={"E7701"}
