@@ -16,7 +16,7 @@ const ShortcutButton = ({ name, type, setModalContent, setModalOpen, setKeyWord,
 
     const getDataAndOpenModal = async () => {
         const modalData = await getModalData(name);
-        if (modalData.length !== 0) {
+        if (modalData !== undefined && modalData.length !== 0) {
             setModalContent(modalData);
         }
         setKeyWord(name);

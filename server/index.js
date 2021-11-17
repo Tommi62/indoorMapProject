@@ -1,6 +1,6 @@
 "use strict";
-const __importDefault = (this && this.__importDefault) || function(mod) {
-    return (mod && mod.__esModule) ? mod : {'default': mod};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fastify_1 = __importDefault(require("fastify"));
@@ -27,13 +27,19 @@ const doFetch = async (url, options = {}) => {
     }
 };
 server.post('/metropolia-data', async (req, reply) => {
-    const { group, room, startDate, apiKey, apiUrl } = req.body;
-    console.log('grouo', group, room);
+    const { group, room, realization, startDate, apiKey, apiUrl } = req.body;
     let body;
-    if (group === '') {
+    if (room !== '') {
         body = {
             "startDate": startDate,
             "room": [room],
+            "building": ["KAAPO"],
+        };
+    }
+    else if (realization !== '') {
+        body = {
+            "startDate": startDate,
+            "realization": [realization],
             "building": ["KAAPO"],
         };
     }
@@ -54,6 +60,17 @@ server.post('/metropolia-data', async (req, reply) => {
     };
     try {
         const result = await doFetch(apiUrl, fetchOptions);
+        console.log('Result', result);
+        return result;
+    }
+    catch (err) {
+        throw new Error(err);
+    }
+});
+server.post('/fazer-data', async (req, reply) => {
+    const { url } = req.body;
+    try {
+        const result = await doFetch(url);
         console.log('Result', result);
         return result;
     }

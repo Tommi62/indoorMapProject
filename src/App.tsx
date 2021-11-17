@@ -5,7 +5,6 @@ import Nav from './Components/Nav';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Modal from './Components/Modal';
 import MapViewer from './Components/MapViewer';
-import { Button } from "@mui/material";
 
 const useStyles = makeStyles(() => ({
   root: {}

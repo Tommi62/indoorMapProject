@@ -19,12 +19,13 @@ const doFetch = async (url: string, options = {}) => {
 interface requestObj {
     group: string,
     room: string,
+    realization: string,
     startDate: string,
     apiKey: string,
     apiUrl: string,
 }
 
-const useReservations = () => {
+const useApiData = () => {
 
     const postGetMetropoliaData = async (requestObject: requestObj) => {
         requestObject.apiKey = ApiConfig.apiKey;
@@ -45,7 +46,25 @@ const useReservations = () => {
         }
     };
 
-    return { postGetMetropoliaData };
+    const postGetFazerData = async (lang: string) => {
+        const fetchOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                url: ApiConfig.fazerApiUrl + lang,
+            }),
+        };
+        try {
+            const result = await doFetch(ApiConfig.backendUrl + '/fazer-data', fetchOptions);
+            return result;
+        } catch (e: any) {
+            alert(e.message);
+        }
+    };
+
+    return { postGetMetropoliaData, postGetFazerData };
 };
 
-export { useReservations };
+export { useApiData };

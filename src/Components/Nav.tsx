@@ -79,7 +79,7 @@ interface propTypes {
 
 const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts }: propTypes) => {
     const classes = useStyles();
-    const { getModalData } = useModalData();
+    const { getModalData, getFazerModalData } = useModalData();
     const [shortcutArray, setShortcutArray] = useState([]);
     const [openDrawer, setOpenDrawer] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -116,7 +116,7 @@ const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts }: pro
                 const str = inputs.searchTerm.replace(/ /g, "");
                 const upperCaseStr = str.toUpperCase();
                 const modalData = await getModalData(upperCaseStr);
-                if (modalData.length !== 0) {
+                if (modalData !== undefined && modalData.length !== 0) {
                     setModalContent(modalData);
                 }
                 setKeyWord(upperCaseStr);
