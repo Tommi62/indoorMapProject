@@ -108,7 +108,6 @@ function RouteFinder({
 
   // Get vector length by it's id
   let lengthGetter = (id: any) => {
-    console.log(id);
     const divElement: SVGGeometryElement = lines[id].current;
     divElement.style.display = "none";
     return divElement.getTotalLength();
@@ -168,19 +167,8 @@ function RouteFinder({
   const K28E7512: any = useRef();
   const K12R2: any = useRef();
   const K12K13: any = useRef();
-  /*     const D758: any = useRef();
-    const D759: any = useRef();
-    const E770: any = useRef();
-    const E790: any = useRef();
-    const D750: any = useRef();
-    const D751: any = useRef();
-    const D757: any = useRef();
-    const E761: any = useRef();
-    const E762: any = useRef();
-    const E751: any = useRef();
-    const E759: any = useRef(); */
+  const classes7: any = useRef();
 
-  // Putting all lines to Object so we can iterate trough them and get lines by their id
   const lines: any = {
     D7592K2: D7592K2,
     K1K2: K1K2,
@@ -252,7 +240,6 @@ function RouteFinder({
       }
       graph[key] = tempObj;
     }
-    console.log(graph);
   };
 
   // Part of dijkstra, finds shortest distance to next nodes that haven't been visited yet
@@ -430,6 +417,15 @@ function RouteFinder({
 
   const { getModalData } = useModalData();
 
+  useEffect(() => {
+    try {
+      const rects = classes7;
+      console.log(rects);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [marker]);
+
   const buttonGroup = (id: string) => {
     const getDataAndOpenModal = async () => {
       const modalData = await getModalData("KM" + id);
@@ -530,13 +526,12 @@ function RouteFinder({
             style={{ fill: "#b1b1b1" }}
           />
         </g>
-        <g id="classes">
+        <g id="classes" ref={classes7}>
           <Tooltip
             title={buttonGroup("D758")}
             arrow
             enterNextDelay={100}
             leaveDelay={100}
-            enterTouchDelay={1}
             onClose={hideNavigationButtons}
           >
             <path
@@ -551,7 +546,6 @@ function RouteFinder({
             enterNextDelay={100}
             leaveDelay={100}
             onClose={hideNavigationButtons}
-            enterTouchDelay={1}
           >
             <path
               className="cls-4"
@@ -565,7 +559,6 @@ function RouteFinder({
             enterNextDelay={100}
             onClose={hideNavigationButtons}
             leaveDelay={100}
-            enterTouchDelay={1}
           >
             <path
               className="cls-4"
@@ -579,7 +572,6 @@ function RouteFinder({
             arrow
             enterNextDelay={100}
             onClose={hideNavigationButtons}
-            enterTouchDelay={1}
             leaveDelay={100}
           >
             <path
@@ -593,7 +585,6 @@ function RouteFinder({
             arrow
             enterNextDelay={100}
             onClose={hideNavigationButtons}
-            enterTouchDelay={1}
             leaveDelay={100}
           >
             <path
@@ -607,7 +598,6 @@ function RouteFinder({
             title={buttonGroup("E751")}
             arrow
             enterNextDelay={100}
-            enterTouchDelay={1}
             onClose={hideNavigationButtons}
             leaveDelay={100}
           >
@@ -620,7 +610,6 @@ function RouteFinder({
           <Tooltip
             title={buttonGroup("E790")}
             arrow
-            enterTouchDelay={1}
             onClose={hideNavigationButtons}
             enterNextDelay={100}
             leaveDelay={100}
@@ -634,7 +623,6 @@ function RouteFinder({
           <Tooltip
             title={buttonGroup("D750")}
             arrow
-            enterTouchDelay={1}
             onClose={hideNavigationButtons}
             enterNextDelay={100}
             leaveDelay={100}
@@ -648,7 +636,6 @@ function RouteFinder({
           <Tooltip
             title={buttonGroup("D751")}
             arrow
-            enterTouchDelay={1}
             enterNextDelay={100}
             onClose={hideNavigationButtons}
             leaveDelay={100}
@@ -663,7 +650,6 @@ function RouteFinder({
           <Tooltip
             title={buttonGroup("D757")}
             arrow
-            enterTouchDelay={1}
             onClose={hideNavigationButtons}
             enterNextDelay={100}
             leaveDelay={100}
@@ -678,7 +664,6 @@ function RouteFinder({
             title={buttonGroup("E770")}
             arrow
             onClose={hideNavigationButtons}
-            enterTouchDelay={1}
             enterNextDelay={100}
             leaveDelay={100}
           >
