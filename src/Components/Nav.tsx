@@ -75,12 +75,14 @@ interface propTypes {
     setModalContent: Function,
     setKeyWord: Function,
     updateShortcuts: number,
+    setRestaurantMenu: Function,
 }
 
-const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts }: propTypes) => {
+const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts, setRestaurantMenu }: propTypes) => {
     const classes = useStyles();
-    const { getModalData, getFazerModalData } = useModalData();
-    const [shortcutArray, setShortcutArray] = useState([]);
+    const defaultShortcuts = ['Ruokalista'];
+    const { getModalData } = useModalData();
+    const [shortcutArray, setShortcutArray] = useState<string[]>([]);
     const [openDrawer, setOpenDrawer] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -103,7 +105,10 @@ const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts }: pro
         try {
             if (localStorage.getItem('shortcuts') !== null) {
                 const scArray = JSON.parse(localStorage.getItem('shortcuts')!);
-                setShortcutArray(scArray);
+                const combinedScArray = defaultShortcuts.concat(scArray);
+                setShortcutArray(combinedScArray);
+            } else {
+                setShortcutArray(defaultShortcuts);
             }
         } catch (error: any) {
             console.log(error.message);
@@ -114,12 +119,16 @@ const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts }: pro
         try {
             if (inputs.searchTerm !== '') {
                 const str = inputs.searchTerm.replace(/ /g, "");
-                const upperCaseStr = str.toUpperCase();
-                const modalData = await getModalData(upperCaseStr);
-                if (modalData !== undefined && modalData.length !== 0) {
-                    setModalContent(modalData);
+                if (str === 'fazer') {
+                    setRestaurantMenu(true);
+                } else {
+                    const upperCaseStr = str.toUpperCase();
+                    const modalData = await getModalData(upperCaseStr);
+                    if (modalData !== undefined && modalData.length !== 0) {
+                        setModalContent(modalData);
+                    }
+                    setKeyWord(upperCaseStr);
                 }
-                setKeyWord(upperCaseStr);
                 setModalOpen(true);
                 setInputs({ searchTerm: '' });
             }
@@ -168,6 +177,7 @@ const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts }: pro
                                         setKeyWord={setKeyWord}
                                         handleClose={handleClose}
                                         setOpenDrawer={setOpenDrawer}
+                                        setRestaurantMenu={setRestaurantMenu}
                                     />
                                 ))}{' '}
                             </Box>
@@ -209,6 +219,7 @@ const Nav = ({ setModalOpen, setModalContent, setKeyWord, updateShortcuts }: pro
                                             setKeyWord={setKeyWord}
                                             handleClose={handleClose}
                                             setOpenDrawer={setOpenDrawer}
+                                            setRestaurantMenu={setRestaurantMenu}
                                         />
                                     ))}{' '}
                                 </Menu>

@@ -32,6 +32,7 @@ const App = () => {
     startDate: '',
     endDate: ''
   }]);
+  const [restaurantMenu, setRestaurantMenu] = useState(false);
 
   const [update, setUpdate] = useState({
     startNode: "",
@@ -40,14 +41,30 @@ const App = () => {
 
   return (
     <>
-      <Nav setModalOpen={setModalOpen} setModalContent={setModalContent} setKeyWord={setKeyWord} updateShortcuts={updateShortcuts} />
+      <Nav
+        setModalOpen={setModalOpen}
+        setModalContent={setModalContent}
+        setKeyWord={setKeyWord}
+        updateShortcuts={updateShortcuts}
+        setRestaurantMenu={setRestaurantMenu}
+      />
       <Grid className='map' container justifyContent="center">
         <Grid container item justifyContent="center" >
 
           <MapViewer update={update} />
         </Grid>
       </Grid>
-      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} modalContent={modalContent} setModalContent={setModalContent} keyWord={keyWord} updateShortcuts={updateShortcuts} setUpdateShortcuts={setUpdateShortcuts} />
+      <Modal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        modalContent={modalContent}
+        setModalContent={setModalContent}
+        keyWord={keyWord}
+        updateShortcuts={updateShortcuts}
+        setUpdateShortcuts={setUpdateShortcuts}
+        restaurantMenu={restaurantMenu}
+        setRestaurantMenu={setRestaurantMenu}
+      />
     </>
   );
 }

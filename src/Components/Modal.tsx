@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import tippy, { followCursor } from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale.css';
+import FazerMenu from './FazerMenu';
 
 const useStyles = makeStyles((theme) => ({
     box: {
@@ -45,9 +46,11 @@ interface propTypes {
     keyWord: string,
     updateShortcuts: number,
     setUpdateShortcuts: Function,
+    restaurantMenu: boolean,
+    setRestaurantMenu: Function,
 }
 
-const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord, updateShortcuts, setUpdateShortcuts }: propTypes) => {
+const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord, updateShortcuts, setUpdateShortcuts, restaurantMenu, setRestaurantMenu }: propTypes) => {
     const classes = useStyles();
     const [isShortcut, setIsShortcut] = useState(false);
     const [shortcutLimiter, setShortcutLimiter] = useState(false);
@@ -58,6 +61,7 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord
 
     const handleClose = () => {
         setModalOpen(false);
+        setRestaurantMenu(false);
         setModalContent([{
             success: false,
             name: '',
@@ -98,27 +102,29 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord
 
     useEffect(() => {
         try {
-            console.log('UseEffect');
-            setIsShortcut(false);
-            if (localStorage.getItem('shortcuts') !== null) {
-                const shortcutArray = JSON.parse(localStorage.getItem('shortcuts')!);
-                if (shortcutArray.length >= 15) {
-                    setShortcutLimiter(true);
-                } else {
-                    setShortcutLimiter(false);
-                }
-                for (let i = 0; i < shortcutArray.length; i++) {
-                    if (shortcutArray[i] === keyWord) {
-                        setIsShortcut(true);
-                        break;
+            if (!restaurantMenu) {
+                console.log('UseEffect');
+                setIsShortcut(false);
+                if (localStorage.getItem('shortcuts') !== null) {
+                    const shortcutArray = JSON.parse(localStorage.getItem('shortcuts')!);
+                    if (shortcutArray.length >= 14) {
+                        setShortcutLimiter(true);
+                    } else {
+                        setShortcutLimiter(false);
+                    }
+                    for (let i = 0; i < shortcutArray.length; i++) {
+                        if (shortcutArray[i] === keyWord) {
+                            setIsShortcut(true);
+                            break;
+                        }
                     }
                 }
+                const today = moment().format('YYYY-MM-DD');
+                setCalendarStartAndEnd({
+                    start: today,
+                    end: today,
+                });
             }
-            const today = moment().format('YYYY-MM-DD');
-            setCalendarStartAndEnd({
-                start: today,
-                end: today,
-            });
         } catch (error: any) {
             console.log(error.message);
         }
@@ -144,80 +150,86 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord
             }}
                 className={classes.box}
             >
-                {modalContent[0].success ? (
-                    <>
-                        <FullCalendar
-                            locales={[fiLocale]}
-                            locale='fi'
-                            dayHeaderContent={false}
-                            plugins={[timeGridPlugin, interactionPlugin]}
-                            headerToolbar={{
-                                left: 'prev',
-                                center: 'title',
-                                right: 'next'
-                            }}
-                            initialView='timeGridDay'
-                            allDaySlot={false}
-                            slotLabelFormat={[{ hour: 'numeric', minute: '2-digit' }]}
-                            slotMinTime='08:00:00'
-                            slotMaxTime='21:00:00'
-                            height={'70vh'}
-                            views={{
-                                timeGrid: {
-                                    visibleRange: {
-                                        start: calendarStartAndEnd.start,
-                                        end: calendarStartAndEnd.end,
-                                    },
-                                },
-                            }}
-                            events={modalContent.map((data) => {
-                                return {
-                                    title:
-                                        data.name +
-                                        ' ' +
-                                        data.group +
-                                        ' ' +
-                                        data.room,
-                                    start: new Date(data.startDate),
-                                    end: new Date(data.endDate),
-                                    extendedProps: {
-                                        subject: data.name,
-                                        group: data.group,
-                                        room: data.room,
-                                    }
-                                }
-                            })}
-                            eventClick={(e) => console.log(e.event._def.extendedProps.room)}
-                            nowIndicator={true}
-                            eventMouseEnter={(arg) => {
-                                tippy(arg.el, {
-                                    content: 'Aihe: ' + arg.event._def.extendedProps.subject + '<br>' + 'Ryhmä(t): ' + arg.event._def.extendedProps.group + '<br>' + 'Tila: ' + arg.event._def.extendedProps.room,
-                                    allowHTML: true,
-                                    theme: 'calendar',
-                                    animation: 'scale',
-                                    arrow: false,
-                                    followCursor: true,
-                                    plugins: [followCursor],
-                                });
-                            }}
-                        />
-                        <Grid container justifyContent="center" className={classes.shortcut}>
-                            {isShortcut ? (
-                                <Button onClick={removeShortcut}>Remove shortcut</Button>
-                            ) : (
-                                <>
-                                    {!shortcutLimiter &&
-                                        <Button onClick={addShortcut}>Add shortcut</Button>
-                                    }
-                                </>
-                            )}
-                        </Grid>
-                    </>
+                {restaurantMenu ? (
+                    <FazerMenu />
                 ) : (
                     <>
-                        <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
-                            No search results found
-                        </Typography>
+                        {modalContent[0].success ? (
+                            <>
+                                <FullCalendar
+                                    locales={[fiLocale]}
+                                    locale='fi'
+                                    dayHeaderContent={false}
+                                    plugins={[timeGridPlugin, interactionPlugin]}
+                                    headerToolbar={{
+                                        left: 'prev',
+                                        center: 'title',
+                                        right: 'next'
+                                    }}
+                                    initialView='timeGridDay'
+                                    allDaySlot={false}
+                                    slotLabelFormat={[{ hour: 'numeric', minute: '2-digit' }]}
+                                    slotMinTime='08:00:00'
+                                    slotMaxTime='21:00:00'
+                                    height={'70vh'}
+                                    views={{
+                                        timeGrid: {
+                                            visibleRange: {
+                                                start: calendarStartAndEnd.start,
+                                                end: calendarStartAndEnd.end,
+                                            },
+                                        },
+                                    }}
+                                    events={modalContent.map((data) => {
+                                        return {
+                                            title:
+                                                data.name +
+                                                ' ' +
+                                                data.group +
+                                                ' ' +
+                                                data.room,
+                                            start: new Date(data.startDate),
+                                            end: new Date(data.endDate),
+                                            extendedProps: {
+                                                subject: data.name,
+                                                group: data.group,
+                                                room: data.room,
+                                            }
+                                        }
+                                    })}
+                                    eventClick={(e) => console.log(e.event._def.extendedProps.room)}
+                                    nowIndicator={true}
+                                    eventMouseEnter={(arg) => {
+                                        tippy(arg.el, {
+                                            content: 'Aihe: ' + arg.event._def.extendedProps.subject + '<br>' + 'Ryhmä(t): ' + arg.event._def.extendedProps.group + '<br>' + 'Tila: ' + arg.event._def.extendedProps.room,
+                                            allowHTML: true,
+                                            theme: 'calendar',
+                                            animation: 'scale',
+                                            arrow: false,
+                                            followCursor: true,
+                                            plugins: [followCursor],
+                                        });
+                                    }}
+                                />
+                                <Grid container justifyContent="center" className={classes.shortcut}>
+                                    {isShortcut ? (
+                                        <Button onClick={removeShortcut}>Remove shortcut</Button>
+                                    ) : (
+                                        <>
+                                            {!shortcutLimiter &&
+                                                <Button onClick={addShortcut}>Add shortcut</Button>
+                                            }
+                                        </>
+                                    )}
+                                </Grid>
+                            </>
+                        ) : (
+                            <>
+                                <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
+                                    No search results found
+                                </Typography>
+                            </>
+                        )}
                     </>
                 )}
             </Box>

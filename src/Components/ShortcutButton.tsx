@@ -9,17 +9,22 @@ interface propTypes {
     setKeyWord: Function,
     handleClose: Function,
     setOpenDrawer: Function,
+    setRestaurantMenu: Function,
 };
 
-const ShortcutButton = ({ name, type, setModalContent, setModalOpen, setKeyWord, handleClose, setOpenDrawer }: propTypes) => {
+const ShortcutButton = ({ name, type, setModalContent, setModalOpen, setKeyWord, handleClose, setOpenDrawer, setRestaurantMenu }: propTypes) => {
     const { getModalData } = useModalData();
 
     const getDataAndOpenModal = async () => {
-        const modalData = await getModalData(name);
-        if (modalData !== undefined && modalData.length !== 0) {
-            setModalContent(modalData);
+        if (name === 'Ruokalista') {
+            setRestaurantMenu(true);
+        } else {
+            const modalData = await getModalData(name);
+            if (modalData !== undefined && modalData.length !== 0) {
+                setModalContent(modalData);
+            }
+            setKeyWord(name);
         }
-        setKeyWord(name);
         setModalOpen(true);
         if (type === 'dropdown') {
             handleClose();
