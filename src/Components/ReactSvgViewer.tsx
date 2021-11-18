@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   INITIAL_VALUE,
   pan,
@@ -9,20 +9,22 @@ import {
 
 import { useWindowSize } from '@react-hook/window-size';
 import { RouteFinder } from './RouteFinder';
-import {Typography} from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { useMediaQuery } from '@mui/material';
 
 interface paramObj {
   startNode: string,
   endNode: string
 }
 
-const ReactSvgViewer = ({update}: {update: paramObj}) => {
+const ReactSvgViewer = ({ update }: { update: paramObj }) => {
 
   const Viewer = useRef<any>(null);
   const [width, height] = useWindowSize(
-      { initialWidth: 400, initialHeight: 400 });
+    { initialWidth: 400, initialHeight: 400 });
   const [tool, setTool] = useState(TOOL_PAN);
   const [value, setValue] = useState(INITIAL_VALUE);
+  const mobile = useMediaQuery('(max-width:600px)');
 
   const zoomTransition = () => {
     //TODO: make zoom smooth by applying transition class to the svg
@@ -36,31 +38,57 @@ const ReactSvgViewer = ({update}: {update: paramObj}) => {
   }, []);
 
   return (
-      <div>
+    <div>
+      {mobile ? (
         <ReactSVGPanZoom
-            ref={Viewer}
-            width={width} height={(height - 64)}
-            background={'white'}
-            SVGBackground={'#ffffff00'}
-            tool={tool} onChangeTool={setTool}
-            value={value} onChangeValue={setValue}
-            onClick={event => console.log('click', event.x, event.y,
-                event.originalEvent)}
-            detectAutoPan={false}
-            //onZoom={zoomTransition()}
-            toolbarProps={{SVGAlignX: 'center'}}
-            scaleFactorMax={1}
-            scaleFactorMin={0.1}
-            scaleFactorOnWheel={1.2}
+          ref={Viewer}
+          width={width} height={(height - 56)}
+          background={'white'}
+          SVGBackground={'#ffffff00'}
+          tool={tool} onChangeTool={setTool}
+          value={value} onChangeValue={setValue}
+          onClick={event => console.log('click', event.x, event.y,
+            event.originalEvent)}
+          detectAutoPan={false}
+          //onZoom={zoomTransition()}
+          toolbarProps={{ SVGAlignX: 'center' }}
+          scaleFactorMax={1}
+          scaleFactorMin={0.1}
+          scaleFactorOnWheel={1.2}
         >
           <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 912.36 2255.97"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 912.36 2255.97"
           >
-            <RouteFinder update={update}/>
+            <RouteFinder update={update} />
           </svg>
         </ReactSVGPanZoom>
-      </div>
+      ) : (
+        <ReactSVGPanZoom
+          ref={Viewer}
+          width={width} height={(height - 64)}
+          background={'white'}
+          SVGBackground={'#ffffff00'}
+          tool={tool} onChangeTool={setTool}
+          value={value} onChangeValue={setValue}
+          onClick={event => console.log('click', event.x, event.y,
+            event.originalEvent)}
+          detectAutoPan={false}
+          //onZoom={zoomTransition()}
+          toolbarProps={{ SVGAlignX: 'center' }}
+          scaleFactorMax={1}
+          scaleFactorMin={0.1}
+          scaleFactorOnWheel={1.2}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 912.36 2255.97"
+          >
+            <RouteFinder update={update} />
+          </svg>
+        </ReactSVGPanZoom>
+      )}
+    </div>
   );
 };
 
