@@ -11,9 +11,16 @@ type postRequest = FastifyRequest<{
     Body: {
         group: string,
         room: string,
+        realization: string,
         startDate: string,
         apiKey: string,
         apiUrl: string,
+    }
+}>
+
+type getRequest = FastifyRequest<{
+    Body: {
+        url: string,
     }
 }>
 
@@ -34,14 +41,19 @@ const doFetch = async (url: string, options = {}) => {
 };
 
 server.post('/metropolia-data', async (req: postRequest, reply) => {
-    const { group, room, startDate, apiKey, apiUrl } = req.body
-    console.log('grouo', group, room);
-    let body;
+    const { group, room, realization, startDate, apiKey, apiUrl } = req.body
+    let body
 
-    if (group === '') {
+    if (room !== '') {
         body = {
             "startDate": startDate,
             "room": [room],
+            "building": ["KAAPO"],
+        }
+    } else if (realization !== '') {
+        body = {
+            "startDate": startDate,
+            "realization": [realization],
             "building": ["KAAPO"],
         }
     } else {
@@ -64,6 +76,17 @@ server.post('/metropolia-data', async (req: postRequest, reply) => {
 
     try {
         const result = await doFetch(apiUrl, fetchOptions);
+        console.log('Result', result);
+        return result;
+    } catch (err: any) {
+        throw new Error(err)
+    }
+})
+
+server.post('/fazer-data', async (req: getRequest, reply) => {
+    const { url } = req.body
+    try {
+        const result = await doFetch(url);
         console.log('Result', result);
         return result;
     } catch (err: any) {

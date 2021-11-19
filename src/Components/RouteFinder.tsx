@@ -1,17 +1,29 @@
-import testSVG from '../../public/testSVG.svg';
+import testSVG from "../../public/testSVG.svg";
 import React, {useEffect, useRef, useState} from "react";
-import {SvgIcon} from "@material-ui/core";
+import {Button, ButtonGroup, SvgIcon, Typography} from "@material-ui/core";
+import "tippy.js/dist/tippy.css";
+import "tippy.js/animations/scale.css";
+import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
+import {styled} from "@mui/material/styles";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import ModalButton from "./ModalButton";
+import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
+import {useModalData} from "../Hooks/ModalDataHooks";
+import InfoIcon from "@mui/icons-material/Info";
 
 
 interface propTypes {
-    update: paramObj
+    update: paramObj;
+    setModalOpen: Function;
+    setModalContent: Function;
+    setKeyWord: Function;
+    marker: string;
 }
 
 interface paramObj {
-    startNode: string,
-    endNode: string
+    startNode: string;
+    endNode: string;
 }
-
 
 // Setting the logic for each point so the algorithm knows from which point can you go to which
 let graph: any = {
@@ -124,7 +136,25 @@ let graph: any = {
 
 };
 
-function RouteFinder({update}: propTypes) {
+function RouteFinder({
+                         setModalOpen,
+                         setModalContent,
+                         setKeyWord,
+                         update,
+                         marker,
+                     }: propTypes) {
+    const [open, setOpen] = useState(false);
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
+    const [showNav, setShowNav] = useState(false);
+
+    const handleTooltipClose = () => {
+        setOpen(false);
+    };
+
+    const handleTooltipOpen = () => {
+        setOpen(true);
+    };
     const [floorSelect, setFloorSelect] = useState(2)
 
     // Get vector length by it's id
@@ -330,16 +360,15 @@ function RouteFinder({update}: propTypes) {
             let tempObj: any = {};
             for (let [key1, value1] of Object.entries(value)) {
                 const temp = key + key1;
-                const temp2 = key1 + key
+                const temp2 = key1 + key;
                 if (Object.keys(lines).includes(temp)) {
                     value1 = lengthGetter(temp);
-                } else value1 = lengthGetter(temp2)
+                } else value1 = lengthGetter(temp2);
                 //Set length property of lines
                 tempObj[key1] = value1;
             }
             graph[key] = tempObj;
         }
-        console.log(graph)
     };
 
     // Part of dijkstra, finds shortest distance to next nodes that haven't been visited yet
@@ -367,7 +396,7 @@ function RouteFinder({update}: propTypes) {
     let findShortestPath = (graph: any, startNode: string, endNode: string) => {
         // track distances from the start node using a hash object
         let distances: any = {};
-        distances[endNode] = 'Infinity';
+        distances[endNode] = "Infinity";
         distances = Object.assign(distances, graph[startNode]);
         // track paths using a hash object
         let parents: any = {endNode: null};
@@ -376,7 +405,7 @@ function RouteFinder({update}: propTypes) {
         }
 
         // collect visited nodes
-        let visited: string[] = []
+        let visited: string[] = [];
         // find the nearest node
         let node = shortestDistanceNode(distances, visited);
 
@@ -388,7 +417,6 @@ function RouteFinder({update}: propTypes) {
 
             // for each of those child nodes:
             for (let child in children) {
-
                 // make sure each child node is not the start node
                 if (String(child) === String(startNode)) {
                     continue;
@@ -422,18 +450,18 @@ function RouteFinder({update}: propTypes) {
         shortestPath.reverse();
         for (let i = 0; i < shortestPath.length - 1; i++) {
             // String combinations that include each line's start and end point and combines them to make it line name
-            let tempString: string = shortestPath[i]
-            let tempString1: string = shortestPath[i + 1]
-            let finalName: string
-            let tempName: any = tempString.concat(tempString1)
-            let tempName1: any = tempString1.concat(tempString)
+            let tempString: string = shortestPath[i];
+            let tempString1: string = shortestPath[i + 1];
+            let finalName: string;
+            let tempName: any = tempString.concat(tempString1);
+            let tempName1: any = tempString1.concat(tempString);
             // Check line name both ways ea. AB and BA to find the line
             if (Object.keys(lines).includes(tempName)) {
                 finalName = tempName;
-            } else finalName = tempName1
+            } else finalName = tempName1;
             const divElement: SVGGeometryElement = lines[finalName].current;
             // Make lines on the shortest path visible
-            divElement.style.display = "block"
+            divElement.style.display = "block";
         }
         // this is the shortest path
         let results = {
@@ -442,18 +470,122 @@ function RouteFinder({update}: propTypes) {
         };
         console.log(results);
         // Log the shortest path & the end node's distance from the start node
+        return results.distance;
     };
 
     useEffect(() => {
         (async () => {
             try {
                 objIterator(graph);
-                findShortestPath(graph, update.startNode, update.endNode)
+                findShortestPath(graph, update.startNode, update.endNode);
             } catch (error: any) {
                 console.log(error.message);
             }
         })();
     }, [update]);
+
+    const returnShortestPath = (from: string, to: string) => {
+        objIterator(graph);
+        const data = [];
+        data.push({
+            from: from + "1",
+            to: to + "1",
+            length: findShortestPath(graph, from + "1", to + "1"),
+        });
+        data.push({
+            from: from + "1",
+            to: to + "2",
+            length: findShortestPath(graph, from + "1", to + "2"),
+        });
+        data.push({
+            from: from + "2",
+            to: to + "1",
+            length: findShortestPath(graph, from + "2", to + "1"),
+        });
+        data.push({
+            from: from + "2",
+            to: to + "2",
+            length: findShortestPath(graph, from + "2", to + "2"),
+        });
+        objIterator(graph);
+
+        const shortestRoute = data.reduce(function (prev, curr) {
+            return prev.length < curr.length ? prev : curr;
+        });
+        console.log(data);
+        console.log(shortestRoute);
+        findShortestPath(graph, shortestRoute.from, shortestRoute.to);
+    };
+
+    const navigateTo = (id: string) => {
+        setEnd(id);
+    };
+
+    const navigateFrom = (id: string) => {
+        setStart(id);
+    };
+
+    useEffect(() => {
+        try {
+            if (start !== "" && end !== "") {
+                returnShortestPath(start, end);
+            }
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }, [start, end]);
+
+    const showNavigationButtons = () => {
+        setShowNav(true);
+    };
+    const hideNavigationButtons = () => {
+        setTimeout(function () {
+            setShowNav(false);
+        }, 100);
+    };
+
+    const {getModalData} = useModalData();
+
+    useEffect(() => {
+        try {
+            // const rects = classes7;
+            // console.log(rects);
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }, [marker]);
+    const buttonGroup = (id: string) => {
+        const getDataAndOpenModal = async () => {
+            const modalData = await getModalData("KM" + id);
+            if (modalData !== undefined) {
+                if (modalData.length !== 0) {
+                    setModalContent(modalData);
+                }
+            }
+            setKeyWord("KM" + id);
+            setModalOpen(true);
+        };
+        return (
+            <>
+                <Typography>{id}</Typography>
+                {!showNav ? (
+                    <ButtonGroup>
+                        <Button onClick={getDataAndOpenModal}>
+                            <InfoIcon/>
+                        </Button>
+                        <Button onClick={showNavigationButtons}>
+                            <AssistantDirectionIcon></AssistantDirectionIcon>
+                        </Button>
+                    </ButtonGroup>
+                ) : (
+                    <ButtonGroup>
+                        <Button onClick={navigateFrom.bind(id, id)}>Navigate from</Button>
+                        <Button onClick={navigateTo.bind(id, id)}>Navigate to</Button>
+                    </ButtonGroup>
+                )}
+            </>
+        );
+    };
 
     return (
         <>

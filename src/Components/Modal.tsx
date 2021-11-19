@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import MuiModal from '@mui/material/Modal';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import tippy, { followCursor } from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale.css';
+import FazerMenu from './FazerMenu';
 
 const useStyles = makeStyles((theme) => ({
     box: {
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
             width: '80vw!important',
         },
     },
+    shortcut: {
+        marginTop: '0.5rem',
+    }
 }));
 
 interface modalContentArray {
@@ -39,10 +43,17 @@ interface propTypes {
     setModalOpen: Function,
     modalContent: modalContentArray[],
     setModalContent: Function,
+    keyWord: string,
+    updateShortcuts: number,
+    setUpdateShortcuts: Function,
+    restaurantMenu: boolean,
+    setRestaurantMenu: Function,
 }
 
-const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propTypes) => {
+const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent, keyWord, updateShortcuts, setUpdateShortcuts, restaurantMenu, setRestaurantMenu }: propTypes) => {
     const classes = useStyles();
+    const [isShortcut, setIsShortcut] = useState(false);
+    const [shortcutLimiter, setShortcutLimiter] = useState(false);
     const [calendarStartAndEnd, setCalendarStartAndEnd] = useState<startEndObject>({
         start: '',
         end: '',
@@ -50,6 +61,7 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
 
     const handleClose = () => {
         setModalOpen(false);
+        setRestaurantMenu(false);
         setModalContent([{
             success: false,
             name: '',
@@ -60,17 +72,63 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
         }]);
     };
 
+    const addShortcut = () => {
+        if (localStorage.getItem('shortcuts') !== null) {
+            const shortcutArray = JSON.parse(localStorage.getItem('shortcuts')!);
+            shortcutArray.push(keyWord);
+            localStorage.setItem('shortcuts', JSON.stringify(shortcutArray));
+        } else {
+            const shortcutArray = [keyWord];
+            localStorage.setItem('shortcuts', JSON.stringify(shortcutArray));
+        }
+        setIsShortcut(true);
+        setUpdateShortcuts(Date.now());
+    };
+
+    const removeShortcut = () => {
+        if (localStorage.getItem('shortcuts') !== null) {
+            const shortcutArray = JSON.parse(localStorage.getItem('shortcuts')!);
+            for (let i = 0; i < shortcutArray.length; i++) {
+                if (shortcutArray[i] === keyWord) {
+                    shortcutArray.splice(i, 1);
+                    localStorage.setItem('shortcuts', JSON.stringify(shortcutArray));
+                    break;
+                }
+            }
+        }
+        setIsShortcut(false);
+        setUpdateShortcuts(Date.now());
+    };
+
     useEffect(() => {
         try {
-            const today = moment().format('YYYY-MM-DD');
-            setCalendarStartAndEnd({
-                start: today,
-                end: today,
-            });
+            if (!restaurantMenu) {
+                console.log('UseEffect');
+                setIsShortcut(false);
+                if (localStorage.getItem('shortcuts') !== null) {
+                    const shortcutArray = JSON.parse(localStorage.getItem('shortcuts')!);
+                    if (shortcutArray.length >= 14) {
+                        setShortcutLimiter(true);
+                    } else {
+                        setShortcutLimiter(false);
+                    }
+                    for (let i = 0; i < shortcutArray.length; i++) {
+                        if (shortcutArray[i] === keyWord) {
+                            setIsShortcut(true);
+                            break;
+                        }
+                    }
+                }
+                const today = moment().format('YYYY-MM-DD');
+                setCalendarStartAndEnd({
+                    start: today,
+                    end: today,
+                });
+            }
         } catch (error: any) {
             console.log(error.message);
         }
-    }, [modalContent]);
+    }, [keyWord, updateShortcuts]);
 
     return (
         <MuiModal
@@ -92,69 +150,86 @@ const Modal = ({ modalOpen, setModalOpen, modalContent, setModalContent }: propT
             }}
                 className={classes.box}
             >
-                {modalContent[0].success ? (
-                    <>
-                        <FullCalendar
-                            locales={[fiLocale]}
-                            locale='fi'
-                            dayHeaderContent={false}
-                            plugins={[timeGridPlugin, interactionPlugin]}
-                            headerToolbar={{
-                                left: 'prev',
-                                center: 'title',
-                                right: 'next'
-                            }}
-                            initialView='timeGridDay'
-                            allDaySlot={false}
-                            slotLabelFormat={[{ hour: 'numeric', minute: '2-digit' }]}
-                            slotMinTime='08:00:00'
-                            slotMaxTime='21:00:00'
-                            height={'70vh'}
-                            views={{
-                                timeGrid: {
-                                    visibleRange: {
-                                        start: calendarStartAndEnd.start,
-                                        end: calendarStartAndEnd.end,
-                                    },
-                                },
-                            }}
-                            events={modalContent.map((data) => {
-                                return {
-                                    title:
-                                        data.name +
-                                        ' ' +
-                                        data.group +
-                                        ' ' +
-                                        data.room,
-                                    start: new Date(data.startDate),
-                                    end: new Date(data.endDate),
-                                    extendedProps: {
-                                        subject: data.name,
-                                        group: data.group,
-                                        room: data.room,
-                                    }
-                                }
-                            })}
-                            eventClick={(e) => console.log(e.event._def.extendedProps.room)}
-                            nowIndicator={true}
-                            eventMouseEnter={(arg) => {
-                                tippy(arg.el, {
-                                    content: 'Aihe: ' + arg.event._def.extendedProps.subject + '<br>' + 'Ryhmä(t): ' + arg.event._def.extendedProps.group + '<br>' + 'Tila: ' + arg.event._def.extendedProps.room,
-                                    allowHTML: true,
-                                    theme: 'calendar',
-                                    animation: 'scale',
-                                    arrow: false,
-                                    followCursor: true,
-                                    plugins: [followCursor],
-                                });
-                            }}
-                        />
-                    </>
+                {restaurantMenu ? (
+                    <FazerMenu />
                 ) : (
                     <>
-                        <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
-                            No search results found
-                        </Typography>
+                        {modalContent[0].success ? (
+                            <>
+                                <FullCalendar
+                                    locales={[fiLocale]}
+                                    locale='fi'
+                                    dayHeaderContent={false}
+                                    plugins={[timeGridPlugin, interactionPlugin]}
+                                    headerToolbar={{
+                                        left: 'prev',
+                                        center: 'title',
+                                        right: 'next'
+                                    }}
+                                    initialView='timeGridDay'
+                                    allDaySlot={false}
+                                    slotLabelFormat={[{ hour: 'numeric', minute: '2-digit' }]}
+                                    slotMinTime='08:00:00'
+                                    slotMaxTime='21:00:00'
+                                    height={'70vh'}
+                                    views={{
+                                        timeGrid: {
+                                            visibleRange: {
+                                                start: calendarStartAndEnd.start,
+                                                end: calendarStartAndEnd.end,
+                                            },
+                                        },
+                                    }}
+                                    events={modalContent.map((data) => {
+                                        return {
+                                            title:
+                                                data.name +
+                                                ' ' +
+                                                data.group +
+                                                ' ' +
+                                                data.room,
+                                            start: new Date(data.startDate),
+                                            end: new Date(data.endDate),
+                                            extendedProps: {
+                                                subject: data.name,
+                                                group: data.group,
+                                                room: data.room,
+                                            }
+                                        }
+                                    })}
+                                    eventClick={(e) => console.log(e.event._def.extendedProps.room)}
+                                    nowIndicator={true}
+                                    eventMouseEnter={(arg) => {
+                                        tippy(arg.el, {
+                                            content: 'Aihe: ' + arg.event._def.extendedProps.subject + '<br>' + 'Ryhmä(t): ' + arg.event._def.extendedProps.group + '<br>' + 'Tila: ' + arg.event._def.extendedProps.room,
+                                            allowHTML: true,
+                                            theme: 'calendar',
+                                            animation: 'scale',
+                                            arrow: false,
+                                            followCursor: true,
+                                            plugins: [followCursor],
+                                        });
+                                    }}
+                                />
+                                <Grid container justifyContent="center" className={classes.shortcut}>
+                                    {isShortcut ? (
+                                        <Button onClick={removeShortcut}>Remove shortcut</Button>
+                                    ) : (
+                                        <>
+                                            {!shortcutLimiter &&
+                                                <Button onClick={addShortcut}>Add shortcut</Button>
+                                            }
+                                        </>
+                                    )}
+                                </Grid>
+                            </>
+                        ) : (
+                            <>
+                                <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
+                                    No search results found
+                                </Typography>
+                            </>
+                        )}
                     </>
                 )}
             </Box>
