@@ -39,8 +39,8 @@ const App = () => {
 
   const button = () => {
     setUpdate({
-      startNode: "H1",
-      endNode: "E7611"
+      startNode: "E2041",
+      endNode: "V21"
     })
   }
 
