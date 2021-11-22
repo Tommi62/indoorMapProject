@@ -26,14 +26,16 @@ const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [keyWord, setKeyWord] = useState("");
   const [updateShortcuts, setUpdateShortcuts] = useState(Date.now());
-  const [modalContent, setModalContent] = useState<modalContentArray[]>([{
-    success: false,
-    name: '',
-    group: '',
-    room: '',
-    startDate: '',
-    endDate: ''
-  }]);
+  const [modalContent, setModalContent] = useState<modalContentArray[]>([
+    {
+      success: false,
+      name: "",
+      group: "",
+      room: "",
+      startDate: "",
+      endDate: "",
+    },
+  ]);
   const [restaurantMenu, setRestaurantMenu] = useState(false);
   const [marker, setMarker] = useState("");
 
@@ -44,10 +46,10 @@ const App = () => {
 
   const button = () => {
     setUpdate({
-      startNode: "H1",
-      endNode: "E7611",
-    });
-  };
+      startNode: "H21",
+      endNode: "V21"
+    })
+  }
 
   return (
     <>
@@ -60,9 +62,13 @@ const App = () => {
         setRestaurantMenu={setRestaurantMenu}
       />
       <Grid className={classes.root} container justifyContent="center">
+        <Button onClick={ button }>
+          Click me
+        </Button>
         <Grid container item justifyContent="center">
           <MapViewer
             setModalOpen={setModalOpen}
+            modalOpen={modalOpen}
             setModalContent={setModalContent}
             setKeyWord={setKeyWord}
             update={update}
