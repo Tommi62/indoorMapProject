@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     },
     shortcut: {
         marginTop: '0.5rem',
+    },
+    modal: {
+        maxHeight: '90vh',
     }
 }));
 
