@@ -54,6 +54,7 @@ g {
     stroke: rgb(127, 127, 127);
 }
 
+/* Lines */
 .cls-6 {
     stroke: #ff0000 !important;
     stroke-width: 5px !important;
@@ -65,7 +66,7 @@ g {
     fill: none
 }
 
-/* Lines */
+/* Doors */
 .cls-8 {
     stroke: #f55 !important;
     stroke-width: 10px !important;

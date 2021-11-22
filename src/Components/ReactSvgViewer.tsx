@@ -136,10 +136,10 @@ const ReactSvgViewer = ({
     console.log(e.originalEvent.path[0].id, e.latlng);
     let str = e.originalEvent.path[0].id.slice(0, -1);
     if (isNaN(str.charAt(0)) && str !== "") {
-      var popup = L.popup()
-        .setLatLng(e.latlng)
-        .setContent("buttonGroup(str)")
-        .openOn(map);
+      const popup = L.popup()
+          .setLatLng(e.latlng)
+          .setContent("buttonGroup(str)")
+          .openOn(map);
     }
   };
 
@@ -162,7 +162,7 @@ const ReactSvgViewer = ({
       <SVGOverlay
         bounds={[
           [100, 100],
-          [0, -100],
+          [-100, -100],
         ]}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 912.36 2255.97">
