@@ -21,6 +21,21 @@ g {
   cursor: default;
 }
 
+.navbar {
+  z-index: 1000;
+}
+
+.colorCode {
+  height: 6rem;
+  width: 6rem;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 1.25rem;
+  z-index: 400;
+  pointer-events: none;
+}
+
 .cls-2,
 .cls-3,
 .cls-4,

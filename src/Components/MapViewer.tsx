@@ -3,6 +3,7 @@ import Routes7 from "../Media/FloorPaths/7._kerros-_reitit.svg";
 import Floor7SVG from "./Floor7SVG";
 import ReactSvgViewer from "./ReactSvgViewer";
 import React from "react";
+import MapColorcodeSVG from "./MapColorcodeSVG";
 
 const options = {
   backdrop: "static",
@@ -49,6 +50,7 @@ const MapViewer = ({
         marker={marker}
         modalOpen={modalOpen}
       />
+      <MapColorcodeSVG />
     </>
   );
 };

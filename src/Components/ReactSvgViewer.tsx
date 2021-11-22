@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useMemo } from "react";
 import { MapContainer, Marker, SVGOverlay, Popup } from "react-leaflet";
 import { RouteFinder } from "./RouteFinder";
 import { Button, ButtonGroup, Typography } from "@material-ui/core";
-import data from "./Data/classrooms.json";
+import data from "../Data/classrooms.json";
 import * as L from "leaflet";
 import { useModalData } from "../Hooks/ModalDataHooks";
 import InfoIcon from "@mui/icons-material/Info";
