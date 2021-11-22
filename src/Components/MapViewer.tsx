@@ -3,6 +3,7 @@ import Routes7 from "../Media/FloorPaths/7._kerros-_reitit.svg";
 import Floor7SVG from "./Floor7SVG";
 import ReactSvgViewer from "./ReactSvgViewer";
 import React from "react";
+import MapColorcodeSVG from "./MapColorcodeSVG";
 
 const options = {
   backdrop: "static",
@@ -23,6 +24,7 @@ interface propTypes {
   setModalContent: Function;
   setKeyWord: Function;
   marker: string;
+  modalOpen: any;
 }
 
 interface paramObj {
@@ -36,6 +38,7 @@ const MapViewer = ({
   setKeyWord,
   update,
   marker,
+  modalOpen,
 }: propTypes) => {
   return (
     <>
@@ -45,7 +48,9 @@ const MapViewer = ({
         setKeyWord={setKeyWord}
         update={update}
         marker={marker}
+        modalOpen={modalOpen}
       />
+      <MapColorcodeSVG />
     </>
   );
 };
