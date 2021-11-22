@@ -23,6 +23,7 @@ interface propTypes {
   setModalContent: Function;
   setKeyWord: Function;
   marker: string;
+  modalOpen: any;
 }
 
 interface paramObj {
@@ -36,6 +37,7 @@ const MapViewer = ({
   setKeyWord,
   update,
   marker,
+  modalOpen,
 }: propTypes) => {
   return (
     <>
@@ -45,6 +47,7 @@ const MapViewer = ({
         setKeyWord={setKeyWord}
         update={update}
         marker={marker}
+        modalOpen={modalOpen}
       />
     </>
   );

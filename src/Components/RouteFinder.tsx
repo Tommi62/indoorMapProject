@@ -1,16 +1,6 @@
-import testSVG from "../../public/testSVG.svg";
 import React, { useEffect, useRef, useState } from "react";
-import { Button, ButtonGroup, SvgIcon, Typography } from "@material-ui/core";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import ModalButton from "./ModalButton";
-import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
-import { useModalData } from "../Hooks/ModalDataHooks";
-import InfoIcon from "@mui/icons-material/Info";
-import RoomIcon from "@mui/icons-material/Room";
 
 interface propTypes {
   update: paramObj;
@@ -18,6 +8,8 @@ interface propTypes {
   setModalContent: Function;
   setKeyWord: Function;
   marker: string;
+  start: string;
+  end: string;
 }
 
 interface paramObj {
@@ -92,20 +84,9 @@ function RouteFinder({
   setKeyWord,
   update,
   marker,
+  start,
+  end,
 }: propTypes) {
-  const [open, setOpen] = useState(false);
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
-  const [showNav, setShowNav] = useState(false);
-
-  const handleTooltipClose = () => {
-    setOpen(false);
-  };
-
-  const handleTooltipOpen = () => {
-    setOpen(true);
-  };
-
   // Get vector length by it's id
   let lengthGetter = (id: any) => {
     const divElement: SVGGeometryElement = lines[id].current;
@@ -388,14 +369,6 @@ function RouteFinder({
     findShortestPath(graph, shortestRoute.from, shortestRoute.to);
   };
 
-  const navigateTo = (id: string) => {
-    setEnd(id);
-  };
-
-  const navigateFrom = (id: string) => {
-    setStart(id);
-  };
-
   useEffect(() => {
     try {
       if (start !== "" && end !== "") {
@@ -406,17 +379,6 @@ function RouteFinder({
     }
   }, [start, end]);
 
-  const showNavigationButtons = () => {
-    setShowNav(true);
-  };
-  const hideNavigationButtons = () => {
-    setTimeout(function () {
-      setShowNav(false);
-    }, 100);
-  };
-
-  const { getModalData } = useModalData();
-
   useEffect(() => {
     try {
       const rects = classes7;
@@ -425,39 +387,6 @@ function RouteFinder({
       console.log(error.message);
     }
   }, [marker]);
-
-  const buttonGroup = (id: string) => {
-    const getDataAndOpenModal = async () => {
-      const modalData = await getModalData("KM" + id);
-      if (modalData !== undefined) {
-        if (modalData.length !== 0) {
-          setModalContent(modalData);
-        }
-      }
-      setKeyWord("KM" + id);
-      setModalOpen(true);
-    };
-    return (
-      <>
-        <Typography>{id}</Typography>
-        {!showNav ? (
-          <ButtonGroup>
-            <Button onClick={getDataAndOpenModal}>
-              <InfoIcon />
-            </Button>
-            <Button onClick={showNavigationButtons}>
-              <AssistantDirectionIcon></AssistantDirectionIcon>
-            </Button>
-          </ButtonGroup>
-        ) : (
-          <ButtonGroup>
-            <Button onClick={navigateFrom.bind(id, id)}>Navigate from</Button>
-            <Button onClick={navigateTo.bind(id, id)}>Navigate to</Button>
-          </ButtonGroup>
-        )}
-      </>
-    );
-  };
 
   return (
     <>
@@ -529,152 +458,74 @@ function RouteFinder({
           />
         </g>
         <g id="classes" ref={classes7}>
-          <Tooltip
-            title={buttonGroup("D758")}
-            arrow
-            enterNextDelay={100}
-            leaveDelay={100}
-            onClose={hideNavigationButtons}
-          >
-            <path
-              className="cls-4"
-              id="D7581"
-              d="M419.79 114.91L323.52 211.17 231.74 211.17 231.74 280.4 244.2 292.86 237.54 299.52 237.54 339.25 288.46 339.25 338.91 288.8 510.51 460.4 632.03 338.88 420.05 126.91 419.79 114.91z"
-            ></path>
-          </Tooltip>
-          <Tooltip
-            title={buttonGroup("D759")}
-            arrow
-            enterNextDelay={100}
-            leaveDelay={100}
-            onClose={hideNavigationButtons}
-          >
-            <path
-              className="cls-4"
-              id="D7591"
-              d="M237.54 299.52L237.54 616.47 70.14 616.47 70.33 280.4 231.74 280.4 244 292.67 237.38 299.29"
-            />
-          </Tooltip>
-          <Tooltip
-            title={buttonGroup("E761")}
-            arrow
-            enterNextDelay={100}
-            onClose={hideNavigationButtons}
-            leaveDelay={100}
-          >
-            <path
-              className="cls-4"
-              id={"E7611"}
-              transform="rotate(-45 1007.959 3229.49)"
-              d="M1629.96 1646.12h352.47v229.52h-352.47z"
-            />
-          </Tooltip>
-          <Tooltip
-            title={buttonGroup("E761")}
-            arrow
-            enterNextDelay={100}
-            onClose={hideNavigationButtons}
-            leaveDelay={100}
-          >
-            <path
-              className="cls-4"
-              id={"E7621"}
-              d="M416.49 1259.92l-170.31 170.3v157.85l81.99 81.99 249.13-249.13-160.81-161.01z"
-            />
-          </Tooltip>
-          <Tooltip
-            title={buttonGroup("E759")}
-            arrow
-            enterNextDelay={100}
-            onClose={hideNavigationButtons}
-            leaveDelay={100}
-          >
-            <path
-              className="cls-4"
-              id={"E7591"}
-              transform="rotate(-45 1200.5 3370.337)"
-              d="M1859.06 1780.75h279.36v241.97h-279.36z"
-            />
-          </Tooltip>
-          <Tooltip
-            title={buttonGroup("E751")}
-            arrow
-            enterNextDelay={100}
-            onClose={hideNavigationButtons}
-            leaveDelay={100}
-          >
-            <path
-              className="cls-4"
-              id={"E7511"}
-              d="M713.26 1951.76l-297.89 297.89-121.78-121.78 101.14-101.14v-38.24h40.35l157.45-157.45 120.73 120.72z"
-            />
-          </Tooltip>
-          <Tooltip
-            title={buttonGroup("E790")}
-            arrow
-            onClose={hideNavigationButtons}
-            enterNextDelay={100}
-            leaveDelay={100}
-          >
-            <path
-              className="cls-4"
-              id={"E7901"}
-              d="M416.19 1257.64L371 1302.84 280.9 1302.84 280.9 1068.15 373.57 1068.15 416.21 1110.79 416.19 1257.64z"
-            />
-          </Tooltip>
-          <Tooltip
-            title={buttonGroup("D750")}
-            arrow
-            onClose={hideNavigationButtons}
-            enterNextDelay={100}
-            leaveDelay={100}
-          >
-            <path
-              className="cls-4"
-              id={"D7501"}
-              d="M333.2 853.16L407 779.65 577.17 949.83 416.55 1110.44 307.3 1001.19 307.3 878.95 320.58 865.72"
-            />
-          </Tooltip>
-          <Tooltip
-            title={buttonGroup("D751")}
-            arrow
-            enterNextDelay={100}
-            onClose={hideNavigationButtons}
-            leaveDelay={100}
-          >
-            <path
-              className="cls-4"
-              id={"D7511"}
-              transform="rotate(-45 1060.841 2372.885)"
-              d="M1725.09 783.96H1993.08V1024.6H1725.09z"
-            />
-          </Tooltip>
-          <Tooltip
-            title={buttonGroup("D757")}
-            arrow
-            onClose={hideNavigationButtons}
-            enterNextDelay={100}
-            leaveDelay={100}
-          >
-            <path
-              className="cls-4"
-              id={"D7571"}
-              d="M618.12 568.27L596.36 590.03 766.65 760.32 910.05 616.91 632.03 338.88 510.38 460.53 618.12 568.27z"
-            />
-          </Tooltip>
-          <Tooltip
-            title={buttonGroup("E770")}
-            arrow
-            onClose={hideNavigationButtons}
-            enterNextDelay={100}
-            leaveDelay={100}
-          >
-            <path
-              className="cls-4"
-              id={"E7701"}
-              d="M72.97 1332.58L196.4 1332.58 196.4 1754.82 73.5 1754.82 72.97 1332.58z"
-            />
-          </Tooltip>
+          <path
+            className="cls-4"
+            id="D7581"
+            d="M419.79 114.91L323.52 211.17 231.74 211.17 231.74 280.4 244.2 292.86 237.54 299.52 237.54 339.25 288.46 339.25 338.91 288.8 510.51 460.4 632.03 338.88 420.05 126.91 419.79 114.91z"
+          ></path>
+
+          <path
+            className="cls-4"
+            id="D7591"
+            d="M237.54 299.52L237.54 616.47 70.14 616.47 70.33 280.4 231.74 280.4 244 292.67 237.38 299.29"
+          />
+
+          <path
+            className="cls-4"
+            id={"E7611"}
+            transform="rotate(-45 1007.959 3229.49)"
+            d="M1629.96 1646.12h352.47v229.52h-352.47z"
+          />
+
+          <path
+            className="cls-4"
+            id={"E7621"}
+            d="M416.49 1259.92l-170.31 170.3v157.85l81.99 81.99 249.13-249.13-160.81-161.01z"
+          />
+
+          <path
+            className="cls-4"
+            id={"E7591"}
+            transform="rotate(-45 1200.5 3370.337)"
+            d="M1859.06 1780.75h279.36v241.97h-279.36z"
+          />
+
+          <path
+            className="cls-4"
+            id={"E7511"}
+            d="M713.26 1951.76l-297.89 297.89-121.78-121.78 101.14-101.14v-38.24h40.35l157.45-157.45 120.73 120.72z"
+          />
+
+          <path
+            className="cls-4"
+            id={"E7901"}
+            d="M416.19 1257.64L371 1302.84 280.9 1302.84 280.9 1068.15 373.57 1068.15 416.21 1110.79 416.19 1257.64z"
+          />
+
+          <path
+            className="cls-4"
+            id={"D7501"}
+            d="M333.2 853.16L407 779.65 577.17 949.83 416.55 1110.44 307.3 1001.19 307.3 878.95 320.58 865.72"
+          />
+
+          <path
+            className="cls-4"
+            id={"D7511"}
+            transform="rotate(-45 1060.841 2372.885)"
+            d="M1725.09 783.96H1993.08V1024.6H1725.09z"
+          />
+
+          <path
+            className="cls-4"
+            id={"D7571"}
+            d="M618.12 568.27L596.36 590.03 766.65 760.32 910.05 616.91 632.03 338.88 510.38 460.53 618.12 568.27z"
+          />
+
+          <path
+            className="cls-4"
+            id={"E7701"}
+            d="M72.97 1332.58L196.4 1332.58 196.4 1754.82 73.5 1754.82 72.97 1332.58z"
+          />
         </g>
         <g id="toilets">
           <path

@@ -1,21 +1,5 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import {
-  INITIAL_VALUE,
-  pan,
-  ReactSVGPanZoom,
-  TOOL_PAN,
-  fitToViewer,
-} from "react-svg-pan-zoom";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  SVGOverlay,
-  useMap,
-  useMapEvents,
-} from "react-leaflet";
-import { useWindowSize } from "@react-hook/window-size";
+import { MapContainer, Marker, SVGOverlay, Popup } from "react-leaflet";
 import { RouteFinder } from "./RouteFinder";
 import { Button, ButtonGroup, Typography } from "@material-ui/core";
 import data from "./Data/classrooms.json";
@@ -23,8 +7,6 @@ import * as L from "leaflet";
 import { useModalData } from "../Hooks/ModalDataHooks";
 import InfoIcon from "@mui/icons-material/Info";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
-import { renderToString } from "react-dom/server";
-import { useMediaQuery } from "@mui/material";
 
 interface paramObj {
   startNode: string;
@@ -37,6 +19,7 @@ interface propTypes {
   setModalContent: Function;
   setKeyWord: Function;
   marker: string;
+  modalOpen: any;
 }
 
 const ReactSvgViewer = ({
@@ -45,16 +28,16 @@ const ReactSvgViewer = ({
   setKeyWord,
   update,
   marker,
+  modalOpen,
 }: propTypes) => {
   const [map, setMap] = useState<any>();
   const { getModalData } = useModalData();
   const [showNav, setShowNav] = useState(false);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-
-  useEffect(() => {
-    console.log("DATA: " + data[0].name);
-  }, []);
+  const [popupPosition, setPopupPosition] = useState<any>([0, 0]);
+  const [popupID, setPopupID] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
 
   const filterJsonData = (data: any) => {
     //removes KM from room name and returns all matching json data
@@ -69,6 +52,10 @@ const ReactSvgViewer = ({
       });
     }
   }, [marker]);
+
+  useEffect(() => {
+    setIsVisible(false);
+  }, [modalOpen]);
 
   const markerRef = useRef<any>();
   const eventHandlers = useMemo(
@@ -87,67 +74,57 @@ const ReactSvgViewer = ({
     setShowNav(true);
   };
   const hideNavigationButtons = () => {
-    setTimeout(function () {
-      setShowNav(false);
-    }, 100);
+    setShowNav(false);
   };
   const navigateTo = (id: string) => {
+    map.closePopup();
+    setShowNav(false);
     setEnd(id);
+    setTimeout(() => {
+      map.closePopup();
+    }, 1);
   };
 
   const navigateFrom = (id: string) => {
+    map.closePopup();
     setStart(id);
+    setShowNav(false);
+    setTimeout(() => {
+      map.closePopup();
+    }, 1);
   };
 
-  const buttonGroup = (id: string) => {
-    const getDataAndOpenModal = async () => {
-      const modalData = await getModalData("KM" + id);
-      if (modalData !== undefined) {
-        if (modalData.length !== 0) {
-          setModalContent(modalData);
-        }
+  const getDataAndOpenModal = async () => {
+    map.closePopup();
+    const modalData = await getModalData("KM" + popupID);
+    if (modalData !== undefined) {
+      if (modalData.length !== 0) {
+        setModalContent(modalData);
       }
-      setKeyWord("KM" + id);
-      setModalOpen(true);
-    };
-    return (
-      <>
-        <Typography>{id}</Typography>
-        {!showNav ? (
-          <ButtonGroup>
-            <Button onClick={getDataAndOpenModal}>
-              <InfoIcon />
-            </Button>
-            <Button onClick={showNavigationButtons}>
-              <AssistantDirectionIcon></AssistantDirectionIcon>
-            </Button>
-          </ButtonGroup>
-        ) : (
-          <ButtonGroup>
-            <Button onClick={navigateFrom.bind(id, id)}>Navigate from</Button>
-            <Button onClick={navigateTo.bind(id, id)}>Navigate to</Button>
-          </ButtonGroup>
-        )}
-      </>
-    );
+    }
+    setKeyWord("KM" + popupID);
+    setModalOpen(true);
   };
 
   const mapClick = (e: any) => {
-    console.log(e.originalEvent.path[0].id, e.latlng);
     let str = e.originalEvent.path[0].id.slice(0, -1);
     if (isNaN(str.charAt(0)) && str !== "") {
-      var popup = L.popup()
-        .setLatLng(e.latlng)
-        .setContent("buttonGroup(str)")
-        .openOn(map);
+      setIsVisible(true);
+      setPopupPosition(e.latlng);
+      setPopupID(str);
     }
   };
 
   useEffect(() => {
     if (map !== undefined) {
       map.on("click", mapClick);
+      console.log("click");
     }
-  });
+  }, [map]);
+
+  const handlePopupClose = () => {
+    hideNavigationButtons();
+  };
 
   return (
     <MapContainer
@@ -172,9 +149,38 @@ const ReactSvgViewer = ({
             setKeyWord={setKeyWord}
             update={update}
             marker={marker}
+            start={start}
+            end={end}
           />
         </svg>
       </SVGOverlay>
+      {isVisible && (
+        <Popup position={popupPosition} onClose={handlePopupClose}>
+          <>
+            <Typography>{popupID}</Typography>
+            {!showNav ? (
+              <ButtonGroup>
+                <Button onClick={getDataAndOpenModal}>
+                  <InfoIcon />
+                </Button>
+                <Button onClick={showNavigationButtons}>
+                  <AssistantDirectionIcon></AssistantDirectionIcon>
+                </Button>
+              </ButtonGroup>
+            ) : (
+              <ButtonGroup>
+                <Button onClick={navigateFrom.bind(popupID, popupID)}>
+                  Navigate from
+                </Button>
+                <Button onClick={navigateTo.bind(popupID, popupID)}>
+                  Navigate to
+                </Button>
+              </ButtonGroup>
+            )}
+          </>
+        </Popup>
+      )}
+
       {filterJsonData(data).length > 0 ? (
         filterJsonData(data).map((x: any) => {
           return (
@@ -182,9 +188,7 @@ const ReactSvgViewer = ({
               position={[x.lat, x.lng]}
               eventHandlers={eventHandlers}
               ref={markerRef}
-            >
-              <Popup>{x.name}</Popup>
-            </Marker>
+            ></Marker>
           );
         })
       ) : (
