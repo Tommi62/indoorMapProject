@@ -14,13 +14,48 @@
 .leaflet-tile-container {
   pointer-events: auto !important;
 }
+
 svg:focus {
   outline: none;
 }
+
 g {
   cursor: default;
 }
 
+/* Stairs/elevators */
+.cls-1 {
+  fill: #ec008c;
+  stroke-width: 8px !important;
+  stroke: rgb(0, 0, 0);
+}
+
+/* Hallways */
+.cls-2 {
+  stroke: rgb(127, 127, 127);
+  fill: #ffffff;
+}
+
+/*Toilets/dressing rooms*/
+.cls-3 {
+  stroke-width: 8px !important;
+  stroke: rgb(0, 0, 0);
+  fill: #ffc60b;
+}
+
+/* Unauthorized places */
+.cls-4 {
+  stroke-width: 8px !important;
+  stroke: rgb(0, 0, 0);
+  fill: #7f7f7f;
+}
+
+/* Classes */
+.cls-5 {
+  stroke-width: 8px !important;
+  stroke: rgb(0, 0, 0);
+  fill: rgb(0, 174, 239);
+}
 .navbar {
   z-index: 1000;
 }
@@ -36,15 +71,21 @@ g {
   pointer-events: none;
 }
 
-.cls-2,
-.cls-3,
-.cls-4,
-.cls-5,
+/* Lines */
 .cls-6 {
-  stroke: #000000 !important;
-  stroke-width: 5px !important;
+  stroke: #ff0000 !important;
+  stroke-width: 14px !important;
+  stroke-linecap: round !important;
 }
 
+/* Walls */
+.cls-7 {
+  stroke-width: 8px !important;
+  stroke: #000000;
+  fill: none;
+}
+
+/* Doors */
 .cls-8 {
   stroke: #f55 !important;
   stroke-width: 10px !important;
@@ -53,6 +94,25 @@ g {
 .cls-9 {
   stroke-width: 12px !important;
 }
+.cls-10 {
+  visibility: hidden;
+}
+
+/*
+ {
+ ".cls-1,.cls-6{fill:#ec008c}" +
+ ".cls-1,.cls-2,.cls-3,.cls-4{stroke:#000}" +
+ ".cls-1,.cls-2,.cls-3,.cls-4,.cls-5{stroke-miterlimit:10}" +
+ ".cls-1,.cls-2,.cls-3,.cls-4,.cls-5{stroke-width:3px}" +
+ ".cls-2,.cls-7{fill:none}" +
+ ".cls-3{fill:#ffc60b}" +
+ ".cls-4,.cls-5{fill:#7f7f7f}" +
+ ".cls-5{stroke:#200}"
+ //".cls-6{fill:#fff;stroke:#f55;stroke-width:4px}" +
+ //".cls-6{stroke:#ee2d2b; fill:#ee2d2b}"
+ }
+
+*/
 
 .leaflet-container {
   background: rgb(255, 255, 255);

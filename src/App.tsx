@@ -46,10 +46,10 @@ const App = () => {
 
   const button = () => {
     setUpdate({
-      startNode: "H1",
-      endNode: "E7611",
-    });
-  };
+      startNode: "H21",
+      endNode: "V21"
+    })
+  }
 
   return (
     <>
@@ -62,6 +62,9 @@ const App = () => {
         setRestaurantMenu={setRestaurantMenu}
       />
       <Grid className={classes.root} container justifyContent="center">
+        <Button onClick={ button }>
+          Click me
+        </Button>
         <Grid container item justifyContent="center">
           <MapViewer
             setModalOpen={setModalOpen}
