@@ -94,6 +94,14 @@ server.post('/fazer-data', async (req: getRequest, reply) => {
     }
 })
 
+server.get('/test', async (req: FastifyRequest, reply) => {
+    try {
+        reply.send('TestiTestiTesti')
+    } catch (err: any) {
+        throw new Error(err)
+    }
+})
+
 server.listen(8080, (err, address) => {
     if (err) {
         console.error(err)

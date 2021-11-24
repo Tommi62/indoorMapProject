@@ -78,6 +78,14 @@ server.post('/fazer-data', async (req, reply) => {
         throw new Error(err);
     }
 });
+server.get('/test', async (req, reply) => {
+    try {
+        reply.send('TestiTestiTesti');
+    }
+    catch (err) {
+        throw new Error(err);
+    }
+});
 server.listen(8080, (err, address) => {
     if (err) {
         console.error(err);
