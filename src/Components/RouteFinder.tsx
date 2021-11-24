@@ -10,6 +10,7 @@ interface propTypes {
   marker: string;
   start: string;
   end: string;
+  floor: string;
 }
 
 interface paramObj {
@@ -132,6 +133,7 @@ function RouteFinder({
   marker,
   start,
   end,
+  floor,
 }: propTypes) {
   const classes7: any = useRef();
 
@@ -323,7 +325,42 @@ function RouteFinder({
     K29K27: K29K27,
   };
 
-  const [floorSelect, setFloorSelect] = useState(2);
+  const [floor7Visibility, setFloor7Visibility] = useState("block");
+  const [floor2Visibility, setFloor2Visibility] = useState("none");
+  const [floor5Visibility, setFloor5Visibility] = useState("none");
+  const [floor6Visibility, setFloor6Visibility] = useState("none");
+
+  useEffect(() => {
+    try {
+      if (floor === "2") {
+        setFloor7Visibility("none");
+        setFloor5Visibility("none");
+        setFloor6Visibility("none");
+        setFloor2Visibility("block");
+      }
+      if (floor === "5") {
+        setFloor7Visibility("none");
+        setFloor5Visibility("block");
+        setFloor6Visibility("none");
+        setFloor2Visibility("none");
+      }
+      if (floor === "6") {
+        setFloor7Visibility("none");
+        setFloor5Visibility("none");
+        setFloor6Visibility("block");
+        setFloor2Visibility("none");
+      }
+      if (floor === "7") {
+        setFloor7Visibility("block");
+        setFloor5Visibility("none");
+        setFloor6Visibility("none");
+        setFloor2Visibility("none");
+      }
+      console.log("selected floor " + floor);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [floor]);
 
   // Get vector length by it's id
   let lengthGetter = (id: any) => {
@@ -532,7 +569,7 @@ function RouteFinder({
   return (
     <>
       {/* Floor 2*/}
-      <g display="none" id="_2_drawn_base">
+      <g display={floor2Visibility} id="_2_drawn_base">
         <g id="walls">
           <path className="cls-1" d="M1140.84 2063.79L1237.76 2063.79" />
           <path
@@ -632,7 +669,7 @@ function RouteFinder({
           <path className="cls-8" d="M817.96 603.29L767.19 603.19" />
         </g>
       </g>
-      <g display="none" id="_2_routes">
+      <g display={floor2Visibility} id="_2_routes">
         <path ref={V21K22} className="cls-6" d="M429.94 740.49L851.92 740.49" />
         <path ref={U21K21} className="cls-6" d="M851.92 537.15L851.92 619.43" />
         <path ref={K21K22} className="cls-6" d="M851.92 620.71L851.92 740.14" />
@@ -805,7 +842,7 @@ function RouteFinder({
       </g>
 
       {/* Floor 7*/}
-      <g id="Layer_3">
+      <g display={floor7Visibility} id="Layer_3">
         <g id="etc">
           <path
             className="cls-4"
@@ -1021,7 +1058,7 @@ function RouteFinder({
           <path className="cls-8" d="M512.18 1908.96L524.8 1896.39" />
         </g>
       </g>
-      <g id="Layer_2">
+      <g display={floor7Visibility} id="Layer_2">
         <path
           ref={D7592K72}
           className="cls-6"

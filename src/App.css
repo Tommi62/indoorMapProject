@@ -33,7 +33,9 @@ g {
 
 /* Hallways */
 .cls-2 {
-  stroke: rgb(127, 127, 127);
+  stroke-width: 8px !important;
+  stroke-linejoin: round;
+  stroke: rgb(0, 0, 0);
   fill: #ffffff;
 }
 
@@ -122,7 +124,7 @@ g {
 .colorCode .colorCodeSVG {
   height: 6rem;
   width: 6rem;
-  background-color: rgba(255, 255, 255, 0.856);
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 3px;
   padding: 0 8px;
 }
@@ -144,6 +146,14 @@ g {
   padding-left: 6px;
 }
 
+.floorButtons {
+  position: absolute;
+  z-index: 401;
+  right: 10px;
+  top: 75px;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
 /* Lines */
 .cls-6 {
   stroke: #ff0000 !important;
@@ -163,7 +173,6 @@ g {
 /* Doors */
 .cls-8 {
   stroke: #f55 !important;
-  stroke-linecap: round !important;
   stroke-width: 13px !important;
 }
 
@@ -200,6 +209,10 @@ div[role="navigation"] {
 
 #prefix__hissiviiva {
   stroke: #a6ff0075;
+}
+
+.leaflet-bottom {
+  display: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -253,12 +266,12 @@ div[role="navigation"] {
   color: #fff;
   color: #fff;
   color: var(--fc-button-text-color, #fff);
-  background-color: #2C3E50;
-  background-color: #2C3E50;
-  background-color: var(--fc-button-bg-color, #2C3E50);
-  border-color: #2C3E50;
-  border-color: #2C3E50;
-  border-color: var(--fc-button-border-color, #2C3E50);
+  background-color: #2c3e50;
+  background-color: #2c3e50;
+  background-color: var(--fc-button-bg-color, #2c3e50);
+  border-color: #2c3e50;
+  border-color: #2c3e50;
+  border-color: var(--fc-button-border-color, #2c3e50);
 }
 
 .fc-button {
@@ -293,14 +306,14 @@ div[role="navigation"] {
   color: #fff;
   color: #fff;
   color: var(--fc-button-text-color, #fff);
-  background-color: #2C3E50;
-  background-color: #2C3E50;
-  background-color: #2C3E50;
-  background-color: var(--fc-button-bg-color, #2C3E50);
-  border-color: #2C3E50;
-  border-color: #2C3E50;
-  border-color: #2C3E50;
-  border-color: var(--fc-button-border-color, #2C3E50);
+  background-color: #2c3e50;
+  background-color: #2c3e50;
+  background-color: #2c3e50;
+  background-color: var(--fc-button-bg-color, #2c3e50);
+  border-color: #2c3e50;
+  border-color: #2c3e50;
+  border-color: #2c3e50;
+  border-color: var(--fc-button-border-color, #2c3e50);
 }
 
 @media only screen and (max-width: 1200px) {
@@ -317,7 +330,7 @@ div[role="navigation"] {
   .fc-button {
     padding: 0 !important;
     line-height: 0 !important;
-    height: 1.5rem!important;
-    width: 1.5rem!important;
+    height: 1.5rem !important;
+    width: 1.5rem !important;
   }
 }

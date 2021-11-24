@@ -6,7 +6,6 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import Modal from "./Components/Modal";
 import MapViewer from "./Components/MapViewer";
 import { Button } from "@mui/material";
-import LeafletMap from "./Components/LeafletMap";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -47,9 +46,9 @@ const App = () => {
   const button = () => {
     setUpdate({
       startNode: "H21",
-      endNode: "V21"
-    })
-  }
+      endNode: "V21",
+    });
+  };
 
   return (
     <>
@@ -62,9 +61,7 @@ const App = () => {
         setRestaurantMenu={setRestaurantMenu}
       />
       <Grid className={classes.root} container justifyContent="center">
-        <Button onClick={ button }>
-          Click me
-        </Button>
+        <Button onClick={button}>Click me</Button>
         <Grid container item justifyContent="center">
           <MapViewer
             setModalOpen={setModalOpen}
@@ -73,11 +70,12 @@ const App = () => {
             setKeyWord={setKeyWord}
             update={update}
             marker={marker}
+            setMarker={setMarker}
           />
-          {/* <LeafletMap /> */}
         </Grid>
       </Grid>
       <Modal
+        setMarker={setMarker}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         modalContent={modalContent}
