@@ -76,6 +76,7 @@ g {
   stroke: #ff0000 !important;
   stroke-width: 14px !important;
   stroke-linecap: round !important;
+  fill: none;
 }
 
 /* Walls */

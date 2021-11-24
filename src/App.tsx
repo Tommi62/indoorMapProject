@@ -7,6 +7,7 @@ import Modal from "./Components/Modal";
 import MapViewer from "./Components/MapViewer";
 import { Button } from "@mui/material";
 import LeafletMap from "./Components/LeafletMap";
+import {useApiData} from "./Hooks/ApiHooks";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -36,6 +37,10 @@ const App = () => {
       endDate: "",
     },
   ]);
+
+  //testing to fetch data from mobile app
+  //console.log(useApiData().getLocalServerData())
+
   const [restaurantMenu, setRestaurantMenu] = useState(false);
   const [marker, setMarker] = useState("");
 
