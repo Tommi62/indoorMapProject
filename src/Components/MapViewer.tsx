@@ -2,8 +2,9 @@ import Floor7 from "../Media/FloorImages/7._kerros-_reitit_kartalla.svg";
 import Routes7 from "../Media/FloorPaths/7._kerros-_reitit.svg";
 import Floor7SVG from "./Floor7SVG";
 import ReactSvgViewer from "./ReactSvgViewer";
-import React from "react";
 import MapColorcodeSVG from "./MapColorcodeSVG";
+import { Button, ButtonGroup } from "@material-ui/core";
+import { useState } from "react";
 
 const options = {
   backdrop: "static",
@@ -24,6 +25,7 @@ interface propTypes {
   setModalContent: Function;
   setKeyWord: Function;
   marker: string;
+  setMarker: Function;
   modalOpen: any;
 }
 
@@ -38,8 +40,16 @@ const MapViewer = ({
   setKeyWord,
   update,
   marker,
+  setMarker,
   modalOpen,
 }: propTypes) => {
+  const [floorSelect, setFloorSelect] = useState("7");
+
+  const changeFloor = (e: any) => {
+    setFloorSelect(e.target.innerText);
+    setMarker("");
+  };
+
   return (
     <>
       <ReactSvgViewer
@@ -48,8 +58,17 @@ const MapViewer = ({
         setKeyWord={setKeyWord}
         update={update}
         marker={marker}
+        setMarker={setMarker}
         modalOpen={modalOpen}
+        floor={floorSelect}
+        setFloor={setFloorSelect}
       />
+      <ButtonGroup orientation="vertical" className="floorButtons">
+        <Button onClick={changeFloor}>7</Button>
+        <Button onClick={changeFloor}>6</Button>
+        <Button onClick={changeFloor}>5</Button>
+        <Button onClick={changeFloor}>2</Button>
+      </ButtonGroup>
       <MapColorcodeSVG />
     </>
   );
