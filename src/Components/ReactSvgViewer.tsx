@@ -18,8 +18,11 @@ interface propTypes {
   setModalOpen: Function;
   setModalContent: Function;
   setKeyWord: Function;
+  setMarker: Function;
   marker: string;
   modalOpen: any;
+  floor: string;
+  setFloor: Function;
 }
 
 const ReactSvgViewer = ({
@@ -28,7 +31,10 @@ const ReactSvgViewer = ({
   setKeyWord,
   update,
   marker,
+  setMarker,
   modalOpen,
+  floor,
+  setFloor,
 }: propTypes) => {
   const [map, setMap] = useState<any>();
   const { getModalData } = useModalData();
@@ -38,6 +44,8 @@ const ReactSvgViewer = ({
   const [popupPosition, setPopupPosition] = useState<any>([0, 0]);
   const [popupID, setPopupID] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [svgSize, setSvgSize] = useState("");
+  const [zoom, setZoom] = useState(1);
 
   const filterJsonData = (data: any) => {
     //removes KM from room name and returns all matching json data
@@ -46,6 +54,7 @@ const ReactSvgViewer = ({
 
   useEffect(() => {
     if (filterJsonData(data).length > 0) {
+      setFloor(marker.substring(3).charAt(0));
       filterJsonData(data).map((x: any) => {
         map.flyTo([x.lat, x.lng], 2);
         return null;
@@ -55,6 +64,7 @@ const ReactSvgViewer = ({
 
   useEffect(() => {
     setIsVisible(false);
+    setMarker("");
   }, [modalOpen]);
 
   const markerRef = useRef<any>();
@@ -118,13 +128,51 @@ const ReactSvgViewer = ({
   useEffect(() => {
     if (map !== undefined) {
       map.on("click", mapClick);
-      console.log("click");
     }
   }, [map]);
 
   const handlePopupClose = () => {
     hideNavigationButtons();
   };
+
+  useEffect(() => {
+    try {
+      if (map !== undefined) {
+        setTimeout(() => {
+          map.closePopup();
+        }, 1);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [floor, marker]);
+
+  useEffect(() => {
+    try {
+      console.log(marker);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [marker]);
+
+  useEffect(() => {
+    try {
+      if (floor === "2") {
+        setSvgSize("0 0 1979.8 2255.97");
+      }
+      if (floor === "5") {
+        setSvgSize("0 0 912.36 2255.97");
+      }
+      if (floor === "6") {
+        setSvgSize("0 0 1979.8 2255.97");
+      }
+      if (floor === "7") {
+        setSvgSize("0 0 912.36 2255.97");
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [floor]);
 
   return (
     <MapContainer
@@ -142,7 +190,7 @@ const ReactSvgViewer = ({
           [-100, -100],
         ]}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 912.36 2255.97">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox={svgSize}>
           <RouteFinder
             setModalOpen={setModalOpen}
             setModalContent={setModalContent}
@@ -151,6 +199,7 @@ const ReactSvgViewer = ({
             marker={marker}
             start={start}
             end={end}
+            floor={floor}
           />
         </svg>
       </SVGOverlay>

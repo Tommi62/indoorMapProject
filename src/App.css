@@ -27,18 +27,22 @@ g {
 .cls-1 {
   fill: #ec008c;
   stroke-width: 8px !important;
+  stroke-linejoin: round;
   stroke: rgb(0, 0, 0);
 }
 
 /* Hallways */
 .cls-2 {
-  stroke: rgb(127, 127, 127);
+  stroke-width: 8px !important;
+  stroke-linejoin: round;
+  stroke: rgb(0, 0, 0);
   fill: #ffffff;
 }
 
 /*Toilets/dressing rooms*/
 .cls-3 {
   stroke-width: 8px !important;
+  stroke-linejoin: round;
   stroke: rgb(0, 0, 0);
   fill: #ffc60b;
 }
@@ -46,6 +50,7 @@ g {
 /* Unauthorized places */
 .cls-4 {
   stroke-width: 8px !important;
+  stroke-linejoin: round;
   stroke: rgb(0, 0, 0);
   fill: #7f7f7f;
 }
@@ -54,21 +59,99 @@ g {
 .cls-5 {
   stroke-width: 8px !important;
   stroke: rgb(0, 0, 0);
+  stroke-linejoin: round;
   fill: rgb(0, 174, 239);
+  transition: fill 0.3s;
 }
+
+.cls-5:active {
+  fill: rgb(99, 213, 255);
+}
+
+.cls-5:hover {
+  fill: rgb(99, 213, 255);
+}
+
 .navbar {
   z-index: 1000;
 }
 
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.rotate180 {
+  transform: rotate(180deg);
+}
+
+.rotate0 {
+  transform: rotate(0deg);
+}
+
+.slideRight {
+  transform: translateX(-100%);
+  animation: 0.5s 0s 1 slideInFromRight;
+}
+
+.slideLeft {
+  animation: 0.5s 0s 1 slideInFromLeft;
+}
+
 .colorCode {
-  height: 6rem;
-  width: 6rem;
   position: absolute;
   left: 0;
   bottom: 0;
-  padding: 1.25rem;
+  margin: 1.25rem;
   z-index: 400;
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.colorCode .colorCodeSVG {
+  height: 6rem;
+  width: 6rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 3px;
+  padding: 0 8px;
+}
+
+.colorCode button {
+  width: 1rem;
+  min-width: 1rem;
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  background-color: rgba(255, 255, 255, 0.856) !important;
+  border-radius: 3px;
+}
+
+.colorCode .colorcodeArrow {
+  opacity: 0.8;
+  transition: transform 0.3s;
+  height: 1rem;
+  width: 0.8rem;
+  padding-left: 6px;
+}
+
+.floorButtons {
+  position: absolute;
+  z-index: 401;
+  right: 10px;
+  top: 75px;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 /* Lines */
@@ -82,14 +165,16 @@ g {
 /* Walls */
 .cls-7 {
   stroke-width: 8px !important;
+  stroke-linejoin: round;
   stroke: #000000;
+  stroke-linecap: round !important;
   fill: none;
 }
 
 /* Doors */
 .cls-8 {
   stroke: #f55 !important;
-  stroke-width: 10px !important;
+  stroke-width: 13px !important;
 }
 
 .cls-9 {
@@ -125,6 +210,10 @@ div[role="navigation"] {
 
 #prefix__hissiviiva {
   stroke: #a6ff0075;
+}
+
+.leaflet-bottom {
+  display: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -170,6 +259,64 @@ div[role="navigation"] {
   padding: 8px 8px 1px 8px !important;
 }
 
+.fc-button:not(:disabled) {
+  cursor: pointer;
+}
+
+.fc-button-primary {
+  color: #fff;
+  color: #fff;
+  color: var(--fc-button-text-color, #fff);
+  background-color: #2c3e50;
+  background-color: #2c3e50;
+  background-color: var(--fc-button-bg-color, #2c3e50);
+  border-color: #2c3e50;
+  border-color: #2c3e50;
+  border-color: var(--fc-button-border-color, #2c3e50);
+}
+
+.fc-button {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.4em 0.65em;
+  font-size: 1em;
+  line-height: 1.5;
+  border-radius: 0.25em;
+}
+.fc-button {
+  -webkit-appearance: button;
+}
+.fc-button {
+  border-radius: 0.2rem;
+  overflow: visible;
+  text-transform: none;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.fc-button-primary {
+  color: #fff;
+  color: #fff;
+  color: #fff;
+  color: var(--fc-button-text-color, #fff);
+  background-color: #2c3e50;
+  background-color: #2c3e50;
+  background-color: #2c3e50;
+  background-color: var(--fc-button-bg-color, #2c3e50);
+  border-color: #2c3e50;
+  border-color: #2c3e50;
+  border-color: #2c3e50;
+  border-color: var(--fc-button-border-color, #2c3e50);
+}
+
 @media only screen and (max-width: 1200px) {
   .fc-toolbar-title {
     font-size: 1.5rem !important;
@@ -184,5 +331,7 @@ div[role="navigation"] {
   .fc-button {
     padding: 0 !important;
     line-height: 0 !important;
+    height: 1.5rem !important;
+    width: 1.5rem !important;
   }
 }

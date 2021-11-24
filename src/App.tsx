@@ -67,9 +67,7 @@ const App = () => {
         setRestaurantMenu={setRestaurantMenu}
       />
       <Grid className={classes.root} container justifyContent="center">
-        <Button onClick={ button }>
-          Click me
-        </Button>
+        <Button onClick={button}>Click me</Button>
         <Grid container item justifyContent="center">
           <MapViewer
             setModalOpen={setModalOpen}
@@ -78,11 +76,12 @@ const App = () => {
             setKeyWord={setKeyWord}
             update={update}
             marker={marker}
+            setMarker={setMarker}
           />
-          {/* <LeafletMap /> */}
         </Grid>
       </Grid>
       <Modal
+        setMarker={setMarker}
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         modalContent={modalContent}
