@@ -57,7 +57,6 @@ const useApiData = () => {
             }),
         };
         try {
-            console.log('URLS', process.env.REACT_APP_FAZER_URL, ApiConfig.backendUrl);
             const result = await doFetch(ApiConfig.backendUrl + '/fazer-data', fetchOptions);
             return result;
         } catch (e: any) {
