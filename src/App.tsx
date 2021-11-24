@@ -6,7 +6,6 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import Modal from "./Components/Modal";
 import MapViewer from "./Components/MapViewer";
 import { Button } from "@mui/material";
-import LeafletMap from "./Components/LeafletMap";
 import {useApiData} from "./Hooks/ApiHooks";
 
 const useStyles = makeStyles(() => ({
