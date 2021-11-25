@@ -7,7 +7,7 @@ const fastify_1 = __importDefault(require("fastify"));
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
 const server = (0, fastify_1.default)();
 server.register(require('fastify-cors'), {
-    origin: "https://media-server-tommi.northeurope.cloudapp.azure.com/"
+    origin: "*"
 });
 const doFetch = async (url, options = {}) => {
     const response = await (0, cross_fetch_1.default)(url, options);
