@@ -67,7 +67,9 @@ const ReactSvgViewer = ({
     setMarker("");
   }, [modalOpen]);
 
+  const svgRef = useRef<any>();
   const markerRef = useRef<any>();
+
   const eventHandlers = useMemo(
     () => ({
       dragend() {
@@ -118,6 +120,7 @@ const ReactSvgViewer = ({
 
   const mapClick = (e: any) => {
     let str = e.originalEvent.path[0].id.slice(0, -1);
+    console.log(e.latlng);
     if (isNaN(str.charAt(0)) && str !== "") {
       setIsVisible(true);
       setPopupPosition(e.latlng);
@@ -127,7 +130,9 @@ const ReactSvgViewer = ({
 
   useEffect(() => {
     if (map !== undefined) {
+      //map.getPane("overlayPane").firstChild.style.width = "3000px";
       map.on("click", mapClick);
+      map.on("zoom", () => {});
     }
   }, [map]);
 
@@ -158,13 +163,13 @@ const ReactSvgViewer = ({
   useEffect(() => {
     try {
       if (floor === "2") {
-        setSvgSize("0 0 1979.8 2255.97");
+        setSvgSize("1000 0 1050 2255.97");
       }
       if (floor === "5") {
-        setSvgSize("0 0 912.36 2255.97");
+        setSvgSize("1000 0 1050 2255.97");
       }
       if (floor === "6") {
-        setSvgSize("0 0 1979.8 2255.97");
+        setSvgSize("1000 0 1050 2255.97");
       }
       if (floor === "7") {
         setSvgSize("0 0 912.36 2255.97");
@@ -176,8 +181,10 @@ const ReactSvgViewer = ({
 
   return (
     <MapContainer
-      center={[0, 0]}
+      center={[0, -60]}
       zoom={1}
+      maxZoom={3}
+      zoomSnap={0.05}
       scrollWheelZoom={false}
       style={{ width: "100vw", height: "calc(100vh - 64px)" }}
       whenCreated={(mapInstance) => {
@@ -186,11 +193,11 @@ const ReactSvgViewer = ({
     >
       <SVGOverlay
         bounds={[
-          [100, 100],
-          [-100, -100],
+          [2100, 2100],
+          [-2100, -2100],
         ]}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox={svgSize}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox={svgSize} ref={svgRef}>
           <RouteFinder
             setModalOpen={setModalOpen}
             setModalContent={setModalContent}

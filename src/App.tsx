@@ -6,7 +6,7 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import Modal from "./Components/Modal";
 import MapViewer from "./Components/MapViewer";
 import { Button } from "@mui/material";
-import {useApiData} from "./Hooks/ApiHooks";
+import { useApiData } from "./Hooks/ApiHooks";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -66,7 +66,6 @@ const App = () => {
         setRestaurantMenu={setRestaurantMenu}
       />
       <Grid className={classes.root} container justifyContent="center">
-        <Button onClick={button}>Click me</Button>
         <Grid container item justifyContent="center">
           <MapViewer
             setModalOpen={setModalOpen}
