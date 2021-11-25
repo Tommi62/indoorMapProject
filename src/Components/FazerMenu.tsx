@@ -19,24 +19,24 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: '100vh',
     },
     listContainer: {
-        maxHeight: '75vh',
+        maxHeight: '70vh',
         overflowY: 'auto',
     },
     dayTitle: {
         display: 'inline-block!important',
         margin: '0.5rem 1rem!important',
-        [theme.breakpoints.down(550)]: {
-            fontSize: '0.9rem!important',
+        [theme.breakpoints.down(600)]: {
+            fontSize: '0.8rem!important',
         },
     },
     fazerTitle: {
-        [theme.breakpoints.down(550)]: {
-            fontSize: '1.1rem!important',
+        [theme.breakpoints.down(600)]: {
+            fontSize: '0.9rem!important',
         },
     },
     listItem: {
-        [theme.breakpoints.down(550)]: {
-            fontSize: '0.8rem!important',
+        [theme.breakpoints.down(600)]: {
+            fontSize: '0.6rem!important',
         },
     }
 }));

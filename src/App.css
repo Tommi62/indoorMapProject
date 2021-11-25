@@ -308,15 +308,19 @@ div[role="navigation"] {
   }
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 600px) {
   .fc-toolbar-title {
-    font-size: 0.9rem !important;
+    font-size: 0.7rem !important;
   }
 
   .fc-button {
     padding: 0 !important;
     line-height: 0 !important;
-    height: 1.5rem !important;
-    width: 1.5rem !important;
+    height: 1.4rem !important;
+    width: 1.4rem !important;
+  }
+
+  .fc .fc-button .fc-icon {
+    font-size: 1rem!important;
   }
 }

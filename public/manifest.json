@@ -3,8 +3,13 @@
   "name": "Metropolia Indoor Map App",
   "icons": [
     {
-      "src": "metropolialogotiny.png",
+      "src": "metropolialogotiny.jpg",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "metropolialogolarge.jpg",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],

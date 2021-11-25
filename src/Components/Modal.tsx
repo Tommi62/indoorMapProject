@@ -16,15 +16,18 @@ import FazerMenu from "./FazerMenu";
 const useStyles = makeStyles((theme) => ({
   box: {
     [theme.breakpoints.down(1000)]: {
-      width: "80vw!important",
+      width: "75vw!important",
+      maxHeight: '80vh!important',
     },
   },
   shortcut: {
     marginTop: "0.5rem",
   },
-  modal: {
-    maxHeight: "90vh",
-  },
+  shortcutButton: {
+    [theme.breakpoints.down(600)]: {
+      fontSize: '0.7rem!important',
+    },
+  }
 }));
 
 interface modalContentArray {
@@ -241,11 +244,11 @@ const Modal = ({
                   className={classes.shortcut}
                 >
                   {isShortcut ? (
-                    <Button onClick={removeShortcut}>Remove shortcut</Button>
+                    <Button className={classes.shortcutButton} onClick={removeShortcut}>Remove shortcut</Button>
                   ) : (
                     <>
                       {!shortcutLimiter && (
-                        <Button onClick={addShortcut}>Add shortcut</Button>
+                        <Button className={classes.shortcutButton} onClick={addShortcut}>Add shortcut</Button>
                       )}
                     </>
                   )}
