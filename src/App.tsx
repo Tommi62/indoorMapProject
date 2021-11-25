@@ -6,6 +6,7 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import Modal from "./Components/Modal";
 import MapViewer from "./Components/MapViewer";
 import { Button } from "@mui/material";
+import {useApiData} from "./Hooks/ApiHooks";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -35,6 +36,10 @@ const App = () => {
       endDate: "",
     },
   ]);
+
+  //testing to fetch data from mobile app
+  //console.log(useApiData().getLocalServerData())
+
   const [restaurantMenu, setRestaurantMenu] = useState(false);
   const [marker, setMarker] = useState("");
 
@@ -45,10 +50,10 @@ const App = () => {
 
   const button = () => {
     setUpdate({
-      startNode: "H21",
-      endNode: "V21",
-    });
-  };
+      startNode: "E7701",
+      endNode: "V21"
+    })
+  }
 
   return (
     <>

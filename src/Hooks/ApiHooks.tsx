@@ -64,7 +64,23 @@ const useApiData = () => {
         }
     };
 
-    return { postGetMetropoliaData, postGetFazerData };
+    const getLocalServerData = async () => {
+        const fetchOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+        try {
+            const result = await doFetch("http://localhost:4590", fetchOptions);
+            return result;
+        } catch (e: any) {
+            alert(e.message);
+        }
+
+    }
+
+    return { postGetMetropoliaData, postGetFazerData, getLocalServerData };
 };
 
 export { useApiData };
