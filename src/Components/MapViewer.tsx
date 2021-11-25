@@ -1,12 +1,9 @@
-import Floor7 from "../Media/FloorImages/7._kerros-_reitit_kartalla.svg";
-import Routes7 from "../Media/FloorPaths/7._kerros-_reitit.svg";
-import Floor7SVG from "./Floor7SVG";
 import ReactSvgViewer from "./ReactSvgViewer";
 import MapColorcodeSVG from "./MapColorcodeSVG";
 import { Button, ButtonGroup } from "@material-ui/core";
 import { useState } from "react";
 
-const options = {
+/* const options = {
   backdrop: "static",
   button: false,
   navbar: false,
@@ -17,7 +14,7 @@ const options = {
   zoomRatio: 0.4,
   tooltip: false,
   toggleOnDblclick: false,
-};
+}; */
 
 interface propTypes {
   update: paramObj;
@@ -43,7 +40,7 @@ const MapViewer = ({
   setMarker,
   modalOpen,
 }: propTypes) => {
-  const [floorSelect, setFloorSelect] = useState("7");
+  const [floorSelect, setFloorSelect] = useState("2");
 
   const changeFloor = (e: any) => {
     setFloorSelect(e.target.innerText);
