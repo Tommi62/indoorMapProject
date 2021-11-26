@@ -13,6 +13,12 @@ interface paramObj {
   endNode: string;
 }
 
+interface dataArray {
+  name: string,
+  lat: number,
+  lng: number,
+}
+
 interface propTypes {
   update: paramObj;
   setModalOpen: Function;
@@ -24,6 +30,7 @@ interface propTypes {
   floor: string;
   setFloor: Function;
 }
+
 
 const ReactSvgViewer = ({
   setModalOpen,
@@ -47,15 +54,16 @@ const ReactSvgViewer = ({
   const [svgSize, setSvgSize] = useState("");
   const [zoom, setZoom] = useState(1);
 
-  const filterJsonData = (data: any) => {
+  const filterJsonData = (data: dataArray[]) => {
     //removes KM from room name and returns all matching json data
+    console.log('DATA', data[7]);
     return data.filter((e: any) => e.name === marker.substring(2));
   };
 
   useEffect(() => {
-    if (filterJsonData(data).length > 0) {
+    if (filterJsonData(data[7]).length > 0) {
       setFloor(marker.substring(3).charAt(0));
-      filterJsonData(data).map((x: any) => {
+      filterJsonData(data[7]).map((x: any) => {
         map.flyTo([x.lat, x.lng], 2);
         return null;
       });
@@ -132,7 +140,7 @@ const ReactSvgViewer = ({
     if (map !== undefined) {
       //map.getPane("overlayPane").firstChild.style.width = "3000px";
       map.on("click", mapClick);
-      map.on("zoom", () => {});
+      map.on("zoom", () => { });
     }
   }, [map]);
 
@@ -237,8 +245,8 @@ const ReactSvgViewer = ({
         </Popup>
       )}
 
-      {filterJsonData(data).length > 0 ? (
-        filterJsonData(data).map((x: any) => {
+      {filterJsonData(data[7]).length > 0 ? (
+        filterJsonData(data[7]).map((x: any) => {
           return (
             <Marker
               position={[x.lat, x.lng]}

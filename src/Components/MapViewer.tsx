@@ -2,6 +2,10 @@ import ReactSvgViewer from "./ReactSvgViewer";
 import MapColorcodeSVG from "./MapColorcodeSVG";
 import { Button, ButtonGroup } from "@material-ui/core";
 import { useState } from "react";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import { Menu, MenuItem } from "@mui/material";
+import ArrowDropDownCircle from "@mui/icons-material/ArrowDropDownCircle";
 
 /* const options = {
   backdrop: "static",
@@ -41,6 +45,15 @@ const MapViewer = ({
   modalOpen,
 }: propTypes) => {
   const [floorSelect, setFloorSelect] = useState("2");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const changeFloor = (e: any) => {
     setFloorSelect(e.target.innerText);
@@ -66,6 +79,29 @@ const MapViewer = ({
         <Button onClick={changeFloor}>5</Button>
         <Button onClick={changeFloor}>2</Button>
       </ButtonGroup>
+      <Button
+        id="basic-button"
+        aria-controls="basic-menu"
+        aria-haspopup="true"
+        variant="contained"
+        disableElevation
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+        className="availableRoomsButton"
+      >
+        <KeyboardArrowDownIcon />
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem>Show available rooms</MenuItem>
+      </Menu>
       <MapColorcodeSVG />
     </>
   );

@@ -27,9 +27,17 @@ const doFetch = async (url, options = {}) => {
     }
 };
 server.post('/metropolia-data', async (req, reply) => {
-    const { group, room, realization, startDate, apiKey, apiUrl } = req.body;
+    const { group, room, realization, startDate, apiKey, apiUrl, rangeStart, rooms } = req.body;
     let body;
-    if (room !== '') {
+    if (rangeStart !== '') {
+        body = {
+            "rangeStart": rangeStart,
+            "rangeEnd": rangeStart,
+            "room": rooms,
+            "building": ["KAAPO"],
+        };
+    }
+    else if (room !== '') {
         body = {
             "startDate": startDate,
             "room": [room],
