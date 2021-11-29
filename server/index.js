@@ -68,7 +68,7 @@ server.post('/metropolia-data', async (req, reply) => {
     };
     try {
         const result = await doFetch(apiUrl, fetchOptions);
-        console.log('Result', result);
+        console.log('MetropoliaData', result);
         return result;
     }
     catch (err) {
