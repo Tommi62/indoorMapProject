@@ -29,6 +29,15 @@ g {
   stroke-width: 8px !important;
   stroke-linejoin: round;
   stroke: rgb(0, 0, 0);
+  transition: fill 0.3s;
+}
+
+.cls-1:active {
+  fill: #ff61c0;
+}
+
+.cls-1:hover {
+  fill: #ff61c0;
 }
 
 /* Hallways */
@@ -45,6 +54,15 @@ g {
   stroke-linejoin: round;
   stroke: rgb(0, 0, 0);
   fill: #ffc60b;
+  transition: fill 0.3s;
+}
+
+.cls-3:active {
+  fill: #ffde6f;
+}
+
+.cls-3:hover {
+  fill: #ffde6f;
 }
 
 /* Unauthorized places */

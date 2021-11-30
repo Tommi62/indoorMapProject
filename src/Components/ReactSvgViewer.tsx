@@ -18,9 +18,9 @@ interface paramObj {
 }
 
 interface dataArray {
-  name: string,
-  lat: number,
-  lng: number,
+  name: string;
+  lat: number;
+  lng: number;
 }
 
 interface propTypes {
@@ -35,7 +35,6 @@ interface propTypes {
   setFloor: Function;
   availableRooms: string[],
 }
-
 
 const ReactSvgViewer = ({
   setModalOpen,
@@ -59,21 +58,6 @@ const ReactSvgViewer = ({
   const [isVisible, setIsVisible] = useState(false);
   const [svgSize, setSvgSize] = useState("");
   const [boundsReady, setBoundsReady] = useState(false);
-
-  const filterJsonData = (data: dataArray[]) => {
-    //removes KM from room name and returns all matching json data
-    return data.filter((e: any) => e.name === marker.substring(2));
-  };
-
-  useEffect(() => {
-    console.log("Marker is ", marker);
-    if (marker.length > 0) {
-      marker.map((x: any) => {
-        //map.flyTo([x.lat, x.lng], 2);
-        return null;
-      });
-    }
-  }, [marker]);
 
   useEffect(() => {
     setIsVisible(false);
