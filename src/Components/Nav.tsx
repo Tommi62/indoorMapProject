@@ -177,7 +177,7 @@ const Nav = ({
     for (let i = 0; i < results.length; i++) {
       final.push(results[i].entry); // remove relevance since it is no longer needed
     }
-    console.log('UNIQ', uniq(final));
+    console.log("UNIQ", uniq(final));
     return uniq(final);
   }
 
