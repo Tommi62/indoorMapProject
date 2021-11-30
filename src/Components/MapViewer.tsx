@@ -1,12 +1,9 @@
-import Floor7 from "../Media/FloorImages/7._kerros-_reitit_kartalla.svg";
-import Routes7 from "../Media/FloorPaths/7._kerros-_reitit.svg";
-import Floor7SVG from "./Floor7SVG";
 import ReactSvgViewer from "./ReactSvgViewer";
 import MapColorcodeSVG from "./MapColorcodeSVG";
 import { Button, ButtonGroup } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const options = {
+/* const options = {
   backdrop: "static",
   button: false,
   navbar: false,
@@ -17,7 +14,7 @@ const options = {
   zoomRatio: 0.4,
   tooltip: false,
   toggleOnDblclick: false,
-};
+}; */
 
 interface propTypes {
   update: paramObj;
@@ -27,6 +24,8 @@ interface propTypes {
   marker: string;
   setMarker: Function;
   modalOpen: any;
+  floorSelect: string;
+  setFloorSelect: Function;
 }
 
 interface paramObj {
@@ -42,13 +41,45 @@ const MapViewer = ({
   marker,
   setMarker,
   modalOpen,
+  floorSelect,
+  setFloorSelect,
 }: propTypes) => {
-  const [floorSelect, setFloorSelect] = useState("7");
+  const [active7, setActive7] = useState("");
+  const [active6, setActive6] = useState("");
+  const [active5, setActive5] = useState("");
+  const [active2, setActive2] = useState("");
 
   const changeFloor = (e: any) => {
     setFloorSelect(e.target.innerText);
     setMarker("");
   };
+
+  useEffect(() => {
+    try {
+      if (floorSelect === "7") {
+        setActive7("buttonActive");
+      } else {
+        setActive7("");
+      }
+      if (floorSelect === "6") {
+        setActive6("buttonActive");
+      } else {
+        setActive6("");
+      }
+      if (floorSelect === "5") {
+        setActive5("buttonActive");
+      } else {
+        setActive5("");
+      }
+      if (floorSelect === "2") {
+        setActive2("buttonActive");
+      } else {
+        setActive2("");
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [floorSelect]);
 
   return (
     <>
@@ -64,10 +95,18 @@ const MapViewer = ({
         setFloor={setFloorSelect}
       />
       <ButtonGroup orientation="vertical" className="floorButtons">
-        <Button onClick={changeFloor}>7</Button>
-        <Button onClick={changeFloor}>6</Button>
-        <Button onClick={changeFloor}>5</Button>
-        <Button onClick={changeFloor}>2</Button>
+        <Button className={active7} onClick={changeFloor}>
+          7
+        </Button>
+        <Button className={active6} onClick={changeFloor}>
+          6
+        </Button>
+        <Button className={active5} onClick={changeFloor}>
+          5
+        </Button>
+        <Button className={active2} onClick={changeFloor}>
+          2
+        </Button>
       </ButtonGroup>
       <MapColorcodeSVG />
     </>
