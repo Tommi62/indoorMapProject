@@ -1,12 +1,16 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import { MapContainer, Marker, SVGOverlay, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  SVGOverlay,
+  Popup,
+  FeatureGroup,
+} from "react-leaflet";
 import { RouteFinder } from "./RouteFinder";
-import { Button, ButtonGroup, Typography } from "@material-ui/core";
 import data from "../Data/classrooms.json";
 import * as L from "leaflet";
 import { useModalData } from "../Hooks/ModalDataHooks";
-import InfoIcon from "@mui/icons-material/Info";
-import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
+import LeafletPopup from "./LeafletPopup";
 
 interface paramObj {
   startNode: string;
@@ -25,7 +29,7 @@ interface propTypes {
   setModalContent: Function;
   setKeyWord: Function;
   setMarker: Function;
-  marker: string;
+  marker: any;
   modalOpen: any;
   floor: string;
   setFloor: Function;
@@ -52,19 +56,18 @@ const ReactSvgViewer = ({
   const [popupID, setPopupID] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [svgSize, setSvgSize] = useState("");
-  const [zoom, setZoom] = useState(1);
+  const [boundsReady, setBoundsReady] = useState(false);
 
   const filterJsonData = (data: dataArray[]) => {
     //removes KM from room name and returns all matching json data
-    console.log('DATA', data[7]);
     return data.filter((e: any) => e.name === marker.substring(2));
   };
 
   useEffect(() => {
-    if (filterJsonData(data[7]).length > 0) {
-      setFloor(marker.substring(3).charAt(0));
-      filterJsonData(data[7]).map((x: any) => {
-        map.flyTo([x.lat, x.lng], 2);
+    console.log("Marker is ", marker);
+    if (marker.length > 0) {
+      marker.map((x: any) => {
+        //map.flyTo([x.lat, x.lng], 2);
         return null;
       });
     }
@@ -77,6 +80,7 @@ const ReactSvgViewer = ({
 
   const svgRef = useRef<any>();
   const markerRef = useRef<any>();
+  const [markerBoundsElement, setMarkerBoundsElement] = useState<any>();
 
   const eventHandlers = useMemo(
     () => ({
@@ -127,7 +131,8 @@ const ReactSvgViewer = ({
   };
 
   const mapClick = (e: any) => {
-    let str = e.originalEvent.path[0].id.slice(0, -1);
+    let str = e.originalEvent.path[0].id;
+    console.log(e.originalEvent.path[0].id);
     console.log(e.latlng);
     if (isNaN(str.charAt(0)) && str !== "") {
       setIsVisible(true);
@@ -138,9 +143,7 @@ const ReactSvgViewer = ({
 
   useEffect(() => {
     if (map !== undefined) {
-      //map.getPane("overlayPane").firstChild.style.width = "3000px";
       map.on("click", mapClick);
-      map.on("zoom", () => { });
     }
   }, [map]);
 
@@ -187,13 +190,82 @@ const ReactSvgViewer = ({
     }
   }, [floor]);
 
+  let classIcon = L.icon({
+    iconUrl:
+      "https://cdn-icons.flaticon.com/png/512/2280/premium/2280294.png?token=exp=1637933811~hmac=2c7a85da4b51ec71f2aa10251621ba56",
+    /*toilet https://cdn-icons.flaticon.com/png/512/2274/premium/2274172.png?token=exp=1637933882~hmac=b648cf3c448c8f637db40d26f39eb3c7 */
+    /*stairs https://cdn-icons-png.flaticon.com/512/734/734548.png */
+    /*elevator https://cdn-icons.flaticon.com/png/512/2460/premium/2460777.png?token=exp=1637933983~hmac=f68906f7ad55a15740a0de2b9dfb8c8f */
+    iconSize: [20, 20], // size of the icon
+    iconAnchor: [11, 11], // point of the icon which will correspond to marker's location
+    popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+  });
+
+  const [bounds, setBounds] = useState<any>();
+
+  useEffect(() => {
+    console.log("eventti map", map);
+  }, [map]);
+
+  useEffect(() => {
+    if (bounds !== undefined) {
+      map.flyToBounds(bounds);
+    }
+  }, [bounds]);
+
+  useEffect(() => {
+    try {
+      if (boundsReady) {
+        const xlat = markerBoundsElement.getBounds()._northEast.lat;
+        const xlng = markerBoundsElement.getBounds()._northEast.lng;
+        const ylat = markerBoundsElement.getBounds()._southWest.lat;
+        const ylng = markerBoundsElement.getBounds()._southWest.lng;
+        console.log("useEffect eventti", xlat, xlng, ylat, ylng);
+        setBounds([
+          [xlat, xlng],
+          [ylat, ylng],
+        ]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [marker, boundsReady]);
+
+  const markerGroupEventHandlers = useMemo(
+    () => ({
+      layeradd(e: any) {
+        try {
+          setMarkerBoundsElement(e.target);
+          setBoundsReady(true);
+        } catch (e) {
+          console.log(e);
+        }
+      },
+      /* layerremove(e: any) {
+        try {
+          const xlat = e.target.getBounds()._northEast.lat;
+          const xlng = e.target.getBounds()._northEast.lng;
+          const ylat = e.target.getBounds()._southWest.lat;
+          const ylng = e.target.getBounds()._southWest.lng;
+          console.log("remove eventti", xlat, xlng, ylat, ylng);
+          setBounds([
+            [xlat, xlng],
+            [ylat, ylng],
+          ]);
+        } catch (e) {
+          console.log(e);
+        }
+      }, */
+    }),
+    []
+  );
+
   return (
     <MapContainer
       center={[0, -60]}
       zoom={1}
       maxZoom={3}
-      zoomSnap={0.05}
-      scrollWheelZoom={false}
+      scrollWheelZoom={true}
       style={{ width: "100vw", height: "calc(100vh - 64px)" }}
       whenCreated={(mapInstance) => {
         setMap(mapInstance);
@@ -219,45 +291,35 @@ const ReactSvgViewer = ({
         </svg>
       </SVGOverlay>
       {isVisible && (
-        <Popup position={popupPosition} onClose={handlePopupClose}>
-          <>
-            <Typography>{popupID}</Typography>
-            {!showNav ? (
-              <ButtonGroup>
-                <Button onClick={getDataAndOpenModal}>
-                  <InfoIcon />
-                </Button>
-                <Button onClick={showNavigationButtons}>
-                  <AssistantDirectionIcon></AssistantDirectionIcon>
-                </Button>
-              </ButtonGroup>
-            ) : (
-              <ButtonGroup>
-                <Button onClick={navigateFrom.bind(popupID, popupID)}>
-                  Navigate from
-                </Button>
-                <Button onClick={navigateTo.bind(popupID, popupID)}>
-                  Navigate to
-                </Button>
-              </ButtonGroup>
-            )}
-          </>
-        </Popup>
+        <>
+          <LeafletPopup
+            navigateFrom={navigateFrom}
+            navigateTo={navigateTo}
+            popupPosition={popupPosition}
+            handlePopupClose={handlePopupClose}
+            popupID={popupID}
+            showNav={showNav}
+            getDataAndOpenModal={getDataAndOpenModal}
+            showNavigationButtons={showNavigationButtons}
+          ></LeafletPopup>
+        </>
       )}
-
-      {filterJsonData(data[7]).length > 0 ? (
-        filterJsonData(data[7]).map((x: any) => {
-          return (
-            <Marker
-              position={[x.lat, x.lng]}
-              eventHandlers={eventHandlers}
-              ref={markerRef}
-            ></Marker>
-          );
-        })
-      ) : (
-        <></>
-      )}
+      <FeatureGroup eventHandlers={markerGroupEventHandlers}>
+        {typeof marker === "string" ? (
+          <></>
+        ) : (
+          marker.map((x: any) => {
+            return (
+              <Marker
+                icon={classIcon}
+                position={[x.lat, x.lng]}
+                eventHandlers={eventHandlers}
+                ref={markerRef}
+              ></Marker>
+            );
+          })
+        )}
+      </FeatureGroup>
     </MapContainer>
   );
 };

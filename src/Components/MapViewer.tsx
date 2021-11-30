@@ -1,7 +1,7 @@
 import ReactSvgViewer from "./ReactSvgViewer";
 import MapColorcodeSVG from "./MapColorcodeSVG";
 import { Button, ButtonGroup } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import { Menu, MenuItem, unstable_composeClasses } from "@mui/material";
@@ -32,6 +32,8 @@ interface propTypes {
   marker: string;
   setMarker: Function;
   modalOpen: any;
+  floorSelect: keyof typeof data;
+  setFloorSelect: Function;
 }
 
 interface paramObj {
@@ -58,8 +60,9 @@ const MapViewer = ({
   marker,
   setMarker,
   modalOpen,
+  floorSelect,
+  setFloorSelect,
 }: propTypes) => {
-  const [floorSelect, setFloorSelect] = useState<keyof typeof data>("7");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { postGetMetropoliaData } = useApiData();
@@ -70,6 +73,10 @@ const MapViewer = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [active7, setActive7] = useState("");
+  const [active6, setActive6] = useState("");
+  const [active5, setActive5] = useState("");
+  const [active2, setActive2] = useState("");
 
   const changeFloor = (e: any) => {
     setFloorSelect(e.target.innerText);
@@ -111,6 +118,32 @@ const MapViewer = ({
     console.log('Rooms available', roomArray);
     handleClose();
   };
+  useEffect(() => {
+    try {
+      if (floorSelect === "7") {
+        setActive7("buttonActive");
+      } else {
+        setActive7("");
+      }
+      if (floorSelect === "6") {
+        setActive6("buttonActive");
+      } else {
+        setActive6("");
+      }
+      if (floorSelect === "5") {
+        setActive5("buttonActive");
+      } else {
+        setActive5("");
+      }
+      if (floorSelect === "2") {
+        setActive2("buttonActive");
+      } else {
+        setActive2("");
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [floorSelect]);
 
   return (
     <>
@@ -126,10 +159,18 @@ const MapViewer = ({
         setFloor={setFloorSelect}
       />
       <ButtonGroup orientation="vertical" className="floorButtons">
-        <Button onClick={changeFloor}>7</Button>
-        <Button onClick={changeFloor}>6</Button>
-        <Button onClick={changeFloor}>5</Button>
-        <Button onClick={changeFloor}>2</Button>
+        <Button className={active7} onClick={changeFloor}>
+          7
+        </Button>
+        <Button className={active6} onClick={changeFloor}>
+          6
+        </Button>
+        <Button className={active5} onClick={changeFloor}>
+          5
+        </Button>
+        <Button className={active2} onClick={changeFloor}>
+          2
+        </Button>
       </ButtonGroup>
       <Button
         id="basic-button"
