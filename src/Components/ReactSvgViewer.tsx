@@ -51,22 +51,6 @@ const ReactSvgViewer = ({
   const [svgSize, setSvgSize] = useState("");
   const [boundsReady, setBoundsReady] = useState(false);
 
-  const filterJsonData = (data: any) => {
-    //removes KM from room name and returns all matching json data
-
-    return data.filter((e: any) => e.name === marker.substring(2));
-  };
-
-  useEffect(() => {
-    console.log("Marker is ", marker);
-    if (marker.length > 0) {
-      marker.map((x: any) => {
-        //map.flyTo([x.lat, x.lng], 2);
-        return null;
-      });
-    }
-  }, [marker]);
-
   useEffect(() => {
     setIsVisible(false);
     setMarker("");
