@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
+import data from "../Data/classrooms.json";
 
 interface propTypes {
     update: paramObj;
@@ -137,6 +138,7 @@ function RouteFinder({
     floor,
 }: propTypes) {
     const classes7: any = useRef();
+    const [roomArray, setRoomArray] = useState([]);
 
     // Making refs to all the lines from svg so we can use them later to display and hide lines by their id
     const D7592K72: any = useRef();
@@ -372,6 +374,20 @@ function RouteFinder({
             console.log(error.message);
         }
     }, [floor]);
+
+    useEffect(() => {
+        try {
+            let roomDataArray = [];
+            for (let i = 0; i < data[7].length; i++) {
+                const roomObject = {
+                    className: 'cls-5',
+                    id: data[7][i].name,
+                }
+            }
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }, []);
 
     // Get vector length by it's id
     let lengthGetter = (id: any) => {
@@ -1137,16 +1153,6 @@ function RouteFinder({
                         className="cls-4"
                         d="M288.02 2254.07L288.02 2197.9 325.81 2160.1 415.04 2249.32 409.9 2254.47 288.02 2254.07z"
                     />
-                    <path
-                        className="cls-5"
-                        id="E7731"
-                        d="M196.4 1869.54L196.4 1986.12 73.1 1986.12 73.1 1869.54"
-                    />
-                    <path
-                        className="cls-5"
-                        id="E7721"
-                        d="M196.4 1754.82L196.4 1869.54 73.5 1869.54 73.5 1754.82"
-                    />
                 </g>
                 <g id="classes" ref={classes7}>
                     <path
@@ -1211,7 +1217,16 @@ function RouteFinder({
                         id={"D7571"}
                         d="M618.12 568.27L596.36 590.03 766.65 760.32 910.05 616.91 632.03 338.88 510.38 460.53 618.12 568.27z"
                     />
-
+                    <path
+                        className="cls-5"
+                        id="E7731"
+                        d="M196.4 1869.54L196.4 1986.12 73.1 1986.12 73.1 1869.54"
+                    />
+                    <path
+                        className="cls-5"
+                        id="E7721"
+                        d="M196.4 1754.82L196.4 1869.54 73.5 1869.54 73.5 1754.82"
+                    />
                     <path
                         className="cls-5"
                         id={"E7701"}
