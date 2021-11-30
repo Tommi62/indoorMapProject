@@ -8,6 +8,8 @@ interface requestObj {
     startDate: string,
     apiKey: string,
     apiUrl: string,
+    rangeStart: string,
+    rooms: string[],
 }
 
 const useModalData = () => {
@@ -25,6 +27,8 @@ const useModalData = () => {
                 startDate: todayStart,
                 apiKey: '',
                 apiUrl: '',
+                rangeStart: '',
+                rooms: [],
             };
             for (let i = 0; i < realizationStartsWith.length; i++) {
                 if (keyword.startsWith(realizationStartsWith[i])) {

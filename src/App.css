@@ -202,6 +202,20 @@ g {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
+.availableRoomsButton {
+  position: absolute!important;
+  z-index: 401;
+  right: 10px;
+  top: 250px;
+  padding: 0.1rem 0.25rem!important;
+  min-width: 1rem!important;
+  background-color: rgba(255, 255, 255, 0.9)!important;
+  border: 0.01rem solid lightgrey!important;
+}
+
+.availableRoomsButton:hover {
+  background-color: rgba(243, 243, 243, 0.9)!important;
+}
 .buttonActive {
   background-color: rgb(238, 238, 238) !important;
 }
@@ -359,15 +373,19 @@ div[role="navigation"] {
   }
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 600px) {
   .fc-toolbar-title {
-    font-size: 0.9rem !important;
+    font-size: 0.7rem !important;
   }
 
   .fc-button {
     padding: 0 !important;
     line-height: 0 !important;
-    height: 1.5rem !important;
-    width: 1.5rem !important;
+    height: 1.4rem !important;
+    width: 1.4rem !important;
+  }
+
+  .fc .fc-button .fc-icon {
+    font-size: 1rem!important;
   }
 }

@@ -23,6 +23,8 @@ interface requestObj {
     startDate: string,
     apiKey: any,
     apiUrl: any,
+    rangeStart: string,
+    rooms: string[],
 }
 
 const useApiData = () => {

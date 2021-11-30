@@ -160,13 +160,16 @@ const Nav = ({
       return;
     }
     let results = [];
-    for (var i in data) {
-      let rel = getRelevance(data[i].name, keyword);
-      console.log(rel);
-      if (rel === 0) {
-        continue;
+    let i: keyof typeof data;
+    for (i in data) {
+      for (let j = 0; j < data[i].length; j++) {
+        let rel = getRelevance(data[i][j].name, keyword);
+        console.log(rel);
+        if (rel === 0) {
+          continue;
+        }
+        results.push({ relevance: rel, entry: data[i][j] }); // matches found, add to results and store relevance
       }
-      results.push({ relevance: rel, entry: data[i] }); // matches found, add to results and store relevance
     }
 
     results.sort(compareRelevance); // sort by relevance
@@ -174,7 +177,7 @@ const Nav = ({
     for (let i = 0; i < results.length; i++) {
       final.push(results[i].entry); // remove relevance since it is no longer needed
     }
-    console.log("uniq", uniq(final));
+    console.log("UNIQ", uniq(final));
     return uniq(final);
   }
 

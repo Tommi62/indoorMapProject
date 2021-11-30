@@ -15,6 +15,8 @@ type postRequest = FastifyRequest<{
         startDate: string,
         apiKey: string,
         apiUrl: string,
+        rangeStart: string,
+        rooms: string[],
     }
 }>
 
@@ -41,10 +43,17 @@ const doFetch = async (url: string, options = {}) => {
 };
 
 server.post('/metropolia-data', async (req: postRequest, reply) => {
-    const { group, room, realization, startDate, apiKey, apiUrl } = req.body
+    const { group, room, realization, startDate, apiKey, apiUrl, rangeStart, rooms } = req.body
     let body
 
-    if (room !== '') {
+    if (rangeStart !== '') {
+        body = {
+            "rangeStart": rangeStart,
+            "rangeEnd": rangeStart,
+            "room": rooms,
+            "building": ["KAAPO"],
+        }
+    } else if (room !== '') {
         body = {
             "startDate": startDate,
             "room": [room],
@@ -76,7 +85,7 @@ server.post('/metropolia-data', async (req: postRequest, reply) => {
 
     try {
         const result = await doFetch(apiUrl, fetchOptions);
-        console.log('Result', result);
+        console.log('MetropoliaData', result);
         return result;
     } catch (err: any) {
         throw new Error(err)

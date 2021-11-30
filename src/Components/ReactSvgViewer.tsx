@@ -17,6 +17,12 @@ interface paramObj {
   endNode: string;
 }
 
+interface dataArray {
+  name: string;
+  lat: number;
+  lng: number;
+}
+
 interface propTypes {
   update: paramObj;
   setModalOpen: Function;
