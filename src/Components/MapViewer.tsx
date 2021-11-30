@@ -66,6 +66,7 @@ const MapViewer = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { postGetMetropoliaData } = useApiData();
+  const [availableRooms, setAvailableRooms] = useState<string[]>([]);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -81,6 +82,7 @@ const MapViewer = ({
   const changeFloor = (e: any) => {
     setFloorSelect(e.target.innerText);
     setMarker("");
+    setAvailableRooms([]);
   };
 
   const getAvailableRooms = async () => {
@@ -89,7 +91,7 @@ const MapViewer = ({
     const now = dateNow + 'T' + timeNow;
     let roomArray = [];
     for (let i = 0; i < data[floorSelect].length; i++) {
-      if (!data[floorSelect][i].name.startsWith('T') && !data[floorSelect][i].name.startsWith('S') && !data[floorSelect][i].name.startsWith('H')) {
+      if (!data[floorSelect][i].name.startsWith('V') && !data[floorSelect][i].name.startsWith('S') && !data[floorSelect][i].name.startsWith('H')) {
         roomArray.push('KM' + data[floorSelect][i].name);
       }
     };
@@ -104,7 +106,6 @@ const MapViewer = ({
       rooms: roomArray,
     };
     const reservedRooms = await postGetMetropoliaData(requestObject);
-    console.log('Reserved Rooms', reservedRooms, roomArray, now);
     if (reservedRooms.reservations.length !== 0) {
       for (let i = 0; i < reservedRooms.reservations.length; i++) {
         for (let j = 0; j < reservedRooms.reservations[i].resources.length; j++) {
@@ -116,6 +117,7 @@ const MapViewer = ({
       }
     }
     console.log('Rooms available', roomArray);
+    setAvailableRooms(roomArray);
     handleClose();
   };
   useEffect(() => {
@@ -157,6 +159,7 @@ const MapViewer = ({
         modalOpen={modalOpen}
         floor={floorSelect}
         setFloor={setFloorSelect}
+        availableRooms={availableRooms}
       />
       <ButtonGroup orientation="vertical" className="floorButtons">
         <Button className={active7} onClick={changeFloor}>

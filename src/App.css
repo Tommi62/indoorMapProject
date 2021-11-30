@@ -72,6 +72,22 @@ g {
   fill: rgb(99, 213, 255);
 }
 
+.cls-5-available {
+  stroke-width: 8px !important;
+  stroke: rgb(0, 0, 0);
+  stroke-linejoin: round;
+  fill: rgb(0, 222, 122);
+  transition: fill 0.3s;
+}
+
+.cls-5-available:active {
+  fill: rgb(59, 253, 166);
+}
+
+.cls-5-available:hover {
+  fill: rgb(59, 253, 166);
+}
+
 /* Lines */
 .cls-6 {
   stroke: #ff0000 !important;

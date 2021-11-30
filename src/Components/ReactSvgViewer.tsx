@@ -33,6 +33,7 @@ interface propTypes {
   modalOpen: any;
   floor: string;
   setFloor: Function;
+  availableRooms: string[],
 }
 
 
@@ -46,6 +47,7 @@ const ReactSvgViewer = ({
   modalOpen,
   floor,
   setFloor,
+  availableRooms,
 }: propTypes) => {
   const [map, setMap] = useState<any>();
   const { getModalData } = useModalData();
@@ -287,6 +289,7 @@ const ReactSvgViewer = ({
             start={start}
             end={end}
             floor={floor}
+            availableRooms={availableRooms}
           />
         </svg>
       </SVGOverlay>
