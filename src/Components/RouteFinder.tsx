@@ -49,7 +49,7 @@ let graph: any = {
   K724: { K721: 1, K725: 1, E7611: 1 },
   K725: { K724: 1, E7591: 1, E7511: 1 },
   K726: { K727: 1, K723: 1, V71: 1 },
-  K727: { K726: 1, K728: 1 },
+  K727: { K726: 1, K728: 1, R73: 1 },
   K728: { K727: 1, E7512: 1 },
 
   // Floor 2
@@ -115,12 +115,14 @@ let graph: any = {
   // Floor 7
   R71: { K75: 1 },
   R72: { K712: 1 },
+  R73: { K727: 1 },
   // Floor 2
   R21: { K25: 1 },
   R22: { K215: 1 },
   R23: { K216: 1 },
 
   // Uniques
+  PUKKARI: { K210: 1 },
   RUOKALA: { K220: 1 },
   U21: { K21: 1 },
 };
@@ -190,6 +192,7 @@ function RouteFinder({
   const K728E7512: any = useRef();
   const K712R72: any = useRef();
   const K712K713: any = useRef();
+  const R73K727: any = useRef();
 
   const V21K22: any = useRef();
   const U21K21: any = useRef();
@@ -284,6 +287,7 @@ function RouteFinder({
     K727K728: K727K728,
     K728E7512: K728E7512,
     K712R72: K712R72,
+    R73K727: R73K727,
 
     // Floor 2
     V21K22: V21K22,
@@ -537,6 +541,31 @@ function RouteFinder({
       to: to + "2",
       length: findShortestPath(graph, from + "2", to + "2"),
     });
+    data.push({
+      from: from,
+      to: to + "1",
+      length: findShortestPath(graph, from, to + "1"),
+    });
+    data.push({
+      from: from,
+      to: to + "2",
+      length: findShortestPath(graph, from, to + "2"),
+    });
+    data.push({
+      from: from + "1",
+      to: to,
+      length: findShortestPath(graph, from + "1", to),
+    });
+    data.push({
+      from: from + "2",
+      to: to,
+      length: findShortestPath(graph, from + "2", to),
+    });
+    data.push({
+      from: from,
+      to: to,
+      length: findShortestPath(graph, from, to),
+    });
     objIterator(graph);
 
     const shortestRoute = data.reduce(function (prev, curr) {
@@ -626,12 +655,18 @@ function RouteFinder({
           <path className="cls-4" d="M740.88 603.21L901.1 603.21" />
         </g>
         <g id="toilets">
-          <path className="cls-3" d="M335.26 699.61H416V774.25H335.26z" />
           <path
+            className="cls-3"
+            id="V21"
+            d="M335.26 699.61H416V774.25H335.26z"
+          />
+          <path
+            id="V23"
             className="cls-3"
             d="M1477.24 1911.21L1459.43 1929.02 1505.59 1975.17 1433.98 2046.78 1411.04 2023.83 1327.17 2023.83 1327.17 1983.48 1308.97 1983.48 1308.97 1911.21 1477.24 1911.21z"
           />
           <path
+            id="PUKKARI"
             className="cls-3"
             d="M1275.74 1218.38L1275.74 1306.2 1388.09 1417.76 1388.09 1826.82 1308.97 1747.7 1308.97 1848.18 1275.74 1848.18 1275.74 1821.28 1252.01 1821.28 1252.01 1796.75 1227.48 1796.75 1227.48 1612.4 1264.66 1612.4 1264.66 1541.19 1227.48 1541.19 1227.48 1306.2 1275.74 1306.2"
           />
@@ -639,11 +674,17 @@ function RouteFinder({
         <g id="stairsElevator">
           <path
             className="cls-1"
+            id="R21"
             d="M1308.97 744.84L1079.52 744.84 1079.52 603.21 1144.4 603.21 1144.4 632.88 1308.97 632.88 1308.97 744.84z"
           />
-          <path className="cls-1" d="M1247.65 824.75H1308.97V993.28H1247.65z" />
           <path
             className="cls-1"
+            id="H21"
+            d="M1247.65 824.75H1308.97V993.28H1247.65z"
+          />
+          <path
+            className="cls-1"
+            id="R22"
             d="M1140.84 1981.9H1238.29V2242.21H1140.84z"
           />
         </g>
@@ -903,93 +944,102 @@ function RouteFinder({
         <g id="classes" ref={classes7}>
           <path
             className="cls-5"
-            id="D7581"
+            id="D758"
             d="M419.79 114.91L323.52 211.17 231.74 211.17 231.74 280.4 244.2 292.86 237.54 299.52 237.54 339.25 288.46 339.25 338.91 288.8 510.51 460.4 632.03 338.88 420.05 126.91 419.79 114.91z"
           ></path>
 
           <path
             className="cls-5"
-            id="D7591"
+            id="D759"
             d="M237.54 299.52L237.54 616.47 70.14 616.47 70.33 280.4 231.74 280.4 244 292.67 237.38 299.29"
           />
 
           <path
             className="cls-5"
-            id={"E7611"}
+            id={"E761"}
             transform="rotate(-45 1007.959 3229.49)"
             d="M1629.96 1646.12h352.47v229.52h-352.47z"
           />
 
           <path
             className="cls-5"
-            id={"E7621"}
+            id={"E762"}
             d="M416.49 1259.92l-170.31 170.3v157.85l81.99 81.99 249.13-249.13-160.81-161.01z"
           />
 
           <path
             className="cls-5"
-            id={"E7591"}
+            id={"E759"}
             transform="rotate(-45 1200.5 3370.337)"
             d="M1859.06 1780.75h279.36v241.97h-279.36z"
           />
 
           <path
             className="cls-5"
-            id={"E7511"}
+            id={"E751"}
             d="M713.26 1951.76l-297.89 297.89-121.78-121.78 101.14-101.14v-38.24h40.35l157.45-157.45 120.73 120.72z"
           />
 
           <path
             className="cls-5"
-            id={"E7901"}
+            id={"E790"}
             d="M416.19 1257.64L371 1302.84 280.9 1302.84 280.9 1068.15 373.57 1068.15 416.21 1110.79 416.19 1257.64z"
           />
 
           <path
             className="cls-5"
-            id={"D7501"}
+            id={"D750"}
             d="M333.2 853.16L407 779.65 577.17 949.83 416.55 1110.44 307.3 1001.19 307.3 878.95 320.58 865.72"
           />
 
           <path
             className="cls-5"
-            id={"D7511"}
+            id={"D751"}
             transform="rotate(-45 1060.841 2372.885)"
             d="M1725.09 783.96H1993.08V1024.6H1725.09z"
           />
 
           <path
             className="cls-5"
-            id={"D7571"}
+            id={"D757"}
             d="M618.12 568.27L596.36 590.03 766.65 760.32 910.05 616.91 632.03 338.88 510.38 460.53 618.12 568.27z"
           />
 
           <path
             className="cls-5"
-            id={"E7701"}
+            id={"E770"}
             d="M72.97 1332.58L196.4 1332.58 196.4 1754.82 73.5 1754.82 72.97 1332.58z"
           />
         </g>
         <g id="toilets">
           <path
             className="cls-3"
+            id="K73"
             d="M340.93 580.27L386.52 625.86 531.02 481.37 485.27 435.63 340.93 580.27z"
           />
           <path
             className="cls-3"
+            id="V71"
             d="M244.2 1916.42L411.61 1916.42 457.86 1962.68 432.38 1988.16 244.1 1988.16 244.2 1916.42z"
           />
         </g>
         <g id="stairs_elevator">
           <path
+            id="R71"
             className="cls-1"
             d="M69.94 636.84L69.94 605.06 1.5 605.06 1.5 752.36 243.61 752.36 243.61 662.42 243.61 646.34 243.61 636.84 69.94 636.84 69.94 616.27"
           />
           <path
+            id="H71"
             className="cls-1"
             d="M178.73 829.37L244.93 829.37 244.93 998.16 177.94 998.16 178.73 829.37z"
           />
-          <path className="cls-1" d="M73.1 2069.32H172.79V2254.27H73.1z" />
+          <path
+            className="cls-1"
+            /* lines need tweaking */
+            id="R73"
+            d="M73.1 2069.32H172.79V2254.27H73.1z"
+          />
         </g>
         <g id="walls">
           <path
@@ -1259,11 +1309,22 @@ function RouteFinder({
           className="cls-6"
           d="M220.66 2006.69L326.16 2006.69"
         />
-        <path
+        {/* <path
           ref={K726K727}
           className="cls-6"
           d="M216.97 2009.32L216.97 2088.45 214.34 2087.92 173.19 2087.92"
+        /> */}
+        <path
+          ref={K726K727}
+          className="cls-6"
+          d="M216.97 2009.32L216.97 2088.45 214.34"
         />
+        <path
+          ref={R73K727}
+          className="cls-6"
+          d="M216.97 2088.45 214.34 2087.92 173.19 2087.92"
+        />
+        {/* d='214.34 2087.92 173.19 2087.92' */}
         <path
           ref={K727K728}
           className="cls-6"

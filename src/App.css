@@ -78,7 +78,7 @@ g {
 
 @keyframes slideInFromLeft {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-103%);
   }
   100% {
     transform: translateX(0);
@@ -90,7 +90,7 @@ g {
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-103%);
   }
 }
 
@@ -103,7 +103,7 @@ g {
 }
 
 .slideRight {
-  transform: translateX(-100%);
+  transform: translateX(-103%);
   animation: 0.5s 0s 1 slideInFromRight;
 }
 
@@ -154,11 +154,16 @@ g {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
+.buttonActive {
+  background-color: rgb(238, 238, 238) !important;
+}
+
 /* Lines */
 .cls-6 {
   stroke: #ff0000 !important;
   stroke-width: 14px !important;
   stroke-linecap: round !important;
+  fill: none;
 }
 
 /* Walls */

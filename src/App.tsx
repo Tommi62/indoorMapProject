@@ -25,6 +25,7 @@ const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [keyWord, setKeyWord] = useState("");
   const [updateShortcuts, setUpdateShortcuts] = useState(Date.now());
+  const [floorSelect, setFloorSelect] = useState("2");
   const [modalContent, setModalContent] = useState<modalContentArray[]>([
     {
       success: false,
@@ -59,11 +60,14 @@ const App = () => {
         setKeyWord={setKeyWord}
         updateShortcuts={updateShortcuts}
         setRestaurantMenu={setRestaurantMenu}
+        floorSelect={floorSelect}
+        setFloorSelect={setFloorSelect}
       />
       <Grid className={classes.root} container justifyContent="center">
-        <Button onClick={button}>Click me</Button>
         <Grid container item justifyContent="center">
           <MapViewer
+            floorSelect={floorSelect}
+            setFloorSelect={setFloorSelect}
             setModalOpen={setModalOpen}
             modalOpen={modalOpen}
             setModalContent={setModalContent}
