@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import data from "../Data/classrooms.json";
+import Room from "./Room";
 
 interface propTypes {
     update: paramObj;
@@ -12,11 +13,20 @@ interface propTypes {
     start: string;
     end: string;
     floor: string;
+    availableRooms: string[],
 }
 
 interface paramObj {
     startNode: string;
     endNode: string;
+}
+
+interface roomsArray {
+    className: string,
+    id: string,
+    transform: any,
+    d: any,
+
 }
 
 // Setting the logic for each point so the algorithm knows from which point can you go to which
@@ -137,8 +147,10 @@ function RouteFinder({
     start,
     end,
     floor,
+    availableRooms,
 }: propTypes) {
     const classes7: any = useRef();
+    const [seventhFloorRoomsArray, setSeventhFloorRoomsArray] = useState<roomsArray[]>([]);
 
     // Making refs to all the lines from svg so we can use them later to display and hide lines by their id
     const D7592K72: any = useRef();
@@ -381,15 +393,32 @@ function RouteFinder({
         try {
             let roomDataArray = [];
             for (let i = 0; i < data[7].length; i++) {
-                const roomObject = {
-                    className: 'cls-5',
-                    id: data[7][i].name,
+                if (!data[7][i].name.startsWith('V') && !data[7][i].name.startsWith('S') && !data[7][i].name.startsWith('H')) {
+                    const roomObject = {
+                        className: 'cls-5',
+                        id: data[7][i].name,
+                        transform: data[7][i].transform,
+                        d: data[7][i].d,
+                    };
+                    roomDataArray.push(roomObject);
                 }
             }
+            if (availableRooms.length !== 0) {
+                for (let i = 0; i < availableRooms.length; i++) {
+                    for (let j = 0; j < roomDataArray.length; j++) {
+                        const correctedName = 'KM' + roomDataArray[j].id;
+                        if (correctedName === availableRooms[i]) {
+                            roomDataArray[j].className = 'cls-5-available';
+                            break;
+                        }
+                    }
+                }
+            }
+            setSeventhFloorRoomsArray(roomDataArray);
         } catch (error: any) {
             console.log(error.message);
         }
-    }, []);
+    }, [availableRooms]);
 
     // Get vector length by it's id
     let lengthGetter = (id: any) => {
@@ -1192,74 +1221,9 @@ function RouteFinder({
                     />
                 </g>
                 <g id="classes" ref={classes7}>
-                    <path
-                        className="cls-5"
-                        id="D758"
-                        d="M419.79 114.91L323.52 211.17 231.74 211.17 231.74 280.4 244.2 292.86 237.54 299.52 237.54 339.25 288.46 339.25 338.91 288.8 510.51 460.4 632.03 338.88 420.05 126.91 419.79 114.91z"
-                    ></path>
-
-                    <path
-                        className="cls-5"
-                        id="D759"
-                        d="M237.54 299.52L237.54 616.47 70.14 616.47 70.33 280.4 231.74 280.4 244 292.67 237.38 299.29"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E761"}
-                        transform="rotate(-45 1007.959 3229.49)"
-                        d="M1629.96 1646.12h352.47v229.52h-352.47z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E762"}
-                        d="M416.49 1259.92l-170.31 170.3v157.85l81.99 81.99 249.13-249.13-160.81-161.01z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E759"}
-                        transform="rotate(-45 1200.5 3370.337)"
-                        d="M1859.06 1780.75h279.36v241.97h-279.36z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E751"}
-                        d="M713.26 1951.76l-297.89 297.89-121.78-121.78 101.14-101.14v-38.24h40.35l157.45-157.45 120.73 120.72z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E790"}
-                        d="M416.19 1257.64L371 1302.84 280.9 1302.84 280.9 1068.15 373.57 1068.15 416.21 1110.79 416.19 1257.64z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"D750"}
-                        d="M333.2 853.16L407 779.65 577.17 949.83 416.55 1110.44 307.3 1001.19 307.3 878.95 320.58 865.72"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"D751"}
-                        transform="rotate(-45 1060.841 2372.885)"
-                        d="M1725.09 783.96H1993.08V1024.6H1725.09z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"D757"}
-                        d="M618.12 568.27L596.36 590.03 766.65 760.32 910.05 616.91 632.03 338.88 510.38 460.53 618.12 568.27z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E770"}
-                        d="M72.97 1332.58L196.4 1332.58 196.4 1754.82 73.5 1754.82 72.97 1332.58z"
-                    />
+                    {seventhFloorRoomsArray.map((item) => (
+                        < Room className={item.className} id={item.id} transform={item.transform} d={item.d} />
+                    ))}{" "}
                 </g>
                 <g id="toilets">
                     <path
