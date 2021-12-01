@@ -174,19 +174,17 @@ const MapViewer = ({
         <Button className={active2} onClick={changeFloor}>
           2
         </Button>
+        <Button
+          id="basic-button"
+          aria-controls="basic-menu"
+          aria-haspopup="true"
+          disableElevation
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+        >
+          <KeyboardArrowDownIcon />
+        </Button>
       </ButtonGroup>
-      <Button
-        id="basic-button"
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        variant="contained"
-        disableElevation
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-        className="availableRoomsButton"
-      >
-        <KeyboardArrowDownIcon />
-      </Button>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

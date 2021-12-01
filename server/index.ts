@@ -4,8 +4,10 @@ import fetch from 'cross-fetch';
 const server = fastify()
 
 server.register(require('fastify-cors'), {
-    origin: "*"
+    origin: "http://localhost:3000"
 })
+
+//https://media-server-tommi.northeurope.cloudapp.azure.com
 
 type postRequest = FastifyRequest<{
     Body: {

@@ -7,7 +7,7 @@ const fastify_1 = __importDefault(require("fastify"));
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
 const server = (0, fastify_1.default)();
 server.register(require('fastify-cors'), {
-    origin: "*"
+    origin: "http://localhost:3000"
 });
 const doFetch = async (url, options = {}) => {
     const response = await (0, cross_fetch_1.default)(url, options);
