@@ -356,28 +356,30 @@ function RouteFinder({
     const [floor2Visibility, setFloor2Visibility] = useState("none");
     const [floor5Visibility, setFloor5Visibility] = useState("none");
     const [floor6Visibility, setFloor6Visibility] = useState("none");
+    const [updateFloor, setUpdateFloor] = useState(Date.now());
 
     useEffect(() => {
         try {
             if (floor === "2") {
+                console.log('FLOOR2');
                 setFloor7Visibility("none");
                 setFloor5Visibility("none");
                 setFloor6Visibility("none");
                 setFloor2Visibility("block");
-            }
-            if (floor === "5") {
+            } else if (floor === "5") {
+                console.log('FLOOR5');
                 setFloor7Visibility("none");
                 setFloor5Visibility("block");
                 setFloor6Visibility("none");
                 setFloor2Visibility("none");
-            }
-            if (floor === "6") {
+            } else if (floor === "6") {
+                console.log('FLOOR6');
                 setFloor7Visibility("none");
                 setFloor5Visibility("none");
                 setFloor6Visibility("block");
                 setFloor2Visibility("none");
-            }
-            if (floor === "7") {
+            } else if (floor === "7") {
+                console.log('FLOOR7');
                 setFloor7Visibility("block");
                 setFloor5Visibility("none");
                 setFloor6Visibility("none");
@@ -388,6 +390,14 @@ function RouteFinder({
             console.log(error.message);
         }
     }, [floor]);
+
+    useEffect(() => {
+        try {
+            console.log('2: ' + floor2Visibility + ' 5: ' + floor5Visibility + ' 6: ' + floor6Visibility + ' 7: ' + floor7Visibility);
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }, [floor2Visibility, floor5Visibility, floor6Visibility, floor7Visibility]);
 
     useEffect(() => {
         try {

@@ -117,9 +117,9 @@ const ReactSvgViewer = ({
   };
 
   const mapClick = (e: any) => {
-    let str = e.originalEvent.path[0].id;
-    console.log(e.originalEvent.path[0].id);
-    console.log(e.latlng);
+    console.log('EEEEEEEE', e);
+    let str = e.originalEvent.target.id;
+    console.log(e.originalEvent.target.id);
     if (isNaN(str.charAt(0)) && str !== "") {
       setIsVisible(true);
       setPopupPosition(e.latlng);
