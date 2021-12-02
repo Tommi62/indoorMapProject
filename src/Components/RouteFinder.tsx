@@ -52,6 +52,39 @@ let graph: any = {
     K727: {K726: 1, K728: 1},
     K728: {K727: 1, E7512: 1},
 
+    // Floor 6
+    K61: {K62: 1, K63: 1, E690: 1},
+    K62: {K61: 1, K616: 1},
+    K63: {K61: 1, K64: 1, K630: 1},
+    K64: {K63: 1, K65: 1, K630: 1},
+    K65: {K64: 1, K66: 1, K624: 1},
+    K66: {K65: 1, K67: 1, K624: 1, K627: 1},
+    K67: {K66: 1, K68: 1, K624: 1},
+    K68: {K67: 1, K69: 1, R63: 1},
+    K69: {K68: 1, K610: 1, K626: 1},
+    K610: {K69: 1, K631: 1, D6591: 1},
+    K611: {K612: 1, K613: 1, R62: 1},
+    K612: {K611: 1, K617: 1, R61: 1},
+    K613: {K611: 1, K614: 1, K619: 1},
+    K614: {K613: 1, K621: 1, K615: 1},
+    K615: {K614: 1, K620: 1, K616: 1},
+    K616: {K615: 1, K62: 1, E6701: 1},
+    K617: {K618: 1, K612: 1},
+    K618: {K617: 1, K619: 1, E6591: 1},
+    K619: {K618: 1, K613: 1},
+    K620: {K621: 1, K615: 1, E6621: 1},
+    K621: {K620: 1, K622: 1, K614: 1},
+    K622: {K621: 1, E6592: 1, E6611: 1},
+    //K623: {},
+    K624: {K65: 1, K66: 1, K67: 1, K625: 1, D6521: 1},
+    K625: {K624: 1, D6571: 1},
+    K626: {D6581: 1, V61: 1, K69: 1},
+    K627: {K66: 1, K628: 1, R64: 1},
+    K628: {K627: 1, K629: 1},
+    K629: {K628: 1, K630: 1, H61: 1},
+    K630: {K64: 1, K63: 1, K629: 1},
+    K631: {D6592: 1, D6582: 1},
+
     // Floor 2
     K21: {K22: 1, U21: 1, K23: 1},
     K22: {K21: 1, K23: 1, V21: 1},
@@ -75,6 +108,48 @@ let graph: any = {
     K220: {RUOKALA: 1, K218: 1, K217: 1},
     K221: {K212: 1, K213: 1, E2042: 1},
 
+    // Floor 5
+    K51: {K53: 1, K52: 1, K534: 1, E5902: 1},
+    K52: {K51: 1, E5901: 1, K515: 1},
+    K53: {K51: 1, K54: 1, K534: 1},
+    K54: {K53: 1, K55: 1, K522: 1},
+    K55: {K525: 1, K54: 1, K522: 1, K56: 1},
+    K56: {K57: 1, K522: 1, K55: 1},
+    K57: {R53: 1, K56: 1, K58: 1},
+    K58: {K57: 1, K59: 1, K524: 1},
+    K59: {D5691: 1, D5581: 1, K58: 1},
+    K510: {R52: 1, K511: 1, K512: 1},
+    K511: {R51: 1, K516: 1, K510: 1},
+    K512: {K510: 1, V51: 1, K513: 1},
+    K513: {E5701: 1, K514: 1, K518: 1, K512: 1},
+    K514: {K515: 1, K513: 1, K518: 1},
+    K515: {K514: 1, E5702: 1, K52: 1},
+    K516: {E5511: 1, K511: 1},
+    K517: {K520: 1, E5512: 1, E5591: 1},
+    K518: {K513: 1, K514: 1, K519: 1},
+    K519: {K520: 1, E5621: 1, K518: 1},
+    K520: {E5611: 1, K519: 1, K517: 1},
+    K521: {D5571: 1, K523: 1},
+    K522: {K56: 1, K55: 1, D5501: 1, K523: 1, K54: 1},
+    K523: {K521: 1, D5502: 1, K522: 1},
+    K524: {K58: 1, V52: 1, D5582: 1},
+    K525: {K526: 1, R54: 1, K55: 1},
+    K526: {K527: 1, K525: 1, K533: 1},
+    K527: {K528: 1, C5921: 1, K526: 1},
+    K528: {K527: 1, K529: 1, K535: 1},
+    K529: {K528: 1, K530: 1, K536: 1},
+    K530: {K531: 1, K538: 1, K529: 1},
+    K531: {C5922: 1, K530: 1, K532: 1},
+    K532: {K531: 1, C5901: 1},
+    K533: {K526: 1, K534: 1, H51: 1},
+    K534: {K533: 1, K53: 1, K51: 1},
+    K535: {K528: 1, K536: 1, C5651: 1},
+    K536: {K529: 1, K535: 1, K537: 1},
+    K537: {C5652: 1, C5571: 1, K536: 1},
+    K538: {V53: 1, K539: 1, K530: 1},
+    K539: {K538: 1, K540: 1},
+    K540: {C5572: 1},
+
     // classrooms
     // Floor 7
     D7591: {K71: 1},
@@ -96,12 +171,53 @@ let graph: any = {
     // Floor 2
     E2041: {K219: 1},
     E2042: {K221: 1},
+    // Floor 6
+    D6582: {K631: 1},
+    D6581: {K626: 1},
+    D6592: {K631: 1},
+    D6591: {K610: 1},
+    D6571: {K625: 1},
+    D6521: {K624: 1},
+    E690: {K61: 1},
+    E6701: {K616: 1},
+    E6621: {K620: 1},
+    E6611: {K622: 1},
+    E6592: {K622: 1},
+    E6591: {K618: 1},
+    // Floor 5
+    D5581: {K59: 1},
+    D5582: {K524: 1},
+    D5691: {K59: 1},
+    D5571: {K521: 1},
+    D5502: {K523: 1},
+    D5501: {K522: 1},
+    E5902: {K51: 1},
+    E5901: {K52: 1},
+    E5702: {K515: 1},
+    E5621: {K519: 1},
+    E5701: {K513: 1},
+    E5611: {K520: 1},
+    E5591: {K517: 1},
+    E5512: {K517: 1},
+    E5511: {K516: 1},
+    C5921: {K527: 1},
+    C5651: {K535: 1},
+    C5922: {K531: 1},
+    C5901: {K532: 1},
+    C5572: {K540: 1},
+    C5652: {K537: 1},
+    C5571: {K537: 1},
 
     // Elevators
     // Floor 7
     H71: {K714: 1, H21: 1},
     // Floor 2
     H21: {K28: 1, H71: 1},
+    // Floor 6
+    //TODO Missing vertical routes
+    H61: {K629: 1},
+    // Floor 5
+    H51: {K533: 1},
 
     // Toilets
     // Floor 7
@@ -110,6 +226,13 @@ let graph: any = {
     V21: {K22: 1},
     V22: {K219: 1},
     V23: {K214: 1},
+    // Floor 6
+    //TODO Missing few toilets
+    V61: {K626: 1},
+    // Floor 5
+    V51: {K512: 1},
+    V52: {K524: 1},
+    V53: {K538: 1},
 
     // Stairs
     // Floor 7
@@ -119,6 +242,18 @@ let graph: any = {
     R21: {K25: 1, R71: 1, R72: 1},
     R22: {K215: 1},
     R23: {K216: 1},
+    // Floor 6
+    //TODO Missing vertical routes
+    R61: {K612: 1},
+    R62: {K611: 1},
+    R63: {K68: 1},
+    R64: {K627: 1},
+    // Floor 5
+    //TODO Missing vertical routes
+    R51: {K511: 1},
+    R52: {K510: 1},
+    R53: {K57: 1},
+    R54: {K525: 1},
 
     // Uniques
     RUOKALA: {K220: 1},
@@ -230,12 +365,144 @@ function RouteFinder({
     const K218K220: any = useRef();
     const K29K27: any = useRef();
 
+    const K61K62: any = useRef();
+    const K61K63: any = useRef();
+    const K63K64: any = useRef();
+    const K64K65: any = useRef();
+    const K65K66: any = useRef();
+    const K66K67: any = useRef();
+    const K67K68: any = useRef();
+    const K68K69: any = useRef();
+    const K69K610: any = useRef();
+    const K611K612: any = useRef();
+    const K611K613: any = useRef();
+    const K613K614: any = useRef();
+    const K614K615: any = useRef();
+    const K615K616: any = useRef();
+    const K617K618: any = useRef();
+    const K618E6591: any = useRef();
+    const K612K617: any = useRef();
+    const R61K612: any = useRef();
+    const R62K611: any = useRef();
+    const K613K619: any = useRef();
+    const K620K615: any = useRef();
+    const K620K621: any = useRef();
+    const K621K622: any = useRef();
+    const K622E6592: any = useRef();
+    const K614K621: any = useRef();
+    const K620E6621: any = useRef();
+    const K622E6611: any = useRef();
+    const K616E6701: any = useRef();
+    const K616K62: any = useRef();
+    const K61E690: any = useRef();
+    const K65K624: any = useRef();
+    const K624K625: any = useRef();
+    const K625D6571: any = useRef();
+    const K624D6521: any = useRef();
+    const R63K68: any = useRef();
+    const K626K69: any = useRef();
+    const K626D6581: any = useRef();
+    const K626V61: any = useRef();
+    const K610D6591: any = useRef();
+    const K627K66: any = useRef();
+    const K627K628: any = useRef();
+    const K66K624: any = useRef();
+    const K67K624: any = useRef();
+    const K627R64: any = useRef();
+    const K629H61: any = useRef();
+    const K628K629: any = useRef();
+    const K630K629: any = useRef();
+    const K630K64: any = useRef();
+    const K630K63: any = useRef();
+    const K619K618: any = useRef();
+    const K631K610: any = useRef();
+    const K631D6582: any = useRef();
+    const K631D6592: any = useRef();
+
+    // Floor 5
+    const K51K52: any = useRef();
+    const K51K53: any = useRef();
+    const K53K54: any = useRef();
+    const K55K56: any = useRef();
+    const K56K57: any = useRef();
+    const K57K58: any = useRef();
+    const K58K59: any = useRef();
+    const K59D5581: any = useRef();
+    const K510K511: any = useRef();
+    const K510K512: any = useRef();
+    const K512K513: any = useRef();
+    const K513K514: any = useRef();
+    const K514K515: any = useRef();
+    const K516E5511: any = useRef();
+    const K511K516: any = useRef();
+    const K511R51: any = useRef();
+    const K510R52: any = useRef();
+    const K512V51: any = useRef();
+    const K513E5701: any = useRef();
+    const K517E5591: any = useRef();
+    const K517E5512: any = useRef();
+    const K514K518: any = useRef();
+    const K519K520: any = useRef();
+    const K520K517: any = useRef();
+    const K513K518: any = useRef();
+    const K519E5621: any = useRef();
+    const K520E5611: any = useRef();
+    const K515E5702: any = useRef();
+    const K52E5901: any = useRef();
+    const K52K515: any = useRef();
+    const K51E5902: any = useRef();
+    const K521D5571: any = useRef();
+    const K522K54: any = useRef();
+    const K522K523: any = useRef();
+    const K521K523: any = useRef();
+    const K522D5501: any = useRef();
+    const K523D5502: any = useRef();
+    const K57R53: any = useRef();
+    const K58K524: any = useRef();
+    const K524D5582: any = useRef();
+    const K524V52: any = useRef();
+    const K59D5691: any = useRef();
+    const K525K55: any = useRef();
+    const K525K526: any = useRef();
+    const K526K527: any = useRef();
+    const K527K528: any = useRef();
+    const K528K529: any = useRef();
+    const K529K530: any = useRef();
+    const K530K531: any = useRef();
+    const K531K532: any = useRef();
+    const K55K522: any = useRef();
+    const K522K56: any = useRef();
+    const K525R54: any = useRef();
+    const K533H51: any = useRef();
+    const K526K533: any = useRef();
+    const K533K534: any = useRef();
+    const K53K534: any = useRef();
+    const K534K51: any = useRef();
+    const K527C5921: any = useRef();
+    const K528K535: any = useRef();
+    const K535K536: any = useRef();
+    const K536K537: any = useRef();
+    const C5571K537: any = useRef();
+    const K535C5651: any = useRef();
+    const K537C5652: any = useRef();
+    const K536K529: any = useRef();
+    const K530K538: any = useRef();
+    const K538K539: any = useRef();
+    const K539K540: any = useRef();
+    const K540C5572: any = useRef();
+    const K538V53: any = useRef();
+    const K532C5901: any = useRef();
+    const K531C5922: any = useRef();
+    const K55K54: any = useRef();
+    const K519K518: any = useRef();
+
+
     // Between floors
     const R21R71: any = useRef();
     const R21R72: any = useRef();
     const H21H71: any = useRef();
 
-        // Putting all lines to Object so we can iterate trough them and get lines by their id
+    // Putting all lines to Object so we can iterate trough them and get lines by their id
     const lines: any = {
         // Floor 7
         D7592K72: D7592K72,
@@ -329,6 +596,139 @@ function RouteFinder({
         K22K23: K22K23,
         K218K220: K218K220,
         K29K27: K29K27,
+
+        // Floor 6
+
+        K61K62: K61K62,
+        K61K63: K61K63,
+        K63K64: K63K64,
+        K64K65: K64K65,
+        K65K66: K65K66,
+        K66K67: K66K67,
+        K67K68: K67K68,
+        K68K69: K68K69,
+        K69K610: K69K610,
+        K611K612: K611K612,
+        K611K613: K611K613,
+        K613K614: K613K614,
+        K614K615: K614K615,
+        K615K616: K615K616,
+        K617K618: K617K618,
+        K618E6591: K618E6591,
+        K612K617: K612K617,
+        R61K612: R61K612,
+        R62K611: R62K611,
+        K613K619: K613K619,
+        K620K615: K620K615,
+        K620K621: K620K621,
+        K621K622: K621K622,
+        K622E6592: K622E6592,
+        K614K621: K614K621,
+        K620E6621: K620E6621,
+        K622E6611: K622E6611,
+        K616E6701: K616E6701,
+        K616K62: K616K62,
+        K61E690: K61E690,
+        K65K624: K65K624,
+        K624K625: K624K625,
+        K625D6571: K625D6571,
+        K624D6521: K624D6521,
+        R63K68: R63K68,
+        K626K69: K626K69,
+        K626D6581: K626D6581,
+        K626V61: K626V61,
+        K610D6591: K610D6591,
+        K627K66: K627K66,
+        K627K628: K627K628,
+        K66K624: K66K624,
+        K67K624: K67K624,
+        K627R64: K627R64,
+        K629H61: K629H61,
+        K628K629: K628K629,
+        K630K629: K630K629,
+        K630K64: K630K64,
+        K630K63: K630K63,
+        K619K618: K619K618,
+        K631K610: K631K610,
+        K631D6582: K631D6582,
+        K631D6592: K631D6592,
+        K530K538: K530K538,
+
+        // Floor 5
+        K51K52: K51K52,
+        K51K53: K51K53,
+        K53K54: K53K54,
+        K55K56: K55K56,
+        K56K57: K56K57,
+        K57K58: K57K58,
+        K58K59: K58K59,
+        K59D5581: K59D5581,
+        K510K511: K510K511,
+        K510K512: K510K512,
+        K512K513: K512K513,
+        K513K514: K513K514,
+        K514K515: K514K515,
+        K516E5511: K516E5511,
+        K511K516: K511K516,
+        K511R51: K511R51,
+        K510R52: K510R52,
+        K512V51: K512V51,
+        K513E5701: K513E5701,
+        K517E5591: K517E5591,
+        K517E5512: K517E5512,
+        K514K518: K514K518,
+        K519K520: K519K520,
+        K520K517: K520K517,
+        K513K518: K513K518,
+        K519E5621: K519E5621,
+        K520E5611: K520E5611,
+        K515E5702: K515E5702,
+        K52E5901: K52E5901,
+        K52K515: K52K515,
+        K51E5902: K51E5902,
+        K521D5571: K521D5571,
+        K522K54: K522K54,
+        K522K523: K522K523,
+        K521K523: K521K523,
+        K522D5501: K522D5501,
+        K523D5502: K523D5502,
+        K57R53: K57R53,
+        K58K524: K58K524,
+        K524D5582: K524D5582,
+        K524V52: K524V52,
+        K59D5691: K59D5691,
+        K525K55: K525K55,
+        K525K526: K525K526,
+        K526K527: K526K527,
+        K527K528: K527K528,
+        K528K529: K528K529,
+        K529K530: K529K530,
+        K530K531: K530K531,
+        K531K532: K531K532,
+        K55K522: K55K522,
+        K522K56: K522K56,
+        K525R54: K525R54,
+        K533H51: K533H51,
+        K526K533: K526K533,
+        K533K534: K533K534,
+        K53K534: K53K534,
+        K534K51: K534K51,
+        K527C5921: K527C5921,
+        K528K535: K528K535,
+        K535K536: K535K536,
+        K536K537: K536K537,
+        C5571K537: C5571K537,
+        K535C5651: K535C5651,
+        K537C5652: K537C5652,
+        K536K529: K536K529,
+        K538K539: K538K539,
+        K539K540: K539K540,
+        K540C5572: K540C5572,
+        K538V53: K538V53,
+        K532C5901: K532C5901,
+        K531C5922: K531C5922,
+        K55K54: K55K54,
+        K519K518: K519K518,
 
         // Between floors
         R21R71: R21R71,
@@ -577,8 +977,8 @@ function RouteFinder({
         }
     }, [marker]);
 
-    const AIB1: any = useRef();
-        return (
+
+    return (
         <>
             {/* Between floors */}
             <g display="none">
@@ -1033,58 +1433,59 @@ function RouteFinder({
                 </g>
             </g>
             <g display={floor6Visibility} id="_6_routes">
-                <path className="cls-6" d="M1326.58 1131.74L1326.58 1278.21"/>
-                <path className="cls-6" d="M1326.58 1087.53L1326.58 1131.74"/>
-                <path className="cls-6" d="M1326.58 1004.95L1326.58 1087.53"/>
-                <path className="cls-6" d="M1326.58 886.99L1326.58 1004.95"/>
-                <path className="cls-6" d="M1326.58 807.54L1326.58 886.99"/>
-                <path className="cls-6" d="M1326.58 676.95L1326.58 807.54"/>
-                <path className="cls-6" d="M1326.58 653.6L1326.58 676.95"/>
-                <path className="cls-6" d="M1326.58 587.98L1326.58 653.6"/>
-                <path className="cls-6" d="M1290.77 2025.21L1290.77 2087.03"/>
-                <path className="cls-6" d="M1290.77 2005.57L1290.77 2025.21"/>
-                <path className="cls-6" d="M1290.77 1732.53L1290.77 2005.57"/>
-                <path className="cls-6" d="M1290.77 1602.64L1290.77 1732.53"/>
-                <path className="cls-6" d="M1290.77 1350.31L1290.77 1602.64"/>
-                <path className="cls-6" d="M1512.43 2004.86L1360.14 2157.15"/>
-                <path className="cls-6" d="M1538.42 1978.86L1512.43 2004.86"/>
-                <path className="cls-6" d="M1359.71 2157.02L1290.91 2088.21"/>
-                <path className="cls-6" d="M1238.22 2087.03L1290.77 2087.03"/>
-                <path className="cls-6" d="M1238.29 2025.41L1290.77 2025.41"/>
-                <path className="cls-6" d="M1398.38 2005.37L1290.77 2005.37"/>
-                <path className="cls-6" d="M1333.86 1642.76L1290.77 1599.67"/>
-                <path className="cls-6" d="M1358.32 1666.73L1335.48 1643.89"/>
-                <path className="cls-6" d="M1397.93 1706.34L1358.32 1666.73"/>
-                <path className="cls-6" d="M1531.2 1839.61L1397.93 1706.34"/>
-                <path className="cls-6" d="M1291.37 1732.53L1357.17 1666.73"/>
-                <path className="cls-6" d="M1351.62 1627.75L1335.48 1643.89"/>
-                <path className="cls-6" d="M1413.89 1690.02L1397.75 1706.16"/>
-                <path className="cls-6" d="M1260.71 1350.31L1290.18 1350.31"/>
-                <path className="cls-6" d="M1326.58 1278.71L1290.77 1350.05"/>
-                <path className="cls-6" d="M1326.58 1131.74L1346.14 1131.74"/>
-                <path className="cls-6" d="M1430.73 782.86L1326.58 886.99"/>
-                <path className="cls-6" d="M1579.23 634.39L1430.73 782.86"/>
-                <path className="cls-6" d="M1665.81 547.83L1579.23 634.39"/>
-                <path className="cls-6" d="M1448.55 800.69L1430.73 782.86"/>
-                <path className="cls-6" d="M1308.97 653.46L1326.58 653.46"/>
-                <path className="cls-6" d="M1432.58 520.79L1326.58 626.82"/>
-                <path className="cls-6" d="M1535.56 417.77L1432.58 520.79"/>
-                <path className="cls-6" d="M1447.4 535.6L1432.58 520.79"/>
-                <path className="cls-6" d="M1301.06 587.98L1326.58 587.98"/>
-                <path className="cls-6" d="M1272.35 806.97L1326.58 806.97"/>
-                <path className="cls-6" d="M1228.53 806.97L1272.35 806.97"/>
-                <path className="cls-6" d="M1430.03 782.86L1327.3 806.97"/>
-                <path className="cls-6" d="M1430.23 782.65L1326.58 676.66"/>
-                <path className="cls-6" d="M1272.19 744.84L1272.19 806.97"/>
-                <path className="cls-6" d="M1247.85 909.06L1229.32 909.06"/>
-                <path className="cls-6" d="M1229.32 806.97L1229.32 908.09"/>
-                <path className="cls-6" d="M1229.32 909.68L1229.32 1003.96"/>
-                <path className="cls-6" d="M1230.25 1003.96L1326.58 1003.96"/>
-                <path className="cls-6" d="M1230.25 1004.95L1325.98 1086.94"/>
-                <path className="cls-6" d="M1511.72 2005.37L1398.38 2005.37"/>
-                <path className="cls-6" d="M1326.58 385.83L1326.58 587.98"/>
-                <path className="cls-6" d="M1326.58 336.58L1326.58 385.83"/>
-                <path className="cls-6" d="M1299.48 385.24L1326.58 385.24"/>
+                <path ref={K61K62} className="cls-6" d="M1326.58 1131.74L1326.58 1278.21"/>
+                <path ref={K61K63} className="cls-6" d="M1326.58 1087.53L1326.58 1131.74"/>
+                <path ref={K63K64} className="cls-6" d="M1326.58 1004.95L1326.58 1087.53"/>
+                <path ref={K64K65} className="cls-6" d="M1326.58 886.99L1326.58 1004.95"/>
+                <path ref={K65K66} className="cls-6" d="M1326.58 807.54L1326.58 886.99"/>
+                <path ref={K66K67} className="cls-6" d="M1326.58 676.95L1326.58 807.54"/>
+                <path ref={K67K68} className="cls-6" d="M1326.58 653.6L1326.58 676.95"/>
+                <path ref={K68K69} className="cls-6" d="M1326.58 626.208L1326.58 653.6"/>
+                <path ref={K69K610} className="cls-6" d="M1326.798 587.475L1326.798 626.017"/>
+                <path ref={K611K612} className="cls-6" d="M1290.77 2025.21L1290.77 2087.03"/>
+                <path ref={K611K613} className="cls-6" d="M1290.77 2005.57L1290.77 2025.21"/>
+                <path ref={K613K614} className="cls-6" d="M1290.77 1732.53L1290.77 2005.57"/>
+                <path ref={K614K615} className="cls-6" d="M1290.77 1602.64L1290.77 1732.53"/>
+                <path ref={K615K616} className="cls-6" d="M1290.77 1350.31L1290.77 1602.64"/>
+                <path ref={K617K618} className="cls-6" d="M1512.43 2004.86L1360.14 2157.15"/>
+                <path ref={K618E6591} className="cls-6" d="M1538.42 1978.86L1512.43 2004.86"/>
+                <path ref={K612K617} className="cls-6" d="M1359.71 2157.02L1290.91 2088.21"/>
+                <path ref={R61K612} className="cls-6" d="M1238.22 2087.03L1290.77 2087.03"/>
+                <path ref={R62K611} className="cls-6" d="M1238.29 2025.41L1290.77 2025.41"/>
+                <path ref={K613K619} className="cls-6" d="M1398.38 2005.37L1290.77 2005.37"/>
+                <path ref={K620K615} className="cls-6" d="M1333.86 1642.76L1290.77 1599.67"/>
+                <path ref={K620K621} className="cls-6" d="M1358.32 1666.73L1335.48 1643.89"/>
+                <path ref={K621K622} className="cls-6" d="M1397.93 1706.34L1358.32 1666.73"/>
+                <path ref={K622E6592} className="cls-6" d="M1531.2 1839.61L1397.93 1706.34"/>
+                <path ref={K614K621} className="cls-6" d="M1291.37 1732.53L1357.17 1666.73"/>
+                <path ref={K620E6621} className="cls-6" d="M1351.62 1627.75L1335.48 1643.89"/>
+                <path ref={K622E6611} className="cls-6" d="M1413.89 1690.02L1397.75 1706.16"/>
+                <path ref={K616E6701} className="cls-6" d="M1260.71 1350.31L1290.18 1350.31"/>
+                <path ref={K616K62} className="cls-6" d="M1326.58 1278.71L1290.77 1350.05"/>
+                <path ref={K61E690} className="cls-6" d="M1326.58 1131.74L1346.14 1131.74"/>
+                <path ref={K65K624} className="cls-6" d="M1430.73 782.86L1326.58 886.99"/>
+                <path ref={K624K625} className="cls-6" d="M1579.23 634.39L1430.73 782.86"/>
+                <path ref={K625D6571} className="cls-6" d="M1665.81 547.83L1579.23 634.39"/>
+                <path ref={K624D6521} className="cls-6" d="M1448.55 800.69L1430.73 782.86"/>
+                <path ref={R63K68} className="cls-6" d="M1308.97 653.46L1326.58 653.46"/>
+                <path ref={K626K69} className="cls-6" d="M1432.58 520.79L1326.58 626.82"/>
+                <path ref={K626D6581} className="cls-6" d="M1535.56 417.77L1432.58 520.79"/>
+                <path ref={K626V61} className="cls-6" d="M1447.4 535.6L1432.58 520.79"/>
+                <path ref={K610D6591} className="cls-6" d="M1301.06 587.98L1326.58 587.98"/>
+                <path ref={K627K66} className="cls-6" d="M1272.35 806.97L1326.58 806.97"/>
+                <path ref={K627K628} className="cls-6" d="M1228.53 806.97L1272.35 806.97"/>
+                <path ref={K66K624} className="cls-6" d="M1430.03 782.86L1327.3 806.97"/>
+                <path ref={K67K624} className="cls-6" d="M1430.23 782.65L1326.58 676.66"/>
+                <path ref={K627R64} className="cls-6" d="M1272.19 744.84L1272.19 806.97"/>
+                <path ref={K629H61} className="cls-6" d="M1247.85 909.06L1229.32 909.06"/>
+                <path ref={K628K629} className="cls-6" d="M1229.32 806.97L1229.32 908.09"/>
+                <path ref={K630K629} className="cls-6" d="M1229.32 909.68L1229.32 1003.96"/>
+                <path ref={K630K64} className="cls-6" d="M1230.25 1003.96L1326.58 1003.96"/>
+                <path ref={K630K63} className="cls-6" d="M1230.25 1004.95L1325.98 1086.94"/>
+                <path ref={K619K618} className="cls-6" d="M1511.72 2005.37L1398.38 2005.37"/>
+                <path ref={K631K610} className="cls-6" d="M1326.58 385.83L1326.58 587.98"/>
+                <path ref={K631D6582} className="cls-6" d="M1326.58 336.58L1326.58 385.83"/>
+                <path ref={K631D6592} className="cls-6" d="M1299.48 385.24L1326.58 385.24"/>
             </g>
 
             {/* Floor 7*/}
@@ -1151,7 +1552,7 @@ function RouteFinder({
                         className="cls-5"
                         id="D7581"
                         d="M419.79 114.91L323.52 211.17 231.74 211.17 231.74 280.4 244.2 292.86 237.54 299.52 237.54 339.25 288.46 339.25 338.91 288.8 510.51 460.4 632.03 338.88 420.05 126.91 419.79 114.91z"
-                    ></path>
+                    />
 
                     <path
                         className="cls-5"
@@ -1526,6 +1927,273 @@ function RouteFinder({
                     d="M206.95 749.19L206.95 788.23"
                 />
             </g>
+
+            {/* Floor 5*/}
+            <g display={floor5Visibility} id="_5_drawn_base">
+                <g id="misc">
+                    <path
+                        className="cls-4"
+                        d="M188.62 890.03L238.66 839.98 434.42 839.98 335.29 939.12 325.24 929.06 276.18 978.12 188.62 890.03z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M454.86 877.76L492.58 840.05 585.81 840.05 636.12 890.36 461.49 1064.98 410.06 1013.55 500.36 923.26 454.86 877.76z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M1.5 857.85L91.57 857.85 253.76 1020.05 168.12 1105.7 1.5 939.08 1.5 857.85z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M822.38 776.09L822.38 781.63 903.08 781.63 903.08 748.8 1079.52 748.8 1079.52 603.21 822.38 603.21 822.38 776.09z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M1140.84 1103.46L982.83 945.45 982.83 951.08 830.47 1103.44 1140.84 1103.46z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M1140.84 1254.77H1260.71V1328.35H1140.84z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M1437.35 1064.88L1391.22 1018.76 1345.43 1064.56 1437.35 1064.88z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M1433.54 1300.22L1345.76 1300.22 1389.65 1344.11 1433.54 1300.22z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M1308.18 1912.66L1308.18 1745.32 1475.32 1912.47 1308.18 1912.66z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M1387.57 2160.18L1352.56 2195.19 1352.56 2242.2 1475.92 2242.2 1390.73 2157.02 1387.57 2160.18z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M1140.84 1790.42H1260.71V1981.89H1140.84z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M1406.29 576.71L1372.27 610.73 1372.27 704.09 1422.12 753.94 1646.56 529.5 1595.92 478.86 1452.18 622.6 1406.29 576.71z"
+                    />
+                    <path
+                        className="cls-4"
+                        d="M1353.28 366.25L1353.28 570.38 1471.57 452.09 1460.49 441.02 1508.95 392.56 1402.14 285.74 1353.68 334.2 1353.28 366.25z"
+                    />
+                </g>
+                <g id="toilets">
+                    <path
+                        className="cls-3"
+                        transform="rotate(-45 346.04 1289.696)"
+                        d="M517.34 1075.37H714.27V1140.08H517.34z"
+                    />
+                    <path
+                        className="cls-3"
+                        d="M1459.3 1985.19L1308.18 1985.19 1308.18 1912.66 1475.13 1912.66 1522.27 1959.81 1496.88 1985.19 1459.3 1985.19z"
+                    />
+                    <path
+                        className="cls-3"
+                        d="M1549.7 433.3L1406.29 576.71 1452.18 622.6 1595.79 479 1549.7 433.3z"
+                    />
+                </g>
+                <g id="stairsElevator">
+                    <path
+                        className="cls-1"
+                        d="M1140.84 1981.9H1238.29V2242.21H1140.84z"
+                    />
+                    <path
+                        className="cls-1"
+                        d="M1308.97 744.84L1079.52 744.84 1079.52 603.21 1144.4 603.21 1144.4 632.88 1308.97 632.88 1308.97 744.84z"
+                    />
+                    <path
+                        className="cls-1"
+                        d="M1247.65 824.79H1308.97V993.3199999999999H1247.65z"
+                    />
+                </g>
+                <g id="classes">
+                    <path className="cls-5" d="M80.75 603.21H334.73V776.09H80.75z"/>
+                    <path className="cls-5" d="M334.73 603.21H822.38V776.09H334.73z"/>
+                    <path
+                        className="cls-5"
+                        d="M253.76 1020.05L168.12 1105.7 498.18 1435.76 663.48 1270.47 495.87 1102.86 497.62 1101.12 410.06 1013.55 361.1 1062.51 315.61 1017.02 283.57 1049.06 253.76 1020.05z"
+                    />
+                    <path
+                        className="cls-5"
+                        d="M495.87 1102.86L663.48 1270.47 982.86 951.08 982.86 940.66 885.87 843.68 754.34 843.68 495.87 1102.86z"
+                    />
+                    <path
+                        className="cls-5"
+                        d="M1140.84 1328.36H1260.71V1790.4299999999998H1140.84z"
+                    />
+                    <path
+                        className="cls-5"
+                        d="M1519.17 1902.51L1492.53 1929.15 1522.73 1959.35 1496.88 1985.19 1459.3 1985.19 1459.3 2024.09 1355.39 2128.01 1387.57 2160.18 1390.99 2156.75 1476.05 2241.81 1481.46 2241.81 1749.08 1974.18 1628.62 1853.72 1549.5 1932.84 1519.17 1902.51z"
+                    />
+                    <path
+                        className="cls-5"
+                        d="M1527.45 1857.31L1545.91 1875.77 1519.17 1902.51 1549.5 1932.84 1628.62 1853.72 1749.28 1974.38 1975.17 1748.49 1805.72 1579.04 1527.45 1857.31z"
+                    />
+                    <path
+                        className="cls-5"
+                        transform="rotate(-45 1523.542 1956.628)"
+                        d="M1596.54 1660.16H1990.07V1889.17H1596.54z"
+                    />
+                    <path
+                        className="cls-5"
+                        d="M1433.54 1300.22L1318.68 1415.08 1318.68 1648.53 1365.52 1695.37 1643.79 1417.1 1480.22 1253.54 1433.54 1300.22z"
+                    />
+                    <path
+                        className="cls-5"
+                        d="M1345.76 1064.88L1437.35 1064.88 1480.17 1107.71 1480.17 1253.59 1433.54 1300.22 1345.76 1300.22 1345.76 1064.88z"
+                    />
+                    <path
+                        className="cls-5"
+                        d="M1803.81 784.07L1480.27 1107.61 1437.35 1064.69 1372.27 999.61 1372.27 876.97 1633.66 615.58 1803.81 784.07z"
+                    />
+                    <path
+                        className="cls-5"
+                        d="M1633.37 615.28L1683.41 565.24 1575.12 456.94 1697.85 334.2 1975.76 612.12 1803.81 784.07 1633.37 615.28z"
+                    />
+                    <path
+                        className="cls-5"
+                        d="M1353.28 366.25L1303.43 366.25 1303.43 1.5 1479.68 1.5 1479.68 116.03 1697.85 334.2 1574.22 457.83 1402.14 285.74 1353.68 334.2 1353.28 366.25z"
+                    />
+                    <path className="cls-5" d="M1144.4 283.96H1303.43V632.88H1144.4z"/>
+                </g>
+                <g id="walls">
+                    <path
+                        className="cls-7"
+                        d="M1326.64 2107.3L1351.34 2131.99 1355.36 2127.97"
+                    />
+                    <path className="cls-7" d="M1326.64 2025.69L1457.71 2025.69"/>
+                    <path
+                        className="cls-7"
+                        d="M1260.71 1254.78L1260.71 1166.16 1243.7 1166.16"
+                    />
+                    <path className="cls-7" d="M901.1 603.21L740.88 603.21"/>
+                    <path
+                        className="cls-7"
+                        d="M740.88 603.21L81.02 603.21 81.02 774.25 1.5 774.25 1.5 939.08 498.18 1435.76 830.49 1103.46 1140.84 1103.46 1140.84 2242.2 1481.46 2242.2 1975.17 1748.49 1480.27 1253.59 1480.27 1107.61 1975.76 612.12 1479.68 116.03 1479.68 1.5 1303.43 1.5 1303.43 283.96 1144.4 283.96 1144.4 603.21 901.1 603.21"
+                    />
+                </g>
+                <g id="doors">
+                    <path className="cls-8" d="M489.59 1093.25L477.02 1080.63"/>
+                    <path className="cls-8" d="M558.52 1040.27L545.9 1052.84"/>
+                    <path className="cls-8" d="M741.14 856.87L728.52 869.44"/>
+                    <path className="cls-8" d="M420.73 911.77L408.12 924.33"/>
+                    <path className="cls-8" d="M366.67 965.98L354.05 978.55"/>
+                    <path className="cls-8" d="M301.97 1030.69L289.35 1043.25"/>
+                    <path className="cls-8" d="M1453.88 529.32L1441.26 541.89"/>
+                    <path className="cls-8" d="M1518 465.16L1505.38 477.73"/>
+                    <path className="cls-8" d="M1540.42 424.05L1527.85 411.43"/>
+                    <path className="cls-8" d="M1662.95 585.92L1650.33 598.49"/>
+                    <path className="cls-8" d="M1604.14 645.53L1591.52 658.1"/>
+                    <path className="cls-8" d="M1455 794.4L1442.38 806.97"/>
+                    <path className="cls-8" d="M1542.56 1879.48L1529.94 1892.05"/>
+                    <path className="cls-8" d="M1509.77 1911.87L1497.15 1924.44"/>
+                    <path className="cls-8" d="M1378.42 2151.45L1365.86 2138.84"/>
+                    <path className="cls-8" d="M1396.25 1726.08L1383.69 1713.46"/>
+                    <path className="cls-8" d="M1358.81 1688.77L1346.24 1676.15"/>
+                    <path className="cls-8" d="M1378.42 2151.45L1365.86 2138.84"/>
+                    <path className="cls-8" d="M1362.71 1985.21L1344.9 1985.17"/>
+                    <path className="cls-8" d="M1449.75 1985.19L1431.94 1985.16"/>
+                    <path className="cls-8" d="M1335.48 366.26L1317.67 366.23"/>
+                    <path className="cls-8" d="M1296.72 744.84L1247.65 744.75"/>
+                    <path className="cls-8" d="M800.82 776.15L783.01 776.11"/>
+                    <path className="cls-8" d="M394.14 776.11L376.33 776.08"/>
+                    <path className="cls-8" d="M284.34 776.09L266.53 776.06"/>
+                    <path className="cls-8" d="M1303.42 572.63L1303.45 554.82"/>
+                    <path className="cls-8" d="M1260.69 1359.22L1260.73 1341.41"/>
+                    <path className="cls-8" d="M1260.69 1741.44L1260.73 1723.63"/>
+                    <path className="cls-8" d="M1238.24 2052.83L1238.34 1998.55"/>
+                    <path className="cls-8" d="M1238.22 2095.93L1238.25 2078.12"/>
+                    <path className="cls-8" d="M1345.75 1287.12L1345.78 1269.31"/>
+                    <path className="cls-8" d="M1346.14 1095.84L1346.18 1078.04"/>
+                    <path className="cls-8" d="M1308.95 669.68L1308.95 637.24"/>
+                    <path className="cls-8" d="M1247.54 985.79L1247.85 831.68"/>
+                </g>
+            </g>
+            <g display={floor5Visibility} id="_5_routes">
+                <path ref={K51K52} className="cls-6" d="M1326.58 1086.94L1326.58 1278.21"/>
+                <path ref={K51K53} className="cls-6" d="M1326.58 1003.96L1326.58 1086.94"/>
+                <path ref={K53K54} className="cls-6" d="M1326.58 887.199v116.761"/>
+                <path ref={K55K54} className="cls-6" d="M1325.976 805.715v80.546"/>
+                <path ref={K55K56} className="cls-6" d="M1326.58 676.95L1326.58 806.42"/>
+                <path ref={K56K57} className="cls-6" d="M1326.58 653.6L1326.58 676.95"/>
+                <path ref={K57K58} className="cls-6" d="M1326.58 628.14L1326.58 653.6"/>
+                <path ref={K58K59} className="cls-6" d="M1326.58 564.12L1326.58 628.14"/>
+                <path ref={K59D5581} className="cls-6" d="M1326.58 366.25L1326.58 564.12"/>
+                <path ref={K510K511} className="cls-6" d="M1290.77 2025.21L1290.77 2087.03"/>
+                <path ref={K510K512} className="cls-6" d="M1290.77 2005.57L1290.77 2025.21"/>
+                <path ref={K512K513} className="cls-6" d="M1290.77 1732.53L1290.77 2005.57"/>
+                <path ref={K513K514} className="cls-6" d="M1290.77 1672.66L1290.77 1732.53"/>
+                <path ref={K514K515} className="cls-6" d="M1290.77 1350.31L1290.77 1672.66"/>
+                <path ref={K516E5511} className="cls-6" d="M1372.14 2145.15L1360.14 2157.15"/>
+                <path ref={K511K516} className="cls-6" d="M1359.71 2157.02L1290.91 2088.21"/>
+                <path ref={K511R51} className="cls-6" d="M1238.22 2087.03L1290.77 2087.03"/>
+                <path ref={K510R52} className="cls-6" d="M1238.29 2025.41L1290.77 2025.41"/>
+                <path ref={K512V51} className="cls-6" d="M1398.38 2005.37L1290.77 2005.37"/>
+                <path ref={K513E5701} className="cls-6" d="M1260.73 1732.53L1290.77 1732.53"/>
+                <path ref={K517E5591} className="cls-6" d="M1497.15 1879.48L1536.25 1885.43"/>
+                <path ref={K517E5512} className="cls-6" d="M1503.46 1918.22L1497.15 1879.76"/>
+                <path ref={K514K518} className="cls-6" d="M1320.74 1703.42L1290.72 1673.4"/>
+                <path ref={K519K518} className="cls-9" d="M1326.41 1709.09L1320.74 1703.42"/>
+                <path ref={K519K520} className="cls-6" d="M1363.68 1746.36L1326.41 1709.09"/>
+                <path ref={K520K517} className="cls-6" d="M1496.95 1879.63L1363.68 1746.36"/>
+                <path ref={K513K518} className="cls-6" d="M1291.37 1732.53L1320.61 1703.29"/>
+                <path ref={K519E5621} className="cls-6" d="M1352.52 1682.46L1326.15 1708.83"/>
+                <path ref={K520E5611} className="cls-6" d="M1389.92 1719.77L1363.5 1746.18"/>
+                <path ref={K515E5702} className="cls-6" d="M1260.71 1350.31L1290.18 1350.31"/>
+                <path ref={K52E5901} className="cls-6" d="M1345.75 1278.21L1327.07 1278.21"/>
+                <path ref={K52K515} className="cls-6" d="M1326.58 1278.71L1290.77 1350.05"/>
+                <path ref={K51E5902} className="cls-6" d="M1326.58 1086.94L1346.14 1086.94"/>
+                <path ref={K521D5571} className="cls-6" d="M1656.45 592.2L1639.01 574.76"/>
+                <path ref={K522K54} className="cls-6" d="M1430.73 782.86L1326.58 886.99"/>
+                <path ref={K522K523} className="cls-6" d="M1579.23 634.39L1430.73 782.86"/>
+                <path ref={K521K523} className="cls-6" d="M1638.41 575.23L1579.23 634.39"/>
+                <path ref={K522D5501} className="cls-6" d="M1448.55 800.69L1430.73 782.86"/>
+                <path ref={K523D5502} className="cls-6" d="M1597.83 651.81L1579.82 633.8"/>
+                <path ref={K57R53} className="cls-6" d="M1308.97 653.46L1326.58 653.46"/>
+                <path ref={K58K524} className="cls-6" d="M1432.58 520.79L1326.58 626.82"/>
+                <path ref={K524D5582} className="cls-6" d="M1534.86 418.47L1432.58 520.79"/>
+                <path ref={K524V52} className="cls-6" d="M1447.4 535.6L1432.58 520.79"/>
+                <path ref={K59D5691} className="cls-6" d="M1303.42 563.72L1326.58 563.72"/>
+                <path ref={K525K55} className="cls-6" d="M1272.35 806.97L1326.58 806.97"/>
+                <path ref={K525K526} className="cls-6" d="M1228.53 806.97L1272.35 806.97"/>
+                <path ref={K526K527} className="cls-6" d="M792.25 806.97L1228.53 806.97"/>
+                <path ref={K527K528} className="cls-6" d="M764.23 806.97L792.25 806.97"/>
+                <path ref={K528K529} className="cls-6" d="M579.38 806.97L764.23 806.97"/>
+                <path ref={K529K530} className="cls-6" d="M489.48 806.97L579.38 806.97"/>
+                <path ref={K530K531} className="cls-6" d="M384.623 806.97H489.48"/>
+                <path ref={K531K532} className="cls-6" d="M277.999 806.97h104.857"/>
+                <path ref={K55K522} className="cls-6" d="M1430.03 782.86L1327.3 806.97"/>
+                <path ref={K522K56} className="cls-6" d="M1430.23 782.65L1326.58 676.66"/>
+                <path ref={K525R54} className="cls-6" d="M1272.19 744.84L1272.19 806.97"/>
+                <path ref={K533H51} className="cls-6" d="M1247.85 909.06L1229.32 909.06"/>
+                <path ref={K526K533} className="cls-6" d="M1229.32 806.97L1229.32 908.09"/>
+                <path ref={K533K534} className="cls-6" d="M1229.32 909.68L1229.32 1003.96"/>
+                <path ref={K53K534} className="cls-6" d="M1230.25 1003.96L1326.58 1003.96"/>
+                <path ref={K534K51} className="cls-6" d="M1230.25 1004.95L1325.98 1086.94"/>
+                <path ref={K527C5921} className="cls-6" d="M791.92 776.09L791.92 806.97"/>
+                <path ref={K528K535} className="cls-6" d="M720.53 849.5L763.04 806.97"/>
+                <path ref={K535K536} className="cls-6" d="M671.22 898.82L720.53 849.5"/>
+                <path ref={K536K537} className="cls-6" d="M538.02 1032.07L671.22 898.82"/>
+                <path ref={C5571K537} className="cls-6" d="M483.31 1086.8L538.02 1032.07"/>
+                <path ref={K535C5651} className="cls-6" d="M734.83 863.24L720.81 849.22"/>
+                <path ref={K537C5652} className="cls-6" d="M552.21 1046.56L537.87 1032.21"/>
+                <path ref={K536K529} className="cls-6" d="M670.93 898.47L579.85 807.39"/>
+                <path ref={K530K538} className="cls-6" d="M397.9 900.71L490.4 808.2"/> {/* 30-38 */}
+                <path ref={K538K539} className="cls-6" d="M343.9 954.71L397.9 900.71"/>
+                <path ref={K539K540} className="cls-6" d="M280.93 1017.68L343.9 954.71"/>
+                <path ref={K540C5572} className="cls-6" d="M295.66 1036.97L278.65 1019.96"/>
+                <path ref={K538V53} className="cls-6" d="M414.42 918.05L397.49 901.12"/>
+                <path ref={K532C5901} className="cls-6" d="M275.44 776.06L275.44 806.97"/>
+                <path ref={K531C5922} className="cls-6" d="M385.24 776.11L385.24 806.97"/>
+            </g>
+
         </>
     );
 }
