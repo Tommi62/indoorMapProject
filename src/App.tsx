@@ -53,9 +53,9 @@ const App = () => {
   const button = () => {
     setUpdate({
       startNode: "E7701",
-      endNode: "V21"
-    })
-  }
+      endNode: "V21",
+    });
+  };
 
   return (
     <>

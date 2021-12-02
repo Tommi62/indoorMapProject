@@ -38,7 +38,7 @@ interface propTypes {
   modalOpen: any;
   floor: string;
   setFloor: Function;
-  availableRooms: string[],
+  availableRooms: string[];
 }
 
 const ReactSvgViewer = ({
@@ -92,7 +92,6 @@ const ReactSvgViewer = ({
     setShowNav(false);
   };
   const navigateTo = (id: string) => {
-    map.closePopup();
     setShowNav(false);
     setEnd(id);
     setTimeout(() => {
@@ -101,7 +100,6 @@ const ReactSvgViewer = ({
   };
 
   const navigateFrom = (id: string) => {
-    map.closePopup();
     setStart(id);
     setShowNav(false);
     setTimeout(() => {
@@ -122,9 +120,8 @@ const ReactSvgViewer = ({
   };
 
   const mapClick = (e: any) => {
-    let str = e.originalEvent.path[0].id;
-    console.log(e.originalEvent.path[0].id);
-    console.log(e.latlng);
+    let str = e.originalEvent.target.id;
+    console.log("event", e.latlng);
     if (isNaN(str.charAt(0)) && str !== "") {
       setIsVisible(true);
       setPopupPosition(e.latlng);
@@ -134,7 +131,7 @@ const ReactSvgViewer = ({
 
   useEffect(() => {
     if (map !== undefined) {
-      map.on("click", mapClick);
+      map.on("click touchstart", mapClick);
     }
   }, [map]);
 
@@ -144,7 +141,6 @@ const ReactSvgViewer = ({
 
   useEffect(() => {
     try {
-      console.log("markkeri", marker);
       if (map !== undefined) {
         setTimeout(() => {
           map.closePopup();
