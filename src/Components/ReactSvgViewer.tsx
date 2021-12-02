@@ -8,6 +8,11 @@ import {
 } from "react-leaflet";
 import { RouteFinder } from "./RouteFinder";
 import data from "../Data/classrooms.json";
+import classMarker from "../Markers/classMarker.svg";
+import stairsMarker from "../Markers/stairsMarker.svg";
+import elevatorMarker from "../Markers/elevatorMarker.svg";
+import wcMarker from "../Markers/wcMarker.svg";
+
 import * as L from "leaflet";
 import { useModalData } from "../Hooks/ModalDataHooks";
 import LeafletPopup from "./LeafletPopup";
@@ -139,6 +144,7 @@ const ReactSvgViewer = ({
 
   useEffect(() => {
     try {
+      console.log("markkeri", marker);
       if (map !== undefined) {
         setTimeout(() => {
           map.closePopup();
@@ -176,15 +182,31 @@ const ReactSvgViewer = ({
     }
   }, [floor]);
 
+  const [markerIcon, setMarkerIcon] = useState(classMarker);
+
+  useEffect(() => {
+    try {
+      if (marker[0].name.charAt(0) === "V") {
+        setMarkerIcon(wcMarker);
+      } else if (marker[0].name.charAt(0) === "H") {
+        setMarkerIcon(elevatorMarker);
+      } else if (marker[0].name.charAt(0) === "S") {
+        setMarkerIcon(stairsMarker);
+      } else {
+        setMarkerIcon(classMarker);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [marker]);
+
   let classIcon = L.icon({
-    iconUrl:
-      "https://cdn-icons.flaticon.com/png/512/2280/premium/2280294.png?token=exp=1637933811~hmac=2c7a85da4b51ec71f2aa10251621ba56",
+    iconUrl: markerIcon,
     /*toilet https://cdn-icons.flaticon.com/png/512/2274/premium/2274172.png?token=exp=1637933882~hmac=b648cf3c448c8f637db40d26f39eb3c7 */
     /*stairs https://cdn-icons-png.flaticon.com/512/734/734548.png */
     /*elevator https://cdn-icons.flaticon.com/png/512/2460/premium/2460777.png?token=exp=1637933983~hmac=f68906f7ad55a15740a0de2b9dfb8c8f */
-    iconSize: [20, 20], // size of the icon
-    iconAnchor: [11, 11], // point of the icon which will correspond to marker's location
-    popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+    iconSize: [50, 50], // size of the icon
+    iconAnchor: [25, 50], // point of the icon which will correspond to marker's location
   });
 
   const [bounds, setBounds] = useState<any>();
