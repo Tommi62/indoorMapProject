@@ -38,7 +38,7 @@ interface propTypes {
   modalOpen: any;
   floor: string;
   setFloor: Function;
-  availableRooms: string[],
+  availableRooms: string[];
 }
 
 const ReactSvgViewer = ({
@@ -122,7 +122,7 @@ const ReactSvgViewer = ({
   };
 
   const mapClick = (e: any) => {
-    console.log('EEEEEEEE', e);
+    console.log("EEEEEEEE", e);
     let str = e.originalEvent.target.id;
     console.log(e.originalEvent.target.id);
     if (isNaN(str.charAt(0)) && str !== "") {
@@ -169,7 +169,7 @@ const ReactSvgViewer = ({
         setSvgSize("1000 0 1050 2255.97");
       }
       if (floor === "5") {
-        setSvgSize("0 0 1979.8 2255.97");
+        setSvgSize("1000 0 1050 2255.97");
       }
       if (floor === "6") {
         setSvgSize("1000 0 1050 2255.97");
