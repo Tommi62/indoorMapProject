@@ -4,8 +4,10 @@ import fetch from 'cross-fetch';
 const server = fastify()
 
 server.register(require('fastify-cors'), {
-    origin: "*"
+    origin: "http://localhost:3000"
 })
+
+//https://media-server-tommi.northeurope.cloudapp.azure.com
 
 type postRequest = FastifyRequest<{
     Body: {
@@ -15,6 +17,8 @@ type postRequest = FastifyRequest<{
         startDate: string,
         apiKey: string,
         apiUrl: string,
+        rangeStart: string,
+        rooms: string[],
     }
 }>
 
@@ -41,10 +45,17 @@ const doFetch = async (url: string, options = {}) => {
 };
 
 server.post('/metropolia-data', async (req: postRequest, reply) => {
-    const { group, room, realization, startDate, apiKey, apiUrl } = req.body
+    const { group, room, realization, startDate, apiKey, apiUrl, rangeStart, rooms } = req.body
     let body
 
-    if (room !== '') {
+    if (rangeStart !== '') {
+        body = {
+            "rangeStart": rangeStart,
+            "rangeEnd": rangeStart,
+            "room": rooms,
+            "building": ["KAAPO"],
+        }
+    } else if (room !== '') {
         body = {
             "startDate": startDate,
             "room": [room],
@@ -76,7 +87,7 @@ server.post('/metropolia-data', async (req: postRequest, reply) => {
 
     try {
         const result = await doFetch(apiUrl, fetchOptions);
-        console.log('Result', result);
+        console.log('MetropoliaData', result);
         return result;
     } catch (err: any) {
         throw new Error(err)
@@ -89,6 +100,14 @@ server.post('/fazer-data', async (req: getRequest, reply) => {
         const result = await doFetch(url);
         console.log('Result', result);
         return result;
+    } catch (err: any) {
+        throw new Error(err)
+    }
+})
+
+server.get('/test', async (req: FastifyRequest, reply) => {
+    try {
+        reply.send('TestiTestiTesti')
     } catch (err: any) {
         throw new Error(err)
     }

@@ -1,6 +1,8 @@
 import React, {useEffect, useRef, useState} from "react";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
+import data from "../Data/classrooms.json";
+import Room from "./Room";
 
 interface propTypes {
     update: paramObj;
@@ -11,11 +13,20 @@ interface propTypes {
     start: string;
     end: string;
     floor: string;
+    availableRooms: string[],
 }
 
 interface paramObj {
     startNode: string;
     endNode: string;
+}
+
+interface roomsArray {
+    className: string,
+    id: string,
+    transform: any,
+    d: any,
+
 }
 
 // Setting the logic for each point so the algorithm knows from which point can you go to which
@@ -49,7 +60,7 @@ let graph: any = {
     K724: {K721: 1, K725: 1, E7611: 1},
     K725: {K724: 1, E7591: 1, E7511: 1},
     K726: {K727: 1, K723: 1, V71: 1},
-    K727: {K726: 1, K728: 1},
+    K727: {K726: 1, K728: 1, R73: 1},
     K728: {K727: 1, E7512: 1},
 
     // Floor 6
@@ -270,8 +281,10 @@ function RouteFinder({
                          start,
                          end,
                          floor,
+                         availableRooms,
                      }: propTypes) {
     const classes7: any = useRef();
+    const [seventhFloorRoomsArray, setSeventhFloorRoomsArray] = useState<roomsArray[]>([]);
 
     // Making refs to all the lines from svg so we can use them later to display and hide lines by their id
     const D7592K72: any = useRef();
@@ -326,6 +339,7 @@ function RouteFinder({
     const K728E7512: any = useRef();
     const K712R72: any = useRef();
     const K712K713: any = useRef();
+    const R73K727: any = useRef();
 
     const V21K22: any = useRef();
     const U21K21: any = useRef();
@@ -502,7 +516,7 @@ function RouteFinder({
     const R21R72: any = useRef();
     const H21H71: any = useRef();
 
-    // Putting all lines to Object so we can iterate trough them and get lines by their id
+    //Putting all lines to Object so we can iterate trough them and get lines by their id
     const lines: any = {
         // Floor 7
         D7592K72: D7592K72,
@@ -556,7 +570,7 @@ function RouteFinder({
         K726K727: K726K727,
         K727K728: K727K728,
         K728E7512: K728E7512,
-        K712R72: K712R72,
+        K712R72: K712R72, R73K727: R73K727,
 
         // Floor 2
         V21K22: V21K22,
@@ -740,28 +754,30 @@ function RouteFinder({
     const [floor2Visibility, setFloor2Visibility] = useState("none");
     const [floor5Visibility, setFloor5Visibility] = useState("none");
     const [floor6Visibility, setFloor6Visibility] = useState("none");
+    const [updateFloor, setUpdateFloor] = useState(Date.now());
 
     useEffect(() => {
         try {
             if (floor === "2") {
+                console.log('FLOOR2');
                 setFloor7Visibility("none");
                 setFloor5Visibility("none");
                 setFloor6Visibility("none");
                 setFloor2Visibility("block");
-            }
-            if (floor === "5") {
+            } else if (floor === "5") {
+                console.log('FLOOR5');
                 setFloor7Visibility("none");
                 setFloor5Visibility("block");
                 setFloor6Visibility("none");
                 setFloor2Visibility("none");
-            }
-            if (floor === "6") {
+            } else if (floor === "6") {
+                console.log('FLOOR6');
                 setFloor7Visibility("none");
                 setFloor5Visibility("none");
                 setFloor6Visibility("block");
                 setFloor2Visibility("none");
-            }
-            if (floor === "7") {
+            } else if (floor === "7") {
+                console.log('FLOOR7');
                 setFloor7Visibility("block");
                 setFloor5Visibility("none");
                 setFloor6Visibility("none");
@@ -773,7 +789,45 @@ function RouteFinder({
         }
     }, [floor]);
 
-    // Get vector length by it's id
+    useEffect(() => {
+        try {
+            console.log('2: ' + floor2Visibility + ' 5: ' + floor5Visibility + ' 6: ' + floor6Visibility + ' 7: ' + floor7Visibility);
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }, [floor2Visibility, floor5Visibility, floor6Visibility, floor7Visibility]);
+
+    useEffect(() => {
+        try {
+            let roomDataArray = [];
+            for (let i = 0; i < data[7].length; i++) {
+                if (!data[7][i].name.startsWith('V') && !data[7][i].name.startsWith('S') && !data[7][i].name.startsWith('H')) {
+                    const roomObject = {
+                        className: 'cls-5',
+                        id: data[7][i].name,
+                        transform: data[7][i].transform,
+                        d: data[7][i].d,
+                    };
+                    roomDataArray.push(roomObject);
+                }
+            }
+            if (availableRooms.length !== 0) {
+                for (let i = 0; i < availableRooms.length; i++) {
+                    for (let j = 0; j < roomDataArray.length; j++) {
+                        const correctedName = 'KM' + roomDataArray[j].id;
+                        if (correctedName === availableRooms[i]) {
+                            roomDataArray[j].className = 'cls-5-available';
+                            break;
+                        }
+                    }
+                }
+            }
+            setSeventhFloorRoomsArray(roomDataArray);
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }, [availableRooms]);// Get vector length by it's id
+
     let lengthGetter = (id: any) => {
         console.log(id)
         const divElement: SVGGeometryElement = lines[id].current;
@@ -823,8 +877,9 @@ function RouteFinder({
     };
 
     // Main function including dijkstra's algorithm so we find shortest path from given "map" with start and end points
-    let findShortestPath = (graph: any, tempStartNode: string, tempEndNode: string) => {
-        // track distances from the start node using a hash object
+    let findShortestPath = (graph: any, tempStartNode: string,
+                            tempEndNode: string
+    ) => {// track distances from the start node using a hash object
         let distances: any = {};
         distances[tempEndNode] = "Infinity";
         distances = Object.assign(distances, graph[tempStartNode]);
@@ -948,6 +1003,31 @@ function RouteFinder({
             to: to + "2",
             length: findShortestPath(graph, from + "2", to + "2"),
         });
+        data.push({
+            from: from,
+            to: to + "1",
+            length: findShortestPath(graph, from, to + "1"),
+        });
+        data.push({
+            from: from,
+            to: to + "2",
+            length: findShortestPath(graph, from, to + "2"),
+        });
+        data.push({
+            from: from + "1",
+            to: to,
+            length: findShortestPath(graph, from + "1", to),
+        });
+        data.push({
+            from: from + "2",
+            to: to,
+            length: findShortestPath(graph, from + "2", to),
+        });
+        data.push({
+            from: from,
+            to: to,
+            length: findShortestPath(graph, from, to),
+        });
         objIterator(graph);
 
         const shortestRoute = data.reduce(function (prev, curr) {
@@ -977,7 +1057,6 @@ function RouteFinder({
         }
     }, [marker]);
 
-
     return (
         <>
             {/* Between floors */}
@@ -999,7 +1078,14 @@ function RouteFinder({
                 />
             </g>
 
-            {/* Floor 2*/}
+            {/* Between floors */}
+            <g display="none">
+                <path ref={R21R71} className="cls-6" d="M206.95 749.19L206.95 788.23"/>
+                <path ref={R21R72} className="cls-6" d="M206.95 749.19L206.95 788.23"/>
+                <path ref={H21H71} className="cls-6" d="M206.95 749.19L206.95 788.23"/>
+            </g>
+
+            {/*Floor 2*/}
             <g display={floor2Visibility} id="_2_drawn_base">
                 <g id="walls">
                     <path className="cls-1" d="M1140.84 2063.79L1237.76 2063.79"/>
@@ -1057,24 +1143,25 @@ function RouteFinder({
                     <path className="cls-4" d="M740.88 603.21L901.1 603.21"/>
                 </g>
                 <g id="toilets">
-                    <path className="cls-3" d="M335.26 699.61H416V774.25H335.26z"/>
-                    <path
-                        className="cls-3"
-                        d="M1477.24 1911.21L1459.43 1929.02 1505.59 1975.17 1433.98 2046.78 1411.04 2023.83 1327.17 2023.83 1327.17 1983.48 1308.97 1983.48 1308.97 1911.21 1477.24 1911.21z"
+                    <path className="cls-3" id="V21" d="M335.26 699.61H416V774.25H335.26z"
                     />
                     <path
+                        id="V23" className="cls-3"
+                        d="M1477.24 1911.21L1459.43 1929.02 1505.59 1975.17 1433.98 2046.78 1411.04 2023.83 1327.17 2023.83 1327.17 1983.48 1308.97 1983.48 1308.97 1911.21 1477.24 1911.21z"
+                    />
+                    <path id="PUKKARI"
                         className="cls-3"
                         d="M1275.74 1218.38L1275.74 1306.2 1388.09 1417.76 1388.09 1826.82 1308.97 1747.7 1308.97 1848.18 1275.74 1848.18 1275.74 1821.28 1252.01 1821.28 1252.01 1796.75 1227.48 1796.75 1227.48 1612.4 1264.66 1612.4 1264.66 1541.19 1227.48 1541.19 1227.48 1306.2 1275.74 1306.2"
                     />
                 </g>
                 <g id="stairsElevator">
                     <path
-                        className="cls-1"
+                        className="cls-1" id="R21"
                         d="M1308.97 744.84L1079.52 744.84 1079.52 603.21 1144.4 603.21 1144.4 632.88 1308.97 632.88 1308.97 744.84z"
                     />
-                    <path className="cls-1" d="M1247.65 824.75H1308.97V993.28H1247.65z"/>
+                    <path className="cls-1" id="H21" d="M1247.65 824.75H1308.97V993.28H1247.65z"/>
                     <path
-                        className="cls-1"
+                        className="cls-1" id="R22"
                         d="M1140.84 1981.9H1238.29V2242.21H1140.84z"
                     />
                 </g>
