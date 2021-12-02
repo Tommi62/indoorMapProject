@@ -17,14 +17,14 @@ const doFetch = async (url: string, options = {}) => {
 };
 
 interface requestObj {
-    group: string,
-    room: string,
-    realization: string,
+    group: string[],
+    room: string[],
+    realization: string[],
     startDate: string,
     apiKey: any,
     apiUrl: any,
     rangeStart: string,
-    rooms: string[],
+    rangeEnd: string,
 }
 
 const useApiData = () => {

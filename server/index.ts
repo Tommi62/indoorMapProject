@@ -11,14 +11,14 @@ server.register(require('fastify-cors'), {
 
 type postRequest = FastifyRequest<{
     Body: {
-        group: string,
-        room: string,
-        realization: string,
+        group: string[],
+        room: string[],
+        realization: string[],
         startDate: string,
         apiKey: string,
         apiUrl: string,
         rangeStart: string,
-        rooms: string[],
+        rangeEnd: string,
     }
 }>
 
@@ -45,32 +45,48 @@ const doFetch = async (url: string, options = {}) => {
 };
 
 server.post('/metropolia-data', async (req: postRequest, reply) => {
-    const { group, room, realization, startDate, apiKey, apiUrl, rangeStart, rooms } = req.body
+    const { group, room, realization, startDate, apiKey, apiUrl, rangeStart, rangeEnd } = req.body
     let body
 
-    if (rangeStart !== '') {
+    if (rangeEnd !== '' && group.length > 0) {
+        body = {
+            "rangeStart": rangeStart,
+            "rangeEnd": rangeEnd,
+            "studentGroup": group,
+            "size": 10,
+            "building": ["KAAPO"],
+        }
+    } else if (rangeEnd !== '' && realization.length > 0) {
+        body = {
+            "rangeStart": rangeStart,
+            "rangeEnd": rangeEnd,
+            "realization": realization,
+            "size": 10,
+            "building": ["KAAPO"],
+        }
+    } else if (rangeStart !== '') {
         body = {
             "rangeStart": rangeStart,
             "rangeEnd": rangeStart,
-            "room": rooms,
+            "room": room,
             "building": ["KAAPO"],
         }
-    } else if (room !== '') {
+    } else if (room.length > 0) {
         body = {
             "startDate": startDate,
-            "room": [room],
+            "room": room,
             "building": ["KAAPO"],
         }
-    } else if (realization !== '') {
+    } else if (realization.length > 0) {
         body = {
             "startDate": startDate,
-            "realization": [realization],
+            "realization": realization,
             "building": ["KAAPO"],
         }
     } else {
         body = {
             "startDate": startDate,
-            "studentGroup": [group],
+            "studentGroup": group,
             "building": ["KAAPO"],
         }
     }
