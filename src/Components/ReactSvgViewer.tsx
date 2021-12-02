@@ -161,7 +161,7 @@ const ReactSvgViewer = ({
         setSvgSize("0 0 1979.8 2255.97");
       }
       if (floor === "5") {
-        setSvgSize("0 0 912.36 2255.97");
+        setSvgSize("0 0 1979.8 2255.97");
       }
       if (floor === "6") {
         setSvgSize("0 0 1979.8 2255.97");
