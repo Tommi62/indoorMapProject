@@ -7,7 +7,7 @@ const fastify_1 = __importDefault(require("fastify"));
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
 const server = (0, fastify_1.default)();
 server.register(require('fastify-cors'), {
-    origin: "*"
+    origin: "http://localhost:3000"
 });
 const doFetch = async (url, options = {}) => {
     const response = await (0, cross_fetch_1.default)(url, options);
@@ -27,9 +27,17 @@ const doFetch = async (url, options = {}) => {
     }
 };
 server.post('/metropolia-data', async (req, reply) => {
-    const { group, room, realization, startDate, apiKey, apiUrl } = req.body;
+    const { group, room, realization, startDate, apiKey, apiUrl, rangeStart, rooms } = req.body;
     let body;
-    if (room !== '') {
+    if (rangeStart !== '') {
+        body = {
+            "rangeStart": rangeStart,
+            "rangeEnd": rangeStart,
+            "room": rooms,
+            "building": ["KAAPO"],
+        };
+    }
+    else if (room !== '') {
         body = {
             "startDate": startDate,
             "room": [room],
@@ -60,7 +68,7 @@ server.post('/metropolia-data', async (req, reply) => {
     };
     try {
         const result = await doFetch(apiUrl, fetchOptions);
-        console.log('Result', result);
+        console.log('MetropoliaData', result);
         return result;
     }
     catch (err) {
@@ -73,6 +81,14 @@ server.post('/fazer-data', async (req, reply) => {
         const result = await doFetch(url);
         console.log('Result', result);
         return result;
+    }
+    catch (err) {
+        throw new Error(err);
+    }
+});
+server.get('/test', async (req, reply) => {
+    try {
+        reply.send('TestiTestiTesti');
     }
     catch (err) {
         throw new Error(err);

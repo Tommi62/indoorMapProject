@@ -16,15 +16,18 @@ import FazerMenu from "./FazerMenu";
 const useStyles = makeStyles((theme) => ({
   box: {
     [theme.breakpoints.down(1000)]: {
-      width: "80vw!important",
+      width: "75vw!important",
+      maxHeight: '80vh!important',
     },
   },
   shortcut: {
     marginTop: "0.5rem",
   },
-  modal: {
-    maxHeight: "90vh",
-  },
+  shortcutButton: {
+    [theme.breakpoints.down(600)]: {
+      fontSize: '0.7rem!important',
+    },
+  }
 }));
 
 interface modalContentArray {
@@ -50,6 +53,8 @@ interface propTypes {
   keyWord: string;
   updateShortcuts: number;
   setUpdateShortcuts: Function;
+  updateOwnList: number,
+  setUpdateOwnList: Function,
   restaurantMenu: boolean;
   setRestaurantMenu: Function;
 }
@@ -62,6 +67,8 @@ const Modal = ({
   keyWord,
   updateShortcuts,
   setUpdateShortcuts,
+  updateOwnList,
+  setUpdateOwnList,
   restaurantMenu,
   setRestaurantMenu,
   setMarker,
@@ -69,6 +76,8 @@ const Modal = ({
   const classes = useStyles();
   const [isShortcut, setIsShortcut] = useState(false);
   const [shortcutLimiter, setShortcutLimiter] = useState(false);
+  const [isRoom, setIsRoom] = useState(false);
+  const [isInYourOwnList, setIsInYourOwnList] = useState(false);
   const [calendarStartAndEnd, setCalendarStartAndEnd] =
     useState<startEndObject>({
       start: "",
@@ -90,32 +99,42 @@ const Modal = ({
     ]);
   };
 
-  const addShortcut = () => {
-    if (localStorage.getItem("shortcuts") !== null) {
-      const shortcutArray = JSON.parse(localStorage.getItem("shortcuts")!);
+  const add = (type: string) => {
+    if (localStorage.getItem(type) !== null) {
+      const shortcutArray = JSON.parse(localStorage.getItem(type)!);
       shortcutArray.push(keyWord);
-      localStorage.setItem("shortcuts", JSON.stringify(shortcutArray));
+      localStorage.setItem(type, JSON.stringify(shortcutArray));
     } else {
       const shortcutArray = [keyWord];
-      localStorage.setItem("shortcuts", JSON.stringify(shortcutArray));
+      localStorage.setItem(type, JSON.stringify(shortcutArray));
     }
-    setIsShortcut(true);
-    setUpdateShortcuts(Date.now());
+    if (type === 'shortcuts') {
+      setIsShortcut(true);
+      setUpdateShortcuts(Date.now());
+    } else {
+      setIsInYourOwnList(true);
+      setUpdateOwnList(Date.now());
+    }
   };
 
-  const removeShortcut = () => {
-    if (localStorage.getItem("shortcuts") !== null) {
-      const shortcutArray = JSON.parse(localStorage.getItem("shortcuts")!);
+  const remove = (type: string) => {
+    if (localStorage.getItem(type) !== null) {
+      const shortcutArray = JSON.parse(localStorage.getItem(type)!);
       for (let i = 0; i < shortcutArray.length; i++) {
         if (shortcutArray[i] === keyWord) {
           shortcutArray.splice(i, 1);
-          localStorage.setItem("shortcuts", JSON.stringify(shortcutArray));
+          localStorage.setItem(type, JSON.stringify(shortcutArray));
           break;
         }
       }
     }
-    setIsShortcut(false);
-    setUpdateShortcuts(Date.now());
+    if (type === 'shortcuts') {
+      setIsShortcut(false);
+      setUpdateShortcuts(Date.now());
+    } else {
+      setIsInYourOwnList(false);
+      setUpdateOwnList(Date.now());
+    }
   };
 
   useEffect(() => {
@@ -147,6 +166,29 @@ const Modal = ({
       console.log(error.message);
     }
   }, [keyWord, updateShortcuts]);
+
+  useEffect(() => {
+    try {
+      if (keyWord.startsWith('KM')) {
+        setIsRoom(true);
+      } else {
+        setIsRoom(false);
+      }
+
+      setIsInYourOwnList(false);
+      if (localStorage.getItem("ownList") !== null) {
+        const ownListArray = JSON.parse(localStorage.getItem("ownList")!);
+        for (let i = 0; i < ownListArray.length; i++) {
+          if (ownListArray[i] === keyWord) {
+            setIsInYourOwnList(true);
+            break;
+          }
+        }
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [keyWord, updateOwnList]);
 
   return (
     <MuiModal
@@ -241,14 +283,23 @@ const Modal = ({
                   className={classes.shortcut}
                 >
                   {isShortcut ? (
-                    <Button onClick={removeShortcut}>Remove shortcut</Button>
+                    <Button className={classes.shortcutButton} onClick={() => remove('shortcuts')}>Remove shortcut</Button>
                   ) : (
                     <>
                       {!shortcutLimiter && (
-                        <Button onClick={addShortcut}>Add shortcut</Button>
+                        <Button className={classes.shortcutButton} onClick={() => add('shortcuts')}>Add shortcut</Button>
                       )}
                     </>
                   )}
+                  {!isRoom &&
+                    <>
+                      {isInYourOwnList ? (
+                        <Button className={classes.shortcutButton} onClick={() => remove('ownList')}>Remove from list</Button>
+                      ) : (
+                        <Button className={classes.shortcutButton} onClick={() => add('ownList')}>Add to list</Button>
+                      )}
+                    </>
+                  }
                 </Grid>
               </>
             ) : (

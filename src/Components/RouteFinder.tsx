@@ -1,6 +1,8 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
+import data from "../Data/classrooms.json";
+import Room from "./Room";
 
 interface propTypes {
     update: paramObj;
@@ -11,11 +13,20 @@ interface propTypes {
     start: string;
     end: string;
     floor: string;
+    availableRooms: string[],
 }
 
 interface paramObj {
     startNode: string;
     endNode: string;
+}
+
+interface roomsArray {
+    className: string,
+    id: string,
+    transform: any,
+    d: any,
+
 }
 
 // Setting the logic for each point so the algorithm knows from which point can you go to which
@@ -262,16 +273,18 @@ let graph: any = {
 };
 
 function RouteFinder({
-                         setModalOpen,
-                         setModalContent,
-                         setKeyWord,
-                         update,
-                         marker,
-                         start,
-                         end,
-                         floor,
-                     }: propTypes) {
+    setModalOpen,
+    setModalContent,
+    setKeyWord,
+    update,
+    marker,
+    start,
+    end,
+    floor,
+    availableRooms,
+}: propTypes) {
     const classes7: any = useRef();
+    const [seventhFloorRoomsArray, setSeventhFloorRoomsArray] = useState<roomsArray[]>([]);
 
     // Making refs to all the lines from svg so we can use them later to display and hide lines by their id
     const D7592K72: any = useRef();
@@ -326,6 +339,7 @@ function RouteFinder({
     const K728E7512: any = useRef();
     const K712R72: any = useRef();
     const K712K713: any = useRef();
+    const R73K727: any = useRef();
 
     const V21K22: any = useRef();
     const U21K21: any = useRef();
@@ -557,6 +571,7 @@ function RouteFinder({
         K727K728: K727K728,
         K728E7512: K728E7512,
         K712R72: K712R72,
+        R73K727: R73K727,
 
         // Floor 2
         V21K22: V21K22,
@@ -740,10 +755,12 @@ function RouteFinder({
     const [floor2Visibility, setFloor2Visibility] = useState("none");
     const [floor5Visibility, setFloor5Visibility] = useState("none");
     const [floor6Visibility, setFloor6Visibility] = useState("none");
+    const [updateFloor, setUpdateFloor] = useState(Date.now());
 
     useEffect(() => {
         try {
             if (floor === "2") {
+                console.log('FLOOR2');
                 setFloor7Visibility("none");
                 setFloor5Visibility("none");
                 setFloor6Visibility("none");
@@ -772,6 +789,45 @@ function RouteFinder({
             console.log(error.message);
         }
     }, [floor]);
+
+    useEffect(() => {
+        try {
+            console.log('2: ' + floor2Visibility + ' 5: ' + floor5Visibility + ' 6: ' + floor6Visibility + ' 7: ' + floor7Visibility);
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }, [floor2Visibility, floor5Visibility, floor6Visibility, floor7Visibility]);
+
+    useEffect(() => {
+        try {
+            let roomDataArray = [];
+            for (let i = 0; i < data[7].length; i++) {
+                if (!data[7][i].name.startsWith('V') && !data[7][i].name.startsWith('S') && !data[7][i].name.startsWith('H')) {
+                    const roomObject = {
+                        className: 'cls-5',
+                        id: data[7][i].name,
+                        transform: data[7][i].transform,
+                        d: data[7][i].d,
+                    };
+                    roomDataArray.push(roomObject);
+                }
+            }
+            if (availableRooms.length !== 0) {
+                for (let i = 0; i < availableRooms.length; i++) {
+                    for (let j = 0; j < roomDataArray.length; j++) {
+                        const correctedName = 'KM' + roomDataArray[j].id;
+                        if (correctedName === availableRooms[i]) {
+                            roomDataArray[j].className = 'cls-5-available';
+                            break;
+                        }
+                    }
+                }
+            }
+            setSeventhFloorRoomsArray(roomDataArray);
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    }, [availableRooms]);
 
     // Get vector length by it's id
     let lengthGetter = (id: any) => {
@@ -948,6 +1004,31 @@ function RouteFinder({
             to: to + "2",
             length: findShortestPath(graph, from + "2", to + "2"),
         });
+        data.push({
+            from: from,
+            to: to + "1",
+            length: findShortestPath(graph, from, to + "1"),
+        });
+        data.push({
+            from: from,
+            to: to + "2",
+            length: findShortestPath(graph, from, to + "2"),
+        });
+        data.push({
+            from: from + "1",
+            to: to,
+            length: findShortestPath(graph, from + "1", to),
+        });
+        data.push({
+            from: from + "2",
+            to: to,
+            length: findShortestPath(graph, from + "2", to),
+        });
+        data.push({
+            from: from,
+            to: to,
+            length: findShortestPath(graph, from, to),
+        });
         objIterator(graph);
 
         const shortestRoute = data.reduce(function (prev, curr) {
@@ -1059,10 +1140,12 @@ function RouteFinder({
                 <g id="toilets">
                     <path className="cls-3" d="M335.26 699.61H416V774.25H335.26z"/>
                     <path
+                        id="V23"
                         className="cls-3"
                         d="M1477.24 1911.21L1459.43 1929.02 1505.59 1975.17 1433.98 2046.78 1411.04 2023.83 1327.17 2023.83 1327.17 1983.48 1308.97 1983.48 1308.97 1911.21 1477.24 1911.21z"
                     />
                     <path
+                        id="PUKKARI"
                         className="cls-3"
                         d="M1275.74 1218.38L1275.74 1306.2 1388.09 1417.76 1388.09 1826.82 1308.97 1747.7 1308.97 1848.18 1275.74 1848.18 1275.74 1821.28 1252.01 1821.28 1252.01 1796.75 1227.48 1796.75 1227.48 1612.4 1264.66 1612.4 1264.66 1541.19 1227.48 1541.19 1227.48 1306.2 1275.74 1306.2"
                     />
@@ -1070,11 +1153,17 @@ function RouteFinder({
                 <g id="stairsElevator">
                     <path
                         className="cls-1"
+                        id="R21"
                         d="M1308.97 744.84L1079.52 744.84 1079.52 603.21 1144.4 603.21 1144.4 632.88 1308.97 632.88 1308.97 744.84z"
                     />
-                    <path className="cls-1" d="M1247.65 824.75H1308.97V993.28H1247.65z"/>
                     <path
                         className="cls-1"
+                        id="H21"
+                        d="M1247.65 824.75H1308.97V993.28H1247.65z"
+                    />
+                    <path
+                        className="cls-1"
+                        id="R22"
                         d="M1140.84 1981.9H1238.29V2242.21H1140.84z"
                     />
                 </g>
@@ -1548,6 +1637,9 @@ function RouteFinder({
                     />
                 </g>
                 <g id="classes" ref={classes7}>
+                    {seventhFloorRoomsArray.map((item) => (
+                        < Room className={item.className} id={item.id} transform={item.transform} d={item.d} />
+                    ))}{" "}
                     <path
                         className="cls-5"
                         id="D7581"
@@ -1620,23 +1712,31 @@ function RouteFinder({
                 <g id="toilets">
                     <path
                         className="cls-3"
+                        id="K73"
                         d="M340.93 580.27L386.52 625.86 531.02 481.37 485.27 435.63 340.93 580.27z"
                     />
                     <path
                         className="cls-3"
+                        id="V71"
                         d="M244.2 1916.42L411.61 1916.42 457.86 1962.68 432.38 1988.16 244.1 1988.16 244.2 1916.42z"
                     />
                 </g>
                 <g id="stairs_elevator">
                     <path
+                        id="R71"
                         className="cls-1"
                         d="M69.94 636.84L69.94 605.06 1.5 605.06 1.5 752.36 243.61 752.36 243.61 662.42 243.61 646.34 243.61 636.84 69.94 636.84 69.94 616.27"
                     />
                     <path
+                        id="H71"
                         className="cls-1"
                         d="M178.73 829.37L244.93 829.37 244.93 998.16 177.94 998.16 178.73 829.37z"
                     />
-                    <path className="cls-1" d="M73.1 2069.32H172.79V2254.27H73.1z"/>
+                    <path
+                        className="cls-1"
+                        id="R73"
+                        d="M73.1 2069.32H172.79V2254.27H73.1z"
+                    />
                 </g>
                 <g id="walls">
                     <path
@@ -1911,6 +2011,12 @@ function RouteFinder({
                     className="cls-6"
                     d="M216.97 2009.32L216.97 2088.45 214.34 2087.92 173.19 2087.92"
                 />
+                <path
+                    ref={R73K727}
+                    className="cls-6"
+                    d="M216.97 2088.45 214.34 2087.92 173.19 2087.92"
+                />
+                {/* d='214.34 2087.92 173.19 2087.92' */}
                 <path
                     ref={K727K728}
                     className="cls-6"

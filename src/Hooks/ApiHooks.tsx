@@ -21,15 +21,17 @@ interface requestObj {
     room: string,
     realization: string,
     startDate: string,
-    apiKey: string,
-    apiUrl: string,
+    apiKey: any,
+    apiUrl: any,
+    rangeStart: string,
+    rooms: string[],
 }
 
 const useApiData = () => {
 
     const postGetMetropoliaData = async (requestObject: requestObj) => {
-        requestObject.apiKey = ApiConfig.apiKey;
-        requestObject.apiUrl = ApiConfig.apiUrl;
+        requestObject.apiKey = process.env.REACT_APP_API_KEY;
+        requestObject.apiUrl = process.env.REACT_APP_API_URL;
 
         const fetchOptions = {
             method: 'POST',
@@ -53,7 +55,7 @@ const useApiData = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                url: ApiConfig.fazerApiUrl + lang,
+                url: process.env.REACT_APP_FAZER_URL + lang,
             }),
         };
         try {

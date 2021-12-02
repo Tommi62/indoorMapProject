@@ -6,7 +6,8 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import Modal from "./Components/Modal";
 import MapViewer from "./Components/MapViewer";
 import { Button } from "@mui/material";
-import {useApiData} from "./Hooks/ApiHooks";
+import { useApiData } from "./Hooks/ApiHooks";
+import data from "./Data/classrooms.json";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -26,6 +27,8 @@ const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [keyWord, setKeyWord] = useState("");
   const [updateShortcuts, setUpdateShortcuts] = useState(Date.now());
+  const [updateOwnList, setUpdateOwnList] = useState(Date.now());
+  const [floorSelect, setFloorSelect] = useState<keyof typeof data>("7");
   const [modalContent, setModalContent] = useState<modalContentArray[]>([
     {
       success: false,
@@ -64,11 +67,14 @@ const App = () => {
         setKeyWord={setKeyWord}
         updateShortcuts={updateShortcuts}
         setRestaurantMenu={setRestaurantMenu}
+        floorSelect={floorSelect}
+        setFloorSelect={setFloorSelect}
       />
       <Grid className={classes.root} container justifyContent="center">
-        <Button onClick={button}>Click me</Button>
         <Grid container item justifyContent="center">
           <MapViewer
+            floorSelect={floorSelect}
+            setFloorSelect={setFloorSelect}
             setModalOpen={setModalOpen}
             modalOpen={modalOpen}
             setModalContent={setModalContent}
@@ -88,6 +94,8 @@ const App = () => {
         keyWord={keyWord}
         updateShortcuts={updateShortcuts}
         setUpdateShortcuts={setUpdateShortcuts}
+        updateOwnList={updateOwnList}
+        setUpdateOwnList={setUpdateOwnList}
         restaurantMenu={restaurantMenu}
         setRestaurantMenu={setRestaurantMenu}
       />

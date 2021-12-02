@@ -29,6 +29,15 @@ g {
   stroke-width: 8px !important;
   stroke-linejoin: round;
   stroke: rgb(0, 0, 0);
+  transition: fill 0.3s;
+}
+
+.cls-1:active {
+  fill: #ff61c0;
+}
+
+.cls-1:hover {
+  fill: #ff61c0;
 }
 
 /* Hallways */
@@ -45,6 +54,15 @@ g {
   stroke-linejoin: round;
   stroke: rgb(0, 0, 0);
   fill: #ffc60b;
+  transition: fill 0.3s;
+}
+
+.cls-3:active {
+  fill: #ffde6f;
+}
+
+.cls-3:hover {
+  fill: #ffde6f;
 }
 
 /* Unauthorized places */
@@ -70,6 +88,22 @@ g {
 
 .cls-5:hover {
   fill: rgb(99, 213, 255);
+}
+
+.cls-5-available {
+  stroke-width: 8px !important;
+  stroke: rgb(0, 0, 0);
+  stroke-linejoin: round;
+  fill: rgb(0, 222, 122);
+  transition: fill 0.3s;
+}
+
+.cls-5-available:active {
+  fill: rgb(59, 253, 166);
+}
+
+.cls-5-available:hover {
+  fill: rgb(59, 253, 166);
 }
 
 /* Lines */
@@ -108,7 +142,7 @@ g {
 
 @keyframes slideInFromLeft {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-103%);
   }
   100% {
     transform: translateX(0);
@@ -120,7 +154,7 @@ g {
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-103%);
   }
 }
 
@@ -133,7 +167,7 @@ g {
 }
 
 .slideRight {
-  transform: translateX(-100%);
+  transform: translateX(-103%);
   animation: 0.5s 0s 1 slideInFromRight;
 }
 
@@ -184,7 +218,53 @@ g {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
+.availableRoomsButton {
+  position: absolute!important;
+  z-index: 401;
+  right: 10px;
+  top: 245px;
+  padding: 0.2rem 0.45rem!important;
+  min-width: 1.5rem!important;
+  background-color: rgba(255, 255, 255, 0.9)!important;
+  border: 0.01rem solid lightgrey!important;
+}
 
+.availableRoomsButton:hover {
+  background-color: rgba(243, 243, 243, 0.9)!important;
+}
+.buttonActive {
+  background-color: rgb(238, 238, 238) !important;
+}
+
+/* Lines */
+.cls-6 {
+  stroke: #ff0000 !important;
+  stroke-width: 14px !important;
+  stroke-linecap: round !important;
+  fill: none;
+}
+
+/* Walls */
+.cls-7 {
+  stroke-width: 8px !important;
+  stroke-linejoin: round;
+  stroke: #000000;
+  stroke-linecap: round !important;
+  fill: none;
+}
+
+/* Doors */
+.cls-8 {
+  stroke: #f55 !important;
+  stroke-width: 13px !important;
+}
+
+.cls-9 {
+  stroke-width: 12px !important;
+}
+.cls-10 {
+  visibility: hidden;
+}
 
 .leaflet-container {
   background: rgb(255, 255, 255);
@@ -309,15 +389,19 @@ div[role="navigation"] {
   }
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 600px) {
   .fc-toolbar-title {
-    font-size: 0.9rem !important;
+    font-size: 0.7rem !important;
   }
 
   .fc-button {
     padding: 0 !important;
     line-height: 0 !important;
-    height: 1.5rem !important;
-    width: 1.5rem !important;
+    height: 1.4rem !important;
+    width: 1.4rem !important;
+  }
+
+  .fc .fc-button .fc-icon {
+    font-size: 1rem!important;
   }
 }
