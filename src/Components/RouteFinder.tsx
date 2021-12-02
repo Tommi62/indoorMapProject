@@ -249,6 +249,7 @@ let graph: any = {
     // Floor 7
     R71: {K75: 1, R21: 1},
     R72: {K712: 1, R21: 1},
+    R73: {K727: 1},
     // Floor 2
     R21: {K25: 1, R71: 1, R72: 1},
     R22: {K215: 1},
@@ -570,7 +571,8 @@ function RouteFinder({
         K726K727: K726K727,
         K727K728: K727K728,
         K728E7512: K728E7512,
-        K712R72: K712R72, R73K727: R73K727,
+        K712R72: K712R72,
+        R73K727: R73K727,
 
         // Floor 2
         V21K22: V21K22,
@@ -1076,13 +1078,6 @@ function RouteFinder({
                     className="cls-6"
                     d="M206.95 749.19L206.95 788.23"
                 />
-            </g>
-
-            {/* Between floors */}
-            <g display="none">
-                <path ref={R21R71} className="cls-6" d="M206.95 749.19L206.95 788.23"/>
-                <path ref={R21R72} className="cls-6" d="M206.95 749.19L206.95 788.23"/>
-                <path ref={H21H71} className="cls-6" d="M206.95 749.19L206.95 788.23"/>
             </g>
 
             {/*Floor 2*/}
@@ -1994,11 +1989,6 @@ function RouteFinder({
                     d="M220.66 2006.69L326.16 2006.69"
                 />
                 <path
-                    ref={K726K727}
-                    className="cls-6"
-                    d="M216.97 2009.32L216.97 2088.45 214.34 2087.92 173.19 2087.92"
-                />
-                <path
                     ref={K727K728}
                     className="cls-6"
                     d="M216.97 2091.08L216.97 2159.13"
@@ -2013,6 +2003,17 @@ function RouteFinder({
                     className="cls-6"
                     d="M206.95 749.19L206.95 788.23"
                 />
+                <path
+                    ref={K726K727}
+                    className="cls-6"
+                    d="M216.97 2009.32L216.97 2088.45 214.34"
+                />
+                <path
+                    ref={R73K727}
+                    className="cls-6"
+                    d="M216.97 2088.45 214.34 2087.92 173.19 2087.92"
+                />
+
             </g>
 
             {/* Floor 5*/}
