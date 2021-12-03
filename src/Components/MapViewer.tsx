@@ -231,9 +231,10 @@ const MapViewer = ({
   const goToMyNextClass = (classesArray: classesArray[]) => {
     for (let i = 0; i < classesArray[0].resources.length; i++) {
       if (classesArray[0].resources[i].type === 'room') {
+        const tempStr = classesArray[0].resources[i].code.substr(2)
         const navigateObject = {
           from: 'U21',
-          to: classesArray[0].resources[i].code,
+          to: tempStr,
           update: Date.now(),
         };
         setNavigateToNextClass(navigateObject);
