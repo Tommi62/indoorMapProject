@@ -5,32 +5,32 @@ import data from "../Data/classrooms.json";
 import Room from "./Room";
 
 interface propTypes {
-  update: paramObj;
-  setModalOpen: Function;
-  setModalContent: Function;
-  setKeyWord: Function;
-  marker: string;
-  start: string;
-  end: string;
-  floor: keyof typeof data;
-  availableRooms: string[];
+    update: paramObj;
+    setModalOpen: Function;
+    setModalContent: Function;
+    setKeyWord: Function;
+    marker: string;
+    start: string;
+    end: string;
+    floor: keyof typeof data;
+    availableRooms: string[];
 }
 
 interface paramObj {
-  startNode: string;
-  endNode: string;
+    startNode: string;
+    endNode: string;
 }
 
 interface roomsArray {
-  className: string;
-  id: string;
-  transform: any;
-  d: any;
+    className: string;
+    id: string;
+    transform: any;
+    d: any;
 }
 
 // Setting the logic for each point so the algorithm knows from which point can you go to which
 let graph: any = {
-  // Hallways
+    // Hallways
 
     //Floor 7
     K71: {K72: 1, D7581: 1, D7591: 1},
@@ -220,14 +220,13 @@ let graph: any = {
 
     // Elevators
     // Floor 7
-    H71: {K714: 1, H21: 1},
+    H71: {K714: 1, H21: 1, H51: 1, H61: 1},
     // Floor 2
-    H21: {K28: 1, H71: 1},
+    H21: {K28: 1, H71: 1, H51: 1, H61: 1},
     // Floor 6
-    //TODO Missing vertical routes
-    H61: {K629: 1},
+    H61: {K629: 1, H51: 1, H71: 1, H21: 1},
     // Floor 5
-    H51: {K533: 1},
+    H51: {K533: 1, H21: 1, H61: 1, H71: 1},
 
     // Toilets
     // Floor 7
@@ -533,6 +532,14 @@ function RouteFinder({
     const R21X51: any = useRef();
     const X51X61: any = useRef();
     const R221R73: any = useRef();
+    const R522R622: any = useRef();
+    const R522R73: any = useRef();
+    const R73R622: any = useRef();
+    const H21H51: any = useRef();
+    const H21H61: any = useRef();
+    const H51H61: any = useRef();
+    const H51H71: any = useRef();
+    const H61H71: any = useRef();
 
 
     //Putting all lines to Object so we can iterate trough them and get lines by their id
@@ -781,6 +788,14 @@ function RouteFinder({
         R21X51: R21X51,
         X51X61: X51X61,
         R221R73: R221R73,
+        R522R622: R522R622,
+        R522R73: R522R73,
+        R73R622: R73R622,
+        H21H51: H21H51,
+        H21H61: H21H61,
+        H51H61: H51H61,
+        H51H71: H51H71,
+        H61H71: H61H71,
 
     };
 
@@ -831,40 +846,40 @@ function RouteFinder({
         }
     }, [floor2Visibility, floor5Visibility, floor6Visibility, floor7Visibility]);
 
-  useEffect(() => {
-    try {
-      let roomDataArray = [];
-      for (let i = 0; i < data[floor].length; i++) {
-        if (
-          !data[floor][i].name.startsWith("V") &&
-          !data[floor][i].name.startsWith("S") &&
-          !data[floor][i].name.startsWith("H")
-        ) {
-          const roomObject = {
-            className: "cls-5",
-            id: data[floor][i].name,
-            transform: data[floor][i].transform,
-            d: data[floor][i].d,
-          };
-          roomDataArray.push(roomObject);
-        }
-      }
-      if (availableRooms.length !== 0) {
-        for (let i = 0; i < availableRooms.length; i++) {
-          for (let j = 0; j < roomDataArray.length; j++) {
-            const correctedName = "KM" + roomDataArray[j].id;
-            if (correctedName === availableRooms[i]) {
-              roomDataArray[j].className = "cls-5-available";
-              break;
+    useEffect(() => {
+        try {
+            let roomDataArray = [];
+            for (let i = 0; i < data[floor].length; i++) {
+                if (
+                    !data[floor][i].name.startsWith("V") &&
+                    !data[floor][i].name.startsWith("S") &&
+                    !data[floor][i].name.startsWith("H")
+                ) {
+                    const roomObject = {
+                        className: "cls-5",
+                        id: data[floor][i].name,
+                        transform: data[floor][i].transform,
+                        d: data[floor][i].d,
+                    };
+                    roomDataArray.push(roomObject);
+                }
             }
-          }
+            if (availableRooms.length !== 0) {
+                for (let i = 0; i < availableRooms.length; i++) {
+                    for (let j = 0; j < roomDataArray.length; j++) {
+                        const correctedName = "KM" + roomDataArray[j].id;
+                        if (correctedName === availableRooms[i]) {
+                            roomDataArray[j].className = "cls-5-available";
+                            break;
+                        }
+                    }
+                }
+            }
+            setSeventhFloorRoomsArray(roomDataArray);
+        } catch (error: any) {
+            console.log(error.message);
         }
-      }
-      setSeventhFloorRoomsArray(roomDataArray);
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  }, [availableRooms, floor]); // Get vector length by it's id
+    }, [availableRooms, floor]); // Get vector length by it's id
 
     // Get vector length by it's id
     let lengthGetter = (id: any) => {
@@ -1098,6 +1113,7 @@ function RouteFinder({
 
 
 
+
         return (
         <>
             {/* Between floors */}
@@ -1117,7 +1133,7 @@ function RouteFinder({
                     ref={X61X71}
                     className="cls-6"
                     d="M206.95 749.19L206.95 788.23"
-        />
+                />
                 <path
                     ref={R21X61}
                     className="cls-6"
@@ -1151,7 +1167,17 @@ function RouteFinder({
                     d="M206.95 749.19L206.95 788.23"
                 />
                 <path
-                    ref={R221R522}
+                    ref={R522R622}
+                    className="cls-6"
+                    d="M206.95 749.19L206.95 788.23"
+                />
+                <path
+                    ref={R522R73}
+                    className="cls-6"
+                    d="M206.95 749.19L206.95 788.23"
+                />
+                <path
+                    ref={R73R622}
                     className="cls-6"
                     d="M206.95 749.19L206.95 788.23"
                 />
@@ -1195,6 +1221,31 @@ function RouteFinder({
                 {/* Elevators */}
                 <path
                     ref={H21H71}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+                <path
+                    ref={H21H51}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+                <path
+                    ref={H21H61}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+                <path
+                    ref={H51H61}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+                <path
+                    ref={H51H71}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+                <path
+                    ref={H61H71}
                     className="cls-6"
                     d="M1272.19 744.84v62.13"
                 />
@@ -1265,8 +1316,8 @@ function RouteFinder({
                         d="M1477.24 1911.21L1459.43 1929.02 1505.59 1975.17 1433.98 2046.78 1411.04 2023.83 1327.17 2023.83 1327.17 1983.48 1308.97 1983.48 1308.97 1911.21 1477.24 1911.21z"
                     />
                     <path id="PUKKARI"
-                        className="cls-3"
-                        d="M1275.74 1218.38L1275.74 1306.2 1388.09 1417.76 1388.09 1826.82 1308.97 1747.7 1308.97 1848.18 1275.74 1848.18 1275.74 1821.28 1252.01 1821.28 1252.01 1796.75 1227.48 1796.75 1227.48 1612.4 1264.66 1612.4 1264.66 1541.19 1227.48 1541.19 1227.48 1306.2 1275.74 1306.2"
+                          className="cls-3"
+                          d="M1275.74 1218.38L1275.74 1306.2 1388.09 1417.76 1388.09 1826.82 1308.97 1747.7 1308.97 1848.18 1275.74 1848.18 1275.74 1821.28 1252.01 1821.28 1252.01 1796.75 1227.48 1796.75 1227.48 1612.4 1264.66 1612.4 1264.66 1541.19 1227.48 1541.19 1227.48 1306.2 1275.74 1306.2"
                     />
                 </g>
                 <g id="stairsElevator">
@@ -1428,52 +1479,52 @@ function RouteFinder({
           className="cls-6"
           d="M1269.86 2084.75L1238.36 2084.75"
         />*/}
-        <path
-          ref={K215R221}
-          className="cls-6"
-          d="M1269.66 2021.6L1238.24 2021.6"
-        />
-        <path
-          ref={K214V23}
-          className="cls-6"
-          d="M1308.99 1964.88L1270.08 1964.88"
-        />
-        <path
-          ref={K210PUKKARI}
-          className="cls-6"
-          d="M1176.35 1576.4L1252.01 1576.4"
-        />
-        <path
-          ref={K212K221}
-          className="cls-6"
-          d="M1275.72 1262.88L1176.11 1262.88"
-        />
-        <path
-          ref={K213K221}
-          className="cls-6"
-          d="M1275.76 1263.28L1176.11 1163.48"
-        />
-        <path
-          ref={K221E2042}
-          className="cls-6"
-          d="M1275.99 1263.28L1322.65 1313.89"
-        />
-        <path
-          ref={K22K23}
-          className="cls-6"
-          d="M852.25 740.49L1013.92 782.18"
-        />
-        <path
-          ref={K218K220}
-          className="cls-6"
-          d="M1347.79 2162.44L1307.36 2202.87"
-        />
-        <path
-          ref={K29K27}
-          className="cls-6"
-          d="M1176.35 943.87L1210.31 909.9"
-        />
-      </g>
+                <path
+                    ref={K215R221}
+                    className="cls-6"
+                    d="M1269.66 2021.6L1238.24 2021.6"
+                />
+                <path
+                    ref={K214V23}
+                    className="cls-6"
+                    d="M1308.99 1964.88L1270.08 1964.88"
+                />
+                <path
+                    ref={K210PUKKARI}
+                    className="cls-6"
+                    d="M1176.35 1576.4L1252.01 1576.4"
+                />
+                <path
+                    ref={K212K221}
+                    className="cls-6"
+                    d="M1275.72 1262.88L1176.11 1262.88"
+                />
+                <path
+                    ref={K213K221}
+                    className="cls-6"
+                    d="M1275.76 1263.28L1176.11 1163.48"
+                />
+                <path
+                    ref={K221E2042}
+                    className="cls-6"
+                    d="M1275.99 1263.28L1322.65 1313.89"
+                />
+                <path
+                    ref={K22K23}
+                    className="cls-6"
+                    d="M852.25 740.49L1013.92 782.18"
+                />
+                <path
+                    ref={K218K220}
+                    className="cls-6"
+                    d="M1347.79 2162.44L1307.36 2202.87"
+                />
+                <path
+                    ref={K29K27}
+                    className="cls-6"
+                    d="M1176.35 943.87L1210.31 909.9"
+                />
+            </g>
 
 
             {/* Floor 6*/}
