@@ -229,16 +229,21 @@ const MapViewer = ({
   };
 
   const goToMyNextClass = (classesArray: classesArray[]) => {
-    for (let i = 0; i < classesArray[0].resources.length; i++) {
-      if (classesArray[0].resources[i].type === 'room') {
-        const navigateObject = {
-          from: 'U21',
-          to: classesArray[0].resources[i].code,
-          update: Date.now(),
-        };
-        setNavigateToNextClass(navigateObject);
-        break;
+    try {
+      for (let i = 0; i < classesArray[0].resources.length; i++) {
+        if (classesArray[0].resources[i].type === 'room') {
+          const splittedRoom = classesArray[0].resources[i].code.substr(2);
+          const navigateObject = {
+            from: 'U21',
+            to: splittedRoom,
+            update: Date.now(),
+          };
+          setNavigateToNextClass(navigateObject);
+          break;
+        }
       }
+    } catch (error: any) {
+      console.log(error.message);
     }
   }
 
