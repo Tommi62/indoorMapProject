@@ -174,11 +174,24 @@ const MapViewer = ({
 
           let finalNextClassArray = [];
           let count = -1;
+          let alreadyExists = false;
           for (let i = 0; i < nextClassArray.length; i++) {
+            alreadyExists = false;
             if (i === 0 || nextClassArray[i].startDate === finalNextClassArray[count].startDate || nextClassArray[i].startDate < now) {
-              if (i === 0 || nextClassArray[i].id !== finalNextClassArray[count].id) {
+              if (i === 0) {
                 finalNextClassArray.push(nextClassArray[i]);
                 count++;
+              } else {
+                for (let j = 0; j < finalNextClassArray.length; j++) {
+                  if (nextClassArray[i].id === finalNextClassArray[j].id) {
+                    alreadyExists = true;
+                    break
+                  }
+                }
+                if (!alreadyExists) {
+                  finalNextClassArray.push(nextClassArray[i]);
+                  count++;
+                }
               }
             } else {
               break;
