@@ -53,8 +53,8 @@ const App = () => {
 
   const button = () => {
     setUpdate({
-      startNode: "E7701",
-      endNode: "V21",
+      startNode: "U21",
+      endNode: "D6571",
     });
   };
 
@@ -72,6 +72,9 @@ const App = () => {
       />
       <Grid className={classes.root} container justifyContent="center">
         <Grid container item justifyContent="center">
+          {/*
+            <Button onClick={button}> Click me </Button>
+          */}
           <MapViewer
             floorSelect={floorSelect}
             setFloorSelect={setFloorSelect}
