@@ -38,14 +38,14 @@ let graph: any = {
     K72: {D7592: 1, K74: 1, K71: 1},
     K73: {K74: 1, D7582: 1},
     K74: {K73: 1, K72: 1, K75: 1},
-    K75: {K74: 1, K76: 1, R71: 1},
+    K75: {K74: 1, K76: 1, R711: 1},
     K76: {K75: 1, K77: 1, K710: 1},
     K77: {K76: 1, K78: 1, K79: 1, K710: 1},
     K78: {K77: 1, D7571: 1, D7511: 1},
     K79: {D7501: 1, K711: 1, K710: 1, K77: 1},
     K710: {K76: 1, K77: 1, K79: 1, K711: 1, K712: 1},
     K711: {K79: 1, K710: 1, K715: 1},
-    K712: {K710: 1, K713: 1, R72: 1},
+    K712: {K710: 1, K713: 1, R712: 1},
     K713: {K712: 1, K714: 1},
     K714: {K713: 1, K717: 1, H71: 1},
     K715: {K711: 1, K717: 1, K716: 1, E7901: 1},
@@ -71,11 +71,11 @@ let graph: any = {
     K65: {K64: 1, K66: 1, K624: 1},
     K66: {K65: 1, K67: 1, K624: 1, K627: 1},
     K67: {K66: 1, K68: 1, K624: 1},
-    K68: {K67: 1, K69: 1, R63: 1},
+    K68: {K67: 1, K69: 1, R611: 1},
     K69: {K68: 1, K610: 1, K626: 1},
     K610: {K69: 1, K631: 1, D6591: 1},
-    K611: {K612: 1, K613: 1, R62: 1},
-    K612: {K611: 1, K617: 1, R61: 1},
+    K611: {K612: 1, K613: 1, R622: 1},
+    K612: {K611: 1, K617: 1, /*R621: 1*/},
     K613: {K611: 1, K614: 1, K619: 1},
     K614: {K613: 1, K621: 1, K615: 1},
     K615: {K614: 1, K620: 1, K616: 1},
@@ -90,7 +90,7 @@ let graph: any = {
     K624: {K65: 1, K66: 1, K67: 1, K625: 1, D6521: 1},
     K625: {K624: 1, D6571: 1},
     K626: {D6581: 1, V61: 1, K69: 1},
-    K627: {K66: 1, K628: 1, R64: 1},
+    K627: {K66: 1, K628: 1, R612: 1},
     K628: {K627: 1, K629: 1},
     K629: {K628: 1, K630: 1, H61: 1},
     K630: {K64: 1, K63: 1, K629: 1},
@@ -111,8 +111,8 @@ let graph: any = {
     K212: {K213: 1, K221: 1, K210: 1},
     K213: {K29: 1, K221: 1, K212: 1},
     K214: {K211: 1, K215: 1, V23: 1},
-    K215: {K214: 1, K216: 1, R22: 1},
-    K216: {K215: 1, K217: 1, R23: 1},
+    K215: {K214: 1, K216: 1, R221: 1},
+    K216: {K215: 1, K217: 1 /*, R222: 1*/},
     K217: {K218: 1, K216: 1, K220: 1},
     K218: {K217: 1, K220: 1, K219: 1},
     K219: {K218: 1, E2041: 1, V22: 1},
@@ -126,11 +126,11 @@ let graph: any = {
     K54: {K53: 1, K55: 1, K522: 1},
     K55: {K525: 1, K54: 1, K522: 1, K56: 1},
     K56: {K57: 1, K522: 1, K55: 1},
-    K57: {R53: 1, K56: 1, K58: 1},
+    K57: {R511: 1, K56: 1, K58: 1},
     K58: {K57: 1, K59: 1, K524: 1},
     K59: {D5691: 1, D5581: 1, K58: 1},
-    K510: {R52: 1, K511: 1, K512: 1},
-    K511: {R51: 1, K516: 1, K510: 1},
+    K510: {R522: 1, K511: 1, K512: 1},
+    K511: {/*R521: 1,*/ K516: 1, K510: 1},
     K512: {K510: 1, V51: 1, K513: 1},
     K513: {E5701: 1, K514: 1, K518: 1, K512: 1},
     K514: {K515: 1, K513: 1, K518: 1},
@@ -144,7 +144,7 @@ let graph: any = {
     K522: {K56: 1, K55: 1, D5501: 1, K523: 1, K54: 1},
     K523: {K521: 1, D5502: 1, K522: 1},
     K524: {K58: 1, V52: 1, D5582: 1},
-    K525: {K526: 1, R54: 1, K55: 1},
+    K525: {K526: 1, R512: 1, K55: 1},
     K526: {K527: 1, K525: 1, K533: 1},
     K527: {K528: 1, C5921: 1, K526: 1},
     K528: {K527: 1, K529: 1, K535: 1},
@@ -247,25 +247,29 @@ let graph: any = {
 
     // Stairs
     // Floor 7
-    R71: {K75: 1, R21: 1},
-    R72: {K712: 1, R21: 1},
-    R73: {K727: 1},
+    R711: {K75: 1, X71: 1},
+    R712: {K712: 1, X71: 1},
+    R73: {K727: 1, R221: 1},
+    X71: {R711: 1, R712: 1, R21: 1, X61: 1, X51: 1},
+
     // Floor 2
-    R21: {K25: 1, R71: 1, R72: 1},
-    R22: {K215: 1},
-    R23: {K216: 1},
+    R21: {K25: 1, X71: 1, X51: 1, X61: 1},
+    R221: {K215: 1, R522: 1, R622: 1, R73: 1},
+    // R222: {K216: 1},
+
     // Floor 6
-    //TODO Missing vertical routes
-    R61: {K612: 1},
-    R62: {K611: 1},
-    R63: {K68: 1},
-    R64: {K627: 1},
+    //R621: {K612: 1},
+    R622: {K611: 1, R221: 1},
+    R611: {K68: 1, X61: 1},
+    R612: {K627: 1, X61: 1},
+    X61: {R611: 1, R612: 1, X51: 1, R21: 1, X71: 1},
+
     // Floor 5
-    //TODO Missing vertical routes
-    R51: {K511: 1},
-    R52: {K510: 1},
-    R53: {K57: 1},
-    R54: {K525: 1},
+    //R521: {K511: 1},
+    R522: {K510: 1},
+    R511: {K57: 1, X51: 1},
+    R512: {K525: 1, X51: 1},
+    X51: {R511: 1, R512: 1, X61: 1, X71: 1, R21: 1},
 
     // Uniques
     RUOKALA: {K220: 1},
@@ -288,6 +292,7 @@ function RouteFinder({
     const [seventhFloorRoomsArray, setSeventhFloorRoomsArray] = useState<roomsArray[]>([]);
 
     // Making refs to all the lines from svg so we can use them later to display and hide lines by their id
+    // Floor 7
     const D7592K72: any = useRef();
     const K71K72: any = useRef();
     const D7591K71: any = useRef();
@@ -296,7 +301,7 @@ function RouteFinder({
     const D7582K73: any = useRef();
     const K72K74: any = useRef();
     const K74K75: any = useRef();
-    const K75R71: any = useRef();
+    const K75R711: any = useRef();
     const K75K76: any = useRef();
     const K76K77: any = useRef();
     const D7571K78: any = useRef();
@@ -338,10 +343,12 @@ function RouteFinder({
     const K726K727: any = useRef();
     const K727K728: any = useRef();
     const K728E7512: any = useRef();
-    const K712R72: any = useRef();
+    const K712R712: any = useRef();
     const K712K713: any = useRef();
     const R73K727: any = useRef();
-
+    const R711X71: any = useRef();
+    const R712X71: any = useRef();
+    // Floor 2
     const V21K22: any = useRef();
     const U21K21: any = useRef();
     const K21K22: any = useRef();
@@ -369,8 +376,8 @@ function RouteFinder({
     const K219E2041: any = useRef();
     const K217K220: any = useRef();
     const K220RUOKALA: any = useRef();
-    const K216R23: any = useRef();
-    const K215R22: any = useRef();
+    // const K216R222: any = useRef();
+    const K215R221: any = useRef();
     const K214V23: any = useRef();
     const K210PUKKARI: any = useRef();
     const K212K221: any = useRef();
@@ -380,6 +387,7 @@ function RouteFinder({
     const K218K220: any = useRef();
     const K29K27: any = useRef();
 
+    // Floor 6
     const K61K62: any = useRef();
     const K61K63: any = useRef();
     const K63K64: any = useRef();
@@ -397,8 +405,8 @@ function RouteFinder({
     const K617K618: any = useRef();
     const K618E6591: any = useRef();
     const K612K617: any = useRef();
-    const R61K612: any = useRef();
-    const R62K611: any = useRef();
+    // const R621K612: any = useRef();
+    const R622K611: any = useRef();
     const K613K619: any = useRef();
     const K620K615: any = useRef();
     const K620K621: any = useRef();
@@ -414,7 +422,7 @@ function RouteFinder({
     const K624K625: any = useRef();
     const K625D6571: any = useRef();
     const K624D6521: any = useRef();
-    const R63K68: any = useRef();
+    const R611K68: any = useRef();
     const K626K69: any = useRef();
     const K626D6581: any = useRef();
     const K626V61: any = useRef();
@@ -423,7 +431,7 @@ function RouteFinder({
     const K627K628: any = useRef();
     const K66K624: any = useRef();
     const K67K624: any = useRef();
-    const K627R64: any = useRef();
+    const K627R612: any = useRef();
     const K629H61: any = useRef();
     const K628K629: any = useRef();
     const K630K629: any = useRef();
@@ -433,6 +441,8 @@ function RouteFinder({
     const K631K610: any = useRef();
     const K631D6582: any = useRef();
     const K631D6592: any = useRef();
+    const R611X61: any = useRef();
+    const R612X61: any = useRef();
 
     // Floor 5
     const K51K52: any = useRef();
@@ -450,8 +460,8 @@ function RouteFinder({
     const K514K515: any = useRef();
     const K516E5511: any = useRef();
     const K511K516: any = useRef();
-    const K511R51: any = useRef();
-    const K510R52: any = useRef();
+    // const K511R521: any = useRef();
+    const K510R522: any = useRef();
     const K512V51: any = useRef();
     const K513E5701: any = useRef();
     const K517E5591: any = useRef();
@@ -472,7 +482,7 @@ function RouteFinder({
     const K521K523: any = useRef();
     const K522D5501: any = useRef();
     const K523D5502: any = useRef();
-    const K57R53: any = useRef();
+    const K57R511: any = useRef();
     const K58K524: any = useRef();
     const K524D5582: any = useRef();
     const K524V52: any = useRef();
@@ -487,7 +497,7 @@ function RouteFinder({
     const K531K532: any = useRef();
     const K55K522: any = useRef();
     const K522K56: any = useRef();
-    const K525R54: any = useRef();
+    const K525R512: any = useRef();
     const K533H51: any = useRef();
     const K526K533: any = useRef();
     const K533K534: any = useRef();
@@ -510,12 +520,21 @@ function RouteFinder({
     const K531C5922: any = useRef();
     const K55K54: any = useRef();
     const K519K518: any = useRef();
-
+    const R511X51: any = useRef();
+    const R512X51: any = useRef();
 
     // Between floors
-    const R21R71: any = useRef();
-    const R21R72: any = useRef();
+    const R21X71: any = useRef();
     const H21H71: any = useRef();
+    const R221R522: any = useRef();
+    const R221R622: any = useRef();
+    const X51X71: any = useRef();
+    const X61X71: any = useRef();
+    const R21X61: any = useRef();
+    const R21X51: any = useRef();
+    const X51X61: any = useRef();
+    const R221R73: any = useRef();
+
 
     //Putting all lines to Object so we can iterate trough them and get lines by their id
     const lines: any = {
@@ -528,7 +547,7 @@ function RouteFinder({
         D7582K73: D7582K73,
         K72K74: K72K74,
         K74K75: K74K75,
-        K75R71: K75R71,
+        K75R711: K75R711,
         K75K76: K75K76,
         K76K77: K76K77,
         D7571K78: D7571K78,
@@ -571,8 +590,10 @@ function RouteFinder({
         K726K727: K726K727,
         K727K728: K727K728,
         K728E7512: K728E7512,
-        K712R72: K712R72,
+        K712R712: K712R712,
         R73K727: R73K727,
+        R711X71: R711X71,
+        R712X71: R712X71,
 
         // Floor 2
         V21K22: V21K22,
@@ -602,8 +623,8 @@ function RouteFinder({
         K219E2041: K219E2041,
         K217K220: K217K220,
         K220RUOKALA: K220RUOKALA,
-        K216R23: K216R23,
-        K215R22: K215R22,
+        // K216R222: K216R222,
+        K215R221: K215R221,
         K214V23: K214V23,
         K210PUKKARI: K210PUKKARI,
         K212K221: K212K221,
@@ -614,7 +635,6 @@ function RouteFinder({
         K29K27: K29K27,
 
         // Floor 6
-
         K61K62: K61K62,
         K61K63: K61K63,
         K63K64: K63K64,
@@ -632,8 +652,8 @@ function RouteFinder({
         K617K618: K617K618,
         K618E6591: K618E6591,
         K612K617: K612K617,
-        R61K612: R61K612,
-        R62K611: R62K611,
+        // R621K612: R621K612,
+        R622K611: R622K611,
         K613K619: K613K619,
         K620K615: K620K615,
         K620K621: K620K621,
@@ -649,7 +669,7 @@ function RouteFinder({
         K624K625: K624K625,
         K625D6571: K625D6571,
         K624D6521: K624D6521,
-        R63K68: R63K68,
+        R611K68: R611K68,
         K626K69: K626K69,
         K626D6581: K626D6581,
         K626V61: K626V61,
@@ -658,7 +678,7 @@ function RouteFinder({
         K627K628: K627K628,
         K66K624: K66K624,
         K67K624: K67K624,
-        K627R64: K627R64,
+        K627R612: K627R612,
         K629H61: K629H61,
         K628K629: K628K629,
         K630K629: K630K629,
@@ -668,7 +688,9 @@ function RouteFinder({
         K631K610: K631K610,
         K631D6582: K631D6582,
         K631D6592: K631D6592,
-        K530K538: K530K538,
+        R611X61: R611X61,
+        R612X61: R612X61,
+
 
         // Floor 5
         K51K52: K51K52,
@@ -686,8 +708,8 @@ function RouteFinder({
         K514K515: K514K515,
         K516E5511: K516E5511,
         K511K516: K511K516,
-        K511R51: K511R51,
-        K510R52: K510R52,
+        // K511R521: K511R521,
+        K510R522: K510R522,
         K512V51: K512V51,
         K513E5701: K513E5701,
         K517E5591: K517E5591,
@@ -708,7 +730,7 @@ function RouteFinder({
         K521K523: K521K523,
         K522D5501: K522D5501,
         K523D5502: K523D5502,
-        K57R53: K57R53,
+        K57R511: K57R511,
         K58K524: K58K524,
         K524D5582: K524D5582,
         K524V52: K524V52,
@@ -723,7 +745,7 @@ function RouteFinder({
         K531K532: K531K532,
         K55K522: K55K522,
         K522K56: K522K56,
-        K525R54: K525R54,
+        K525R512: K525R512,
         K533H51: K533H51,
         K526K533: K526K533,
         K533K534: K533K534,
@@ -745,11 +767,22 @@ function RouteFinder({
         K531C5922: K531C5922,
         K55K54: K55K54,
         K519K518: K519K518,
+        R511X51: R511X51,
+        R512X51: R512X51,
+        K530K538: K530K538,
 
         // Between floors
-        R21R71: R21R71,
-        R21R72: R21R72,
+        R221R622: R221R622,
+        R21X71: R21X71,
         H21H71: H21H71,
+        R221R522: R221R522,
+        X51X71: X51X71,
+        X61X71: X61X71,
+        R21X61: R21X61,
+        R21X51: R21X51,
+        X51X61: X51X61,
+        R221R73: R221R73,
+
     };
 
     const [floor7Visibility, setFloor7Visibility] = useState("block");
@@ -1059,24 +1092,107 @@ function RouteFinder({
         }
     }, [marker]);
 
-    return (
+
+
+        return (
         <>
             {/* Between floors */}
             <g display="none">
+                {/*Vertical*/}
                 <path
-                    ref={R21R71}
+                    ref={R21X71}
                     className="cls-6"
                     d="M206.95 749.19L206.95 788.23"
                 />
                 <path
-                    ref={R21R72}
+                    ref={X51X71}
                     className="cls-6"
                     d="M206.95 749.19L206.95 788.23"
                 />
+                <path
+                    ref={X61X71}
+                    className="cls-6"
+                    d="M206.95 749.19L206.95 788.23"
+                />
+                <path
+                    ref={R21X61}
+                    className="cls-6"
+                    d="M206.95 749.19L206.95 788.23"
+                />
+                <path
+                    ref={X51X61}
+                    className="cls-6"
+                    d="M206.95 749.19L206.95 788.23"
+                />
+                <path
+                    ref={R21X51}
+                    className="cls-6"
+                    d="M206.95 749.19L206.95 788.23"
+                />
+
+                {/*Small stairs*/}
+                <path
+                    ref={R221R622}
+                    className="cls-6"
+                    d="M206.95 749.19L206.95 788.23"
+                />
+                <path
+                    ref={R221R522}
+                    className="cls-6"
+                    d="M206.95 749.19L206.95 788.23"
+                />
+                <path
+                    ref={R221R73}
+                    className="cls-6"
+                    d="M206.95 749.19L206.95 788.23"
+                />
+                <path
+                    ref={R221R522}
+                    className="cls-6"
+                    d="M206.95 749.19L206.95 788.23"
+                />
+
+                {/* Floor 7 */}
+                <path
+                    ref={R711X71}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+                <path
+                    ref={R712X71}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+
+                {/* Floor 6*/}
+                <path
+                    ref={R611X61}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+                <path
+                    ref={R612X61}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+
+                {/* Floor 5 */}
+                <path
+                    ref={R511X51}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+                <path
+                    ref={R512X51}
+                    className="cls-6"
+                    d="M1272.19 744.84v62.13"
+                />
+
+                {/* Elevators */}
                 <path
                     ref={H21H71}
                     className="cls-6"
-                    d="M206.95 749.19L206.95 788.23"
+                    d="M1272.19 744.84v62.13"
                 />
             </g>
 
@@ -1302,13 +1418,14 @@ function RouteFinder({
                     className="cls-6"
                     d="M1307.33 2242.26L1307.33 2203.04"
                 />
-                <path
-                    ref={K216R23}
+
+                {/*<path
+                    ref={K216R222}
                     className="cls-6"
                     d="M1269.86 2084.75L1238.36 2084.75"
-                />
+                />*/}
                 <path
-                    ref={K215R22}
+                    ref={K215R221}
                     className="cls-6"
                     d="M1269.66 2021.6L1238.24 2021.6"
                 />
@@ -1532,8 +1649,8 @@ function RouteFinder({
                 <path ref={K617K618} className="cls-6" d="M1512.43 2004.86L1360.14 2157.15"/>
                 <path ref={K618E6591} className="cls-6" d="M1538.42 1978.86L1512.43 2004.86"/>
                 <path ref={K612K617} className="cls-6" d="M1359.71 2157.02L1290.91 2088.21"/>
-                <path ref={R61K612} className="cls-6" d="M1238.22 2087.03L1290.77 2087.03"/>
-                <path ref={R62K611} className="cls-6" d="M1238.29 2025.41L1290.77 2025.41"/>
+                {/*<path ref={R621K612} className="cls-6" d="M1238.22 2087.03L1290.77 2087.03"/>*/}
+                <path ref={R622K611} className="cls-6" d="M1238.29 2025.41L1290.77 2025.41"/>
                 <path ref={K613K619} className="cls-6" d="M1398.38 2005.37L1290.77 2005.37"/>
                 <path ref={K620K615} className="cls-6" d="M1333.86 1642.76L1290.77 1599.67"/>
                 <path ref={K620K621} className="cls-6" d="M1358.32 1666.73L1335.48 1643.89"/>
@@ -1549,7 +1666,7 @@ function RouteFinder({
                 <path ref={K624K625} className="cls-6" d="M1579.23 634.39L1430.73 782.86"/>
                 <path ref={K625D6571} className="cls-6" d="M1665.81 547.83L1579.23 634.39"/>
                 <path ref={K624D6521} className="cls-6" d="M1448.55 800.69L1430.73 782.86"/>
-                <path ref={R63K68} className="cls-6" d="M1308.97 653.46L1326.58 653.46"/>
+                <path ref={R611K68} className="cls-6" d="M1308.97 653.46L1326.58 653.46"/>
                 <path ref={K626K69} className="cls-6" d="M1432.58 520.79L1326.58 626.82"/>
                 <path ref={K626D6581} className="cls-6" d="M1535.56 417.77L1432.58 520.79"/>
                 <path ref={K626V61} className="cls-6" d="M1447.4 535.6L1432.58 520.79"/>
@@ -1558,7 +1675,7 @@ function RouteFinder({
                 <path ref={K627K628} className="cls-6" d="M1228.53 806.97L1272.35 806.97"/>
                 <path ref={K66K624} className="cls-6" d="M1430.03 782.86L1327.3 806.97"/>
                 <path ref={K67K624} className="cls-6" d="M1430.23 782.65L1326.58 676.66"/>
-                <path ref={K627R64} className="cls-6" d="M1272.19 744.84L1272.19 806.97"/>
+                <path ref={K627R612} className="cls-6" d="M1272.19 744.84L1272.19 806.97"/>
                 <path ref={K629H61} className="cls-6" d="M1247.85 909.06L1229.32 909.06"/>
                 <path ref={K628K629} className="cls-6" d="M1229.32 806.97L1229.32 908.09"/>
                 <path ref={K630K629} className="cls-6" d="M1229.32 909.68L1229.32 1003.96"/>
@@ -1812,7 +1929,7 @@ function RouteFinder({
                 />
                 <path ref={K72K74} className="cls-6" d="M264.97 569.59L264.97 630.64"/>
                 <path ref={K74K75} className="cls-6" d="M264.97 630.59L264.97 654.64"/>
-                <path ref={K75R71} className="cls-6" d="M262.6 653.85L243.21 653.85"/>
+                <path ref={K75R711} className="cls-6" d="M262.6 653.85L243.21 653.85"/>
                 <path ref={K75K76} className="cls-6" d="M264.97 657.41L264.97 696.18"/>
                 <path ref={K76K77} className="cls-6" d="M264.97 695.79L359.72 790.53"/>
                 <path
@@ -1999,7 +2116,7 @@ function RouteFinder({
                     d="M220.14 2158.6L296.62 2158.6 298.73 2157.02 312.18 2143.57"
                 />
                 <path
-                    ref={K712R72}
+                    ref={K712R712}
                     className="cls-6"
                     d="M206.95 749.19L206.95 788.23"
                 />
@@ -2221,8 +2338,8 @@ function RouteFinder({
                 <path ref={K514K515} className="cls-6" d="M1290.77 1350.31L1290.77 1672.66"/>
                 <path ref={K516E5511} className="cls-6" d="M1372.14 2145.15L1360.14 2157.15"/>
                 <path ref={K511K516} className="cls-6" d="M1359.71 2157.02L1290.91 2088.21"/>
-                <path ref={K511R51} className="cls-6" d="M1238.22 2087.03L1290.77 2087.03"/>
-                <path ref={K510R52} className="cls-6" d="M1238.29 2025.41L1290.77 2025.41"/>
+                {/*<path ref={K511R521} className="cls-6" d="M1238.22 2087.03L1290.77 2087.03"/>*/}
+                <path ref={K510R522} className="cls-6" d="M1238.29 2025.41L1290.77 2025.41"/>
                 <path ref={K512V51} className="cls-6" d="M1398.38 2005.37L1290.77 2005.37"/>
                 <path ref={K513E5701} className="cls-6" d="M1260.73 1732.53L1290.77 1732.53"/>
                 <path ref={K517E5591} className="cls-6" d="M1497.15 1879.48L1536.25 1885.43"/>
@@ -2244,7 +2361,7 @@ function RouteFinder({
                 <path ref={K521K523} className="cls-6" d="M1638.41 575.23L1579.23 634.39"/>
                 <path ref={K522D5501} className="cls-6" d="M1448.55 800.69L1430.73 782.86"/>
                 <path ref={K523D5502} className="cls-6" d="M1597.83 651.81L1579.82 633.8"/>
-                <path ref={K57R53} className="cls-6" d="M1308.97 653.46L1326.58 653.46"/>
+                <path ref={K57R511} className="cls-6" d="M1308.97 653.46L1326.58 653.46"/>
                 <path ref={K58K524} className="cls-6" d="M1432.58 520.79L1326.58 626.82"/>
                 <path ref={K524D5582} className="cls-6" d="M1534.86 418.47L1432.58 520.79"/>
                 <path ref={K524V52} className="cls-6" d="M1447.4 535.6L1432.58 520.79"/>
@@ -2259,7 +2376,7 @@ function RouteFinder({
                 <path ref={K531K532} className="cls-6" d="M277.999 806.97h104.857"/>
                 <path ref={K55K522} className="cls-6" d="M1430.03 782.86L1327.3 806.97"/>
                 <path ref={K522K56} className="cls-6" d="M1430.23 782.65L1326.58 676.66"/>
-                <path ref={K525R54} className="cls-6" d="M1272.19 744.84L1272.19 806.97"/>
+                <path ref={K525R512} className="cls-6" d="M1272.19 744.84L1272.19 806.97"/>
                 <path ref={K533H51} className="cls-6" d="M1247.85 909.06L1229.32 909.06"/>
                 <path ref={K526K533} className="cls-6" d="M1229.32 806.97L1229.32 908.09"/>
                 <path ref={K533K534} className="cls-6" d="M1229.32 909.68L1229.32 1003.96"/>
@@ -2273,7 +2390,7 @@ function RouteFinder({
                 <path ref={K535C5651} className="cls-6" d="M734.83 863.24L720.81 849.22"/>
                 <path ref={K537C5652} className="cls-6" d="M552.21 1046.56L537.87 1032.21"/>
                 <path ref={K536K529} className="cls-6" d="M670.93 898.47L579.85 807.39"/>
-                <path ref={K530K538} className="cls-6" d="M397.9 900.71L490.4 808.2"/> {/* 30-38 */}
+                <path ref={K530K538} className="cls-6" d="M397.9 900.71L490.4 808.2"/>
                 <path ref={K538K539} className="cls-6" d="M343.9 954.71L397.9 900.71"/>
                 <path ref={K539K540} className="cls-6" d="M280.93 1017.68L343.9 954.71"/>
                 <path ref={K540C5572} className="cls-6" d="M295.66 1036.97L278.65 1019.96"/>
