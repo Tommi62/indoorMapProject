@@ -80,11 +80,14 @@ const MapViewer = ({
   const [active2, setActive2] = useState("");
 
   const changeFloor = (e: any) => {
-    if (floorSelect !== e.target.innerText) {
+    console.log("LOGI", e.target.id);
+    if (e.target.id === "") {
       setFloorSelect(e.target.innerText);
-      setMarker("");
-      setAvailableRooms([]);
+    } else {
+      setFloorSelect(e.target.id);
     }
+    setMarker("");
+    setAvailableRooms([]);
   };
 
   const getAvailableRooms = async () => {
@@ -174,16 +177,16 @@ const MapViewer = ({
         availableRooms={availableRooms}
       />
       <ButtonGroup orientation="vertical" className="floorButtons">
-        <Button className={active7} onClick={changeFloor}>
+        <Button id="7" className={active7} onClick={changeFloor}>
           7
         </Button>
-        <Button className={active6} onClick={changeFloor}>
+        <Button id="6" className={active6} onClick={changeFloor}>
           6
         </Button>
-        <Button className={active5} onClick={changeFloor}>
+        <Button id="5" className={active5} onClick={changeFloor}>
           5
         </Button>
-        <Button className={active2} onClick={changeFloor}>
+        <Button id="2" className={active2} onClick={changeFloor}>
           2
         </Button>
         <Button

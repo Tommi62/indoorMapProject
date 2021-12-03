@@ -36,7 +36,7 @@ interface propTypes {
   setMarker: Function;
   marker: any;
   modalOpen: any;
-  floor: string;
+  floor: keyof typeof data;
   setFloor: Function;
   availableRooms: string[];
 }

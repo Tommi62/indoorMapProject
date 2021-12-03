@@ -73,6 +73,13 @@ g {
   fill: #7f7f7f;
 }
 
+.cls-11 {
+  stroke-width: 8px !important;
+  stroke-linejoin: round;
+  stroke: rgb(0, 0, 0);
+  fill: #7f7f7f;
+}
+
 /* Classes */
 .cls-5 {
   stroke-width: 8px !important;
@@ -219,18 +226,18 @@ g {
 }
 
 .availableRoomsButton {
-  position: absolute!important;
+  position: absolute !important;
   z-index: 401;
   right: 10px;
   top: 245px;
-  padding: 0.2rem 0.45rem!important;
-  min-width: 1.5rem!important;
-  background-color: rgba(255, 255, 255, 0.9)!important;
-  border: 0.01rem solid lightgrey!important;
+  padding: 0.2rem 0.45rem !important;
+  min-width: 1.5rem !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border: 0.01rem solid lightgrey !important;
 }
 
 .availableRoomsButton:hover {
-  background-color: rgba(243, 243, 243, 0.9)!important;
+  background-color: rgba(243, 243, 243, 0.9) !important;
 }
 .buttonActive {
   background-color: rgb(238, 238, 238) !important;
@@ -402,6 +409,6 @@ div[role="navigation"] {
   }
 
   .fc .fc-button .fc-icon {
-    font-size: 1rem!important;
+    font-size: 1rem !important;
   }
 }

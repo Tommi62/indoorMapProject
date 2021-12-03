@@ -27,6 +27,7 @@ const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [keyWord, setKeyWord] = useState("");
   const [updateShortcuts, setUpdateShortcuts] = useState(Date.now());
+  const [updateOwnList, setUpdateOwnList] = useState(Date.now());
   const [floorSelect, setFloorSelect] = useState<keyof typeof data>("7");
   const [modalContent, setModalContent] = useState<modalContentArray[]>([
     {
@@ -93,6 +94,8 @@ const App = () => {
         keyWord={keyWord}
         updateShortcuts={updateShortcuts}
         setUpdateShortcuts={setUpdateShortcuts}
+        updateOwnList={updateOwnList}
+        setUpdateOwnList={setUpdateOwnList}
         restaurantMenu={restaurantMenu}
         setRestaurantMenu={setRestaurantMenu}
       />
