@@ -119,7 +119,7 @@ const FazerMenu = () => {
 
     return (
         <>
-            {menuLength > 0 ? (
+            {menuLength >= 0 ? (
                 <Grid className={classes.container} container justifyContent="center" direction="column">
                     <Grid item justifyContent="center">
                         <Typography className={classes.fazerTitle} component="h5" variant="h5" align="center">{fazerTitle}</Typography>

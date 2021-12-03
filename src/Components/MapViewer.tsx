@@ -3,13 +3,13 @@ import MapColorcodeSVG from "./MapColorcodeSVG";
 import { Button, ButtonGroup } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
 import { Menu, MenuItem, unstable_composeClasses } from "@mui/material";
 import ArrowDropDownCircle from "@mui/icons-material/ArrowDropDownCircle";
-import moment from 'moment';
-import 'moment/locale/fi'
+import moment from "moment";
+import "moment/locale/fi";
 import data from "../Data/classrooms.json";
-import { useApiData } from '../Hooks/ApiHooks';
+import { useApiData } from "../Hooks/ApiHooks";
 
 /* const options = {
   backdrop: "static",
@@ -52,6 +52,22 @@ interface requestObj {
   rangeEnd: string,
 }
 
+interface resourcesArray {
+  id: string,
+  type: string,
+  code: string,
+}
+
+interface classesArray {
+  resources: resourcesArray[],
+}
+
+interface navigateToNextClass {
+  from: string,
+  to: string,
+  update: number,
+}
+
 const MapViewer = ({
   setModalOpen,
   setModalContent,
@@ -67,6 +83,11 @@ const MapViewer = ({
   const open = Boolean(anchorEl);
   const { postGetMetropoliaData } = useApiData();
   const [availableRooms, setAvailableRooms] = useState<string[]>([]);
+  const [navigateToNextClass, setNavigateToNextClass] = useState<navigateToNextClass>({
+    from: 'U21',
+    to: '',
+    update: Date.now(),
+  });
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -80,9 +101,9 @@ const MapViewer = ({
   const [active2, setActive2] = useState("");
 
   const changeFloor = (e: any) => {
-    console.log('LOGI', e.target.id);
-    if (e.target.id === '') {
-      setFloorSelect(e.target.innerText)
+    console.log("LOGI", e.target.id);
+    if (e.target.id === "") {
+      setFloorSelect(e.target.innerText);
     } else {
       setFloorSelect(e.target.id);
     }
@@ -198,6 +219,7 @@ const MapViewer = ({
             }
           }
           console.log('FinalNextClassArray', finalNextClassArray);
+          goToMyNextClass(finalNextClassArray);
         }
       }
       handleClose();
@@ -205,6 +227,20 @@ const MapViewer = ({
       console.log(error.message);
     }
   };
+
+  const goToMyNextClass = (classesArray: classesArray[]) => {
+    for (let i = 0; i < classesArray[0].resources.length; i++) {
+      if (classesArray[0].resources[i].type === 'room') {
+        const navigateObject = {
+          from: 'U21',
+          to: classesArray[0].resources[i].code,
+          update: Date.now(),
+        };
+        setNavigateToNextClass(navigateObject);
+        break;
+      }
+    }
+  }
 
   useEffect(() => {
     try {
@@ -246,6 +282,7 @@ const MapViewer = ({
         floor={floorSelect}
         setFloor={setFloorSelect}
         availableRooms={availableRooms}
+        navigateToNextClass={navigateToNextClass}
       />
       <ButtonGroup orientation="vertical" className="floorButtons">
         <Button id="7" className={active7} onClick={changeFloor}>
