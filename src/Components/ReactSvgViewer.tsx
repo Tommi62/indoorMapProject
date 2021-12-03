@@ -28,6 +28,12 @@ interface dataArray {
   lng: number;
 }
 
+interface navigateToNextClass {
+  from: string,
+  to: string,
+  update: number,
+}
+
 interface propTypes {
   update: paramObj;
   setModalOpen: Function;
@@ -39,6 +45,7 @@ interface propTypes {
   floor: keyof typeof data;
   setFloor: Function;
   availableRooms: string[];
+  navigateToNextClass: navigateToNextClass,
 }
 
 const ReactSvgViewer = ({
@@ -52,6 +59,7 @@ const ReactSvgViewer = ({
   floor,
   setFloor,
   availableRooms,
+  navigateToNextClass,
 }: propTypes) => {
   const [map, setMap] = useState<any>();
   const { getModalData } = useModalData();
@@ -128,6 +136,18 @@ const ReactSvgViewer = ({
       setPopupID(str);
     }
   };
+
+  useEffect(() => {
+    try {
+      if (navigateToNextClass.to !== '') {
+        navigateFrom(navigateToNextClass.from);
+        navigateTo(navigateToNextClass.to);
+        setFloor('2');
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [navigateToNextClass]);
 
   useEffect(() => {
     if (map !== undefined) {

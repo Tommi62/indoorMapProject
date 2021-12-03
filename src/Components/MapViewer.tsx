@@ -42,14 +42,30 @@ interface paramObj {
 }
 
 interface requestObj {
-  group: string;
-  room: string;
-  realization: string;
-  startDate: string;
-  apiKey: string;
-  apiUrl: string;
-  rangeStart: string;
-  rooms: string[];
+  group: string[],
+  room: string[],
+  realization: string[],
+  startDate: string,
+  apiKey: string,
+  apiUrl: string,
+  rangeStart: string,
+  rangeEnd: string,
+}
+
+interface resourcesArray {
+  id: string,
+  type: string,
+  code: string,
+}
+
+interface classesArray {
+  resources: resourcesArray[],
+}
+
+interface navigateToNextClass {
+  from: string,
+  to: string,
+  update: number,
 }
 
 const MapViewer = ({
@@ -67,6 +83,11 @@ const MapViewer = ({
   const open = Boolean(anchorEl);
   const { postGetMetropoliaData } = useApiData();
   const [availableRooms, setAvailableRooms] = useState<string[]>([]);
+  const [navigateToNextClass, setNavigateToNextClass] = useState<navigateToNextClass>({
+    from: 'U21',
+    to: '',
+    update: Date.now(),
+  });
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -91,50 +112,136 @@ const MapViewer = ({
   };
 
   const getAvailableRooms = async () => {
-    const dateNow = moment().locale("fi").format("YYYY-MM-DD");
-    const timeNow = moment().locale("fi").format("LT").replace(".", ":");
-    const now = dateNow + "T" + timeNow;
-    let roomArray = [];
-    for (let i = 0; i < data[floorSelect].length; i++) {
-      if (
-        !data[floorSelect][i].name.startsWith("V") &&
-        !data[floorSelect][i].name.startsWith("S") &&
-        !data[floorSelect][i].name.startsWith("H")
-      ) {
-        roomArray.push("KM" + data[floorSelect][i].name);
-      }
-    }
-    let requestObject: requestObj = {
-      group: "",
-      room: "",
-      realization: "",
-      startDate: "",
-      apiKey: "",
-      apiUrl: "",
-      rangeStart: now,
-      rooms: roomArray,
-    };
-    const reservedRooms = await postGetMetropoliaData(requestObject);
-    if (reservedRooms.reservations.length !== 0) {
-      for (let i = 0; i < reservedRooms.reservations.length; i++) {
-        for (
-          let j = 0;
-          j < reservedRooms.reservations[i].resources.length;
-          j++
-        ) {
-          if (reservedRooms.reservations[i].resources[j].type === "room") {
-            roomArray = roomArray.filter(
-              (e) => e !== reservedRooms.reservations[i].resources[j].code
-            );
-            break;
+    try {
+      const dateNow = moment().locale('fi').format('YYYY-MM-DD');
+      const timeNow = moment().locale('fi').format('LT').replace('.', ':');
+      const now = dateNow + 'T' + timeNow;
+      let roomArray = [];
+      for (let i = 0; i < data[floorSelect].length; i++) {
+        if (!data[floorSelect][i].name.startsWith('V') && !data[floorSelect][i].name.startsWith('S') && !data[floorSelect][i].name.startsWith('H')) {
+          roomArray.push('KM' + data[floorSelect][i].name);
+        }
+      };
+      let requestObject: requestObj = {
+        group: [],
+        room: roomArray,
+        realization: [],
+        startDate: '',
+        apiKey: '',
+        apiUrl: '',
+        rangeStart: now,
+        rangeEnd: '',
+      };
+      const reservedRooms = await postGetMetropoliaData(requestObject);
+      if (reservedRooms.reservations.length !== 0) {
+        for (let i = 0; i < reservedRooms.reservations.length; i++) {
+          for (let j = 0; j < reservedRooms.reservations[i].resources.length; j++) {
+            if (reservedRooms.reservations[i].resources[j].type === 'room') {
+              roomArray = roomArray.filter(e => e !== reservedRooms.reservations[i].resources[j].code);
+              break;
+            }
           }
         }
       }
+      console.log('Rooms available', roomArray);
+      setAvailableRooms(roomArray);
+      handleClose();
+    } catch (error: any) {
+      console.log(error.message);
     }
-    console.log("Rooms available", roomArray);
-    setAvailableRooms(roomArray);
-    handleClose();
   };
+
+  const whatsMyNextClass = async () => {
+    try {
+      if (localStorage.getItem("ownList") !== null) {
+        const ownListArray = JSON.parse(localStorage.getItem("ownList")!);
+        let realizationArray = [];
+        let groupArray = [];
+        if (ownListArray.length > 0) {
+          for (let i = 0; i < ownListArray.length; i++) {
+            if (ownListArray[i].startsWith('TX00') || ownListArray[i].startsWith('TU00') || ownListArray[i].startsWith('XX00')) {
+              realizationArray.push(ownListArray[i]);
+            } else {
+              groupArray.push(ownListArray[i]);
+            }
+          }
+          const dateNow = moment().locale('fi').format('YYYY-MM-DD');
+          const timeNow = moment().locale('fi').format('LT').replace('.', ':');
+          const now = dateNow + 'T' + timeNow;
+          let requestObject: requestObj = {
+            group: [],
+            room: [],
+            realization: [],
+            startDate: '',
+            apiKey: '',
+            apiUrl: '',
+            rangeStart: now,
+            rangeEnd: '2121-12-02T11:00',
+          };
+          let realizations = [];
+          let groups = [];
+          if (realizationArray.length > 0) {
+            requestObject.realization = realizationArray;
+            realizations = await postGetMetropoliaData(requestObject);
+          }
+          if (groupArray.length > 0) {
+            requestObject.group = groupArray;
+            requestObject.realization = [];
+            groups = await postGetMetropoliaData(requestObject);
+          }
+          const nextClassArray = realizations.reservations.concat(groups.reservations);
+          nextClassArray.sort((a: any, b: any) => (a.startDate > b.startDate) ? 1 : ((b.startDate > a.startDate) ? -1 : 0));
+          console.log('NEXTCLASSARRAY', nextClassArray);
+
+          let finalNextClassArray = [];
+          let count = -1;
+          let alreadyExists = false;
+          for (let i = 0; i < nextClassArray.length; i++) {
+            alreadyExists = false;
+            if (i === 0 || nextClassArray[i].startDate === finalNextClassArray[count].startDate || nextClassArray[i].startDate < now) {
+              if (i === 0) {
+                finalNextClassArray.push(nextClassArray[i]);
+                count++;
+              } else {
+                for (let j = 0; j < finalNextClassArray.length; j++) {
+                  if (nextClassArray[i].id === finalNextClassArray[j].id) {
+                    alreadyExists = true;
+                    break
+                  }
+                }
+                if (!alreadyExists) {
+                  finalNextClassArray.push(nextClassArray[i]);
+                  count++;
+                }
+              }
+            } else {
+              break;
+            }
+          }
+          console.log('FinalNextClassArray', finalNextClassArray);
+          goToMyNextClass(finalNextClassArray);
+        }
+      }
+      handleClose();
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  const goToMyNextClass = (classesArray: classesArray[]) => {
+    for (let i = 0; i < classesArray[0].resources.length; i++) {
+      if (classesArray[0].resources[i].type === 'room') {
+        const navigateObject = {
+          from: 'U21',
+          to: classesArray[0].resources[i].code,
+          update: Date.now(),
+        };
+        setNavigateToNextClass(navigateObject);
+        break;
+      }
+    }
+  }
+
   useEffect(() => {
     try {
       if (floorSelect === "7") {
@@ -175,6 +282,7 @@ const MapViewer = ({
         floor={floorSelect}
         setFloor={setFloorSelect}
         availableRooms={availableRooms}
+        navigateToNextClass={navigateToNextClass}
       />
       <ButtonGroup orientation="vertical" className="floorButtons">
         <Button id="7" className={active7} onClick={changeFloor}>
@@ -210,6 +318,7 @@ const MapViewer = ({
         }}
       >
         <MenuItem onClick={getAvailableRooms}>Show available rooms</MenuItem>
+        <MenuItem onClick={whatsMyNextClass}>Go to my next class</MenuItem>
       </Menu>
       <MapColorcodeSVG />
     </>

@@ -808,25 +808,25 @@ function RouteFinder({
     useEffect(() => {
         try {
             if (floor === "2") {
-                console.log('FLOOR2');
+                console.log("FLOOR2");
                 setFloor7Visibility("none");
                 setFloor5Visibility("none");
                 setFloor6Visibility("none");
                 setFloor2Visibility("block");
             } else if (floor === "5") {
-                console.log('FLOOR5');
+                console.log("FLOOR5");
                 setFloor7Visibility("none");
                 setFloor5Visibility("block");
                 setFloor6Visibility("none");
                 setFloor2Visibility("none");
             } else if (floor === "6") {
-                console.log('FLOOR6');
+                console.log("FLOOR6");
                 setFloor7Visibility("none");
                 setFloor5Visibility("none");
                 setFloor6Visibility("block");
                 setFloor2Visibility("none");
             } else if (floor === "7") {
-                console.log('FLOOR7');
+                console.log("FLOOR7");
                 setFloor7Visibility("block");
                 setFloor5Visibility("none");
                 setFloor6Visibility("none");
@@ -840,7 +840,16 @@ function RouteFinder({
 
     useEffect(() => {
         try {
-            console.log('2: ' + floor2Visibility + ' 5: ' + floor5Visibility + ' 6: ' + floor6Visibility + ' 7: ' + floor7Visibility);
+            console.log(
+                "2: " +
+                floor2Visibility +
+                " 5: " +
+                floor5Visibility +
+                " 6: " +
+                floor6Visibility +
+                " 7: " +
+                floor7Visibility
+            );
         } catch (error: any) {
             console.log(error.message);
         }
@@ -879,7 +888,7 @@ function RouteFinder({
         } catch (error: any) {
             console.log(error.message);
         }
-    }, [availableRooms, floor]); // Get vector length by it's id
+    }, [availableRooms, floor]);
 
     // Get vector length by it's id
     let lengthGetter = (id: any) => {
@@ -931,9 +940,12 @@ function RouteFinder({
     };
 
     // Main function including dijkstra's algorithm so we find shortest path from given "map" with start and end points
-    let findShortestPath = (graph: any, tempStartNode: string,
-                            tempEndNode: string
-    ) => {// track distances from the start node using a hash object
+    let findShortestPath = (
+        graph: any,
+        tempStartNode: string,
+        tempEndNode: string
+    ) => {
+        // track distances from the start node using a hash object
         let distances: any = {};
         distances[tempEndNode] = "Infinity";
         distances = Object.assign(distances, graph[tempStartNode]);
@@ -1112,9 +1124,7 @@ function RouteFinder({
     }, [marker]);
 
 
-
-
-        return (
+    return (
         <>
             {/* Between floors */}
             <g display="none">
@@ -1526,7 +1536,6 @@ function RouteFinder({
                 />
             </g>
 
-
             {/* Floor 6*/}
             <g display={floor6Visibility} id="_6_drawn_base">
                 <g id="walls">
@@ -1536,34 +1545,31 @@ function RouteFinder({
                         d="M1140.81 1103.46L1140.84 1103.46 1140.84 2242.2 1481.46 2242.2 1975.17 1748.49 1480.27 1253.59 1480.27 1107.61 1975.76 612.12 1479.68 116.03 1479.68 1.5 1303.43 1.5 1303.43 283.96 1144.4 283.96 1144.4 603.21 1079.5 603.21"
                     />
                     <path
-                        className="cls-7"
-                        d="M740.88 603.21L81.02 603.21 81.02 774.25 1.5 774.25 1.5 939.08 498.18 1435.76 830.49 1103.46 1140.81 1103.46"
+                        className="cls-11"
+                        d="M1140.81 603.21L81.02 603.21 81.02 774.25 1.5 774.25 1.5 939.08 498.18 1435.76 830.49 1103.46 1140.81 1103.46"
                     />
                     <path
                         className="cls-7"
                         d="M1327.57 2025.41L1455.05 2025.41 1350.49 2129.97 1328.09 2107.57"
                     />
-                    <path
-                        fill="#fff"
-                        stroke="#000"
-                        strokeWidth="3px"
-                        strokeMiterlimit={10}
-                        d="M1140.84 744.87L1140.84 1103.46"
-                    />
+                    <path className="cls-11" d="M1140.84 744.87L1140.84 1103.46"/>
                     <path className="cls-7" d="M1327.57 1985.24L1327.57 1997.32"/>
                     <path className="cls-7" d="M1455.74 1985.24L1455.74 1997.32"/>
                 </g>
                 <g id="stairsElevators">
                     <path
                         className="cls-1"
+                        id="R21"
                         d="M1140.84 1981.9H1238.29V2242.21H1140.84z"
                     />
                     <path
                         className="cls-1"
+                        id="R11"
                         d="M1308.97 744.84L1079.52 744.84 1079.52 603.21 1144.4 603.21 1144.4 632.88 1308.97 632.88 1308.97 744.84z"
                     />
                     <path
                         className="cls-1"
+                        id="H61"
                         d="M1247.65 824.79H1308.97V993.3199999999999H1247.65z"
                     />
                 </g>
@@ -1607,56 +1613,29 @@ function RouteFinder({
                     />
                 </g>
                 <g id="classes">
-                    <path
-                        className="cls-5"
-                        d="M1144.4 632.88L1301.06 632.88 1301.06 336.58 1301.06 298.2 1309.37 289.9 1303.43 283.96 1144.4 283.96 1144.4 632.88z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1353.28 336.58L1403.92 285.94 1574.29 456.31 1697.13 333.48 1479.68 116.03 1479.68 1.5 1303.43 1.5 1303.43 283.96 1309.37 289.9 1301.06 298.2 1301.06 336.58 1353.28 336.58z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1636.52 518.96L1683.2 565.64 1661.26 587.59 1830.78 757.1 1975.76 612.12 1697.13 333.48 1573.99 456.61 1683.2 565.64"
-                    />
-                    <path
-                        className="cls-5"
-                        transform="rotate(-45 1562.052 1113.657)"
-                        d="M1659.46 811.81H2004.19V1051.54H1659.46z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1345.23 1064.23L1345.23 1300.4 1435.04 1300.4 1481.06 1254.38 1481.06 1108.8 1435.5 1063.24 1345.23 1064.23z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1481.06 1254.38L1308.82 1426.62 1308.82 1585.24 1391.74 1668.16 1643.29 1416.61 1481.06 1254.38z"
-                    />
-                    <path
-                        className="cls-5"
-                        transform="rotate(-45 1536.514 1942.895)"
-                        d="M1628.42 1646.25H1984.16V1875.59H1628.42z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1547.05 1823.46L1514.95 1855.57 1571.85 1912.47 1520.95 1963.37 1640.62 2083.04 1975.17 1748.49 1805.46 1578.78 1553.91 1830.32 1547.05 1823.46z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1140.84 1328.88H1262.03V1904.88H1140.84z"
-                    />
+                    {seventhFloorRoomsArray.map((item) => (
+                        <Room
+                            className={item.className}
+                            id={item.id}
+                            transform={item.transform}
+                            d={item.d}
+                        />
+                    ))}{" "}
                 </g>
                 <g id="toilets">
                     <path
                         className="cls-3"
+                        id="K619"
                         d="M1460.08 1985.19L1308.95 1985.19 1308.95 1912.66 1475.9 1912.66 1523.04 1959.81 1497.66 1985.19 1460.08 1985.19z"
                     />
                     <path
                         className="cls-3"
+                        id="V61"
                         d="M1550.47 433.3L1407.07 576.71 1452.95 622.6 1596.56 479 1550.47 433.3z"
                     />
                     <path
                         className="cls-3"
+                        id="K625"
                         transform="rotate(-45 1476.136 896.725)"
                         d="M1709.54 686.49H1782.27V743.01H1709.54z"
                     />
@@ -1687,59 +1666,273 @@ function RouteFinder({
                 </g>
             </g>
             <g display={floor6Visibility} id="_6_routes">
-                <path ref={K61K62} className="cls-6" d="M1326.58 1131.74L1326.58 1278.21"/>
-                <path ref={K61K63} className="cls-6" d="M1326.58 1087.53L1326.58 1131.74"/>
-                <path ref={K63K64} className="cls-6" d="M1326.58 1004.95L1326.58 1087.53"/>
-                <path ref={K64K65} className="cls-6" d="M1326.58 886.99L1326.58 1004.95"/>
-                <path ref={K65K66} className="cls-6" d="M1326.58 807.54L1326.58 886.99"/>
-                <path ref={K66K67} className="cls-6" d="M1326.58 676.95L1326.58 807.54"/>
-                <path ref={K67K68} className="cls-6" d="M1326.58 653.6L1326.58 676.95"/>
-                <path ref={K68K69} className="cls-6" d="M1326.58 626.208L1326.58 653.6"/>
-                <path ref={K69K610} className="cls-6" d="M1326.798 587.475L1326.798 626.017"/>
-                <path ref={K611K612} className="cls-6" d="M1290.77 2025.21L1290.77 2087.03"/>
-                <path ref={K611K613} className="cls-6" d="M1290.77 2005.57L1290.77 2025.21"/>
-                <path ref={K613K614} className="cls-6" d="M1290.77 1732.53L1290.77 2005.57"/>
-                <path ref={K614K615} className="cls-6" d="M1290.77 1602.64L1290.77 1732.53"/>
-                <path ref={K615K616} className="cls-6" d="M1290.77 1350.31L1290.77 1602.64"/>
-                <path ref={K617K618} className="cls-6" d="M1512.43 2004.86L1360.14 2157.15"/>
-                <path ref={K618E6591} className="cls-6" d="M1538.42 1978.86L1512.43 2004.86"/>
-                <path ref={K612K617} className="cls-6" d="M1359.71 2157.02L1290.91 2088.21"/>
-                {/*<path ref={R621K612} className="cls-6" d="M1238.22 2087.03L1290.77 2087.03"/>*/}
-                <path ref={R622K611} className="cls-6" d="M1238.29 2025.41L1290.77 2025.41"/>
-                <path ref={K613K619} className="cls-6" d="M1398.38 2005.37L1290.77 2005.37"/>
-                <path ref={K620K615} className="cls-6" d="M1333.86 1642.76L1290.77 1599.67"/>
-                <path ref={K620K621} className="cls-6" d="M1358.32 1666.73L1335.48 1643.89"/>
-                <path ref={K621K622} className="cls-6" d="M1397.93 1706.34L1358.32 1666.73"/>
-                <path ref={K622E6592} className="cls-6" d="M1531.2 1839.61L1397.93 1706.34"/>
-                <path ref={K614K621} className="cls-6" d="M1291.37 1732.53L1357.17 1666.73"/>
-                <path ref={K620E6621} className="cls-6" d="M1351.62 1627.75L1335.48 1643.89"/>
-                <path ref={K622E6611} className="cls-6" d="M1413.89 1690.02L1397.75 1706.16"/>
-                <path ref={K616E6701} className="cls-6" d="M1260.71 1350.31L1290.18 1350.31"/>
-                <path ref={K616K62} className="cls-6" d="M1326.58 1278.71L1290.77 1350.05"/>
-                <path ref={K61E690} className="cls-6" d="M1326.58 1131.74L1346.14 1131.74"/>
-                <path ref={K65K624} className="cls-6" d="M1430.73 782.86L1326.58 886.99"/>
-                <path ref={K624K625} className="cls-6" d="M1579.23 634.39L1430.73 782.86"/>
-                <path ref={K625D6571} className="cls-6" d="M1665.81 547.83L1579.23 634.39"/>
-                <path ref={K624D6521} className="cls-6" d="M1448.55 800.69L1430.73 782.86"/>
-                <path ref={R611K68} className="cls-6" d="M1308.97 653.46L1326.58 653.46"/>
-                <path ref={K626K69} className="cls-6" d="M1432.58 520.79L1326.58 626.82"/>
-                <path ref={K626D6581} className="cls-6" d="M1535.56 417.77L1432.58 520.79"/>
-                <path ref={K626V61} className="cls-6" d="M1447.4 535.6L1432.58 520.79"/>
-                <path ref={K610D6591} className="cls-6" d="M1301.06 587.98L1326.58 587.98"/>
-                <path ref={K627K66} className="cls-6" d="M1272.35 806.97L1326.58 806.97"/>
-                <path ref={K627K628} className="cls-6" d="M1228.53 806.97L1272.35 806.97"/>
-                <path ref={K66K624} className="cls-6" d="M1430.03 782.86L1327.3 806.97"/>
-                <path ref={K67K624} className="cls-6" d="M1430.23 782.65L1326.58 676.66"/>
-                <path ref={K627R612} className="cls-6" d="M1272.19 744.84L1272.19 806.97"/>
-                <path ref={K629H61} className="cls-6" d="M1247.85 909.06L1229.32 909.06"/>
-                <path ref={K628K629} className="cls-6" d="M1229.32 806.97L1229.32 908.09"/>
-                <path ref={K630K629} className="cls-6" d="M1229.32 909.68L1229.32 1003.96"/>
-                <path ref={K630K64} className="cls-6" d="M1230.25 1003.96L1326.58 1003.96"/>
-                <path ref={K630K63} className="cls-6" d="M1230.25 1004.95L1325.98 1086.94"/>
-                <path ref={K619K618} className="cls-6" d="M1511.72 2005.37L1398.38 2005.37"/>
-                <path ref={K631K610} className="cls-6" d="M1326.58 385.83L1326.58 587.98"/>
-                <path ref={K631D6582} className="cls-6" d="M1326.58 336.58L1326.58 385.83"/>
-                <path ref={K631D6592} className="cls-6" d="M1299.48 385.24L1326.58 385.24"/>
+                <path
+                    ref={K61K62}
+                    className="cls-6"
+                    d="M1326.58 1131.74L1326.58 1278.21"
+                />
+                <path
+                    ref={K61K63}
+                    className="cls-6"
+                    d="M1326.58 1087.53L1326.58 1131.74"
+                />
+                <path
+                    ref={K63K64}
+                    className="cls-6"
+                    d="M1326.58 1004.95L1326.58 1087.53"
+                />
+                <path
+                    ref={K64K65}
+                    className="cls-6"
+                    d="M1326.58 886.99L1326.58 1004.95"
+                />
+                <path
+                    ref={K65K66}
+                    className="cls-6"
+                    d="M1326.58 807.54L1326.58 886.99"
+                />
+                <path
+                    ref={K66K67}
+                    className="cls-6"
+                    d="M1326.58 676.95L1326.58 807.54"
+                />
+                <path
+                    ref={K67K68}
+                    className="cls-6"
+                    d="M1326.58 653.6L1326.58 676.95"
+                />
+                <path
+                    ref={K68K69}
+                    className="cls-6"
+                    d="M1326.58 626.208L1326.58 653.6"
+                />
+                <path
+                    ref={K69K610}
+                    className="cls-6"
+                    d="M1326.798 587.475L1326.798 626.017"
+                />
+                <path
+                    ref={K611K612}
+                    className="cls-6"
+                    d="M1290.77 2025.21L1290.77 2087.03"
+                />
+                <path
+                    ref={K611K613}
+                    className="cls-6"
+                    d="M1290.77 2005.57L1290.77 2025.21"
+                />
+                <path
+                    ref={K613K614}
+                    className="cls-6"
+                    d="M1290.77 1732.53L1290.77 2005.57"
+                />
+                <path
+                    ref={K614K615}
+                    className="cls-6"
+                    d="M1290.77 1602.64L1290.77 1732.53"
+                />
+                <path
+                    ref={K615K616}
+                    className="cls-6"
+                    d="M1290.77 1350.31L1290.77 1602.64"
+                />
+                <path
+                    ref={K617K618}
+                    className="cls-6"
+                    d="M1512.43 2004.86L1360.14 2157.15"
+                />
+                <path
+                    ref={K618E6591}
+                    className="cls-6"
+                    d="M1538.42 1978.86L1512.43 2004.86"
+                />
+                <path
+                    ref={K612K617}
+                    className="cls-6"
+                    d="M1359.71 2157.02L1290.91 2088.21"
+                />
+                {/*
+                              <path
+                    ref={R621K612}
+                    className="cls-6"
+                    d="M1238.22 2087.03L1290.77 2087.03"
+                />
+              */}
+                <path
+                    ref={R622K611}
+                    className="cls-6"
+                    d="M1238.29 2025.41L1290.77 2025.41"
+                />
+                <path
+                    ref={K613K619}
+                    className="cls-6"
+                    d="M1398.38 2005.37L1290.77 2005.37"
+                />
+                <path
+                    ref={K620K615}
+                    className="cls-6"
+                    d="M1333.86 1642.76L1290.77 1599.67"
+                />
+                <path
+                    ref={K620K621}
+                    className="cls-6"
+                    d="M1358.32 1666.73L1335.48 1643.89"
+                />
+                <path
+                    ref={K621K622}
+                    className="cls-6"
+                    d="M1397.93 1706.34L1358.32 1666.73"
+                />
+                <path
+                    ref={K622E6592}
+                    className="cls-6"
+                    d="M1531.2 1839.61L1397.93 1706.34"
+                />
+                <path
+                    ref={K614K621}
+                    className="cls-6"
+                    d="M1291.37 1732.53L1357.17 1666.73"
+                />
+                <path
+                    ref={K620E6621}
+                    className="cls-6"
+                    d="M1351.62 1627.75L1335.48 1643.89"
+                />
+                <path
+                    ref={K622E6611}
+                    className="cls-6"
+                    d="M1413.89 1690.02L1397.75 1706.16"
+                />
+                <path
+                    ref={K616E6701}
+                    className="cls-6"
+                    d="M1260.71 1350.31L1290.18 1350.31"
+                />
+                <path
+                    ref={K616K62}
+                    className="cls-6"
+                    d="M1326.58 1278.71L1290.77 1350.05"
+                />
+                <path
+                    ref={K61E690}
+                    className="cls-6"
+                    d="M1326.58 1131.74L1346.14 1131.74"
+                />
+                <path
+                    ref={K65K624}
+                    className="cls-6"
+                    d="M1430.73 782.86L1326.58 886.99"
+                />
+                <path
+                    ref={K624K625}
+                    className="cls-6"
+                    d="M1579.23 634.39L1430.73 782.86"
+                />
+                <path
+                    ref={K625D6571}
+                    className="cls-6"
+                    d="M1665.81 547.83L1579.23 634.39"
+                />
+                <path
+                    ref={K624D6521}
+                    className="cls-6"
+                    d="M1448.55 800.69L1430.73 782.86"
+                />
+                <path
+                    ref={R611K68}
+                    className="cls-6"
+                    d="M1308.97 653.46L1326.58 653.46"
+                />
+                <path
+                    ref={K626K69}
+                    className="cls-6"
+                    d="M1432.58 520.79L1326.58 626.82"
+                />
+                <path
+                    ref={K626D6581}
+                    className="cls-6"
+                    d="M1535.56 417.77L1432.58 520.79"
+                />
+                <path
+                    ref={K626V61}
+                    className="cls-6"
+                    d="M1447.4 535.6L1432.58 520.79"
+                />
+                <path
+                    ref={K610D6591}
+                    className="cls-6"
+                    d="M1301.06 587.98L1326.58 587.98"
+                />
+                <path
+                    ref={K627K66}
+                    className="cls-6"
+                    d="M1272.35 806.97L1326.58 806.97"
+                />
+                <path
+                    ref={K627K628}
+                    className="cls-6"
+                    d="M1228.53 806.97L1272.35 806.97"
+                />
+                <path
+                    ref={K66K624}
+                    className="cls-6"
+                    d="M1430.03 782.86L1327.3 806.97"
+                />
+                <path
+                    ref={K67K624}
+                    className="cls-6"
+                    d="M1430.23 782.65L1326.58 676.66"
+                />
+                <path
+                    ref={K627R612}
+                    className="cls-6"
+                    d="M1272.19 744.84L1272.19 806.97"
+                />
+                <path
+                    ref={K629H61}
+                    className="cls-6"
+                    d="M1247.85 909.06L1229.32 909.06"
+                />
+                <path
+                    ref={K628K629}
+                    className="cls-6"
+                    d="M1229.32 806.97L1229.32 908.09"
+                />
+                <path
+                    ref={K630K629}
+                    className="cls-6"
+                    d="M1229.32 909.68L1229.32 1003.96"
+                />
+                <path
+                    ref={K630K64}
+                    className="cls-6"
+                    d="M1230.25 1003.96L1326.58 1003.96"
+                />
+                <path
+                    ref={K630K63}
+                    className="cls-6"
+                    d="M1230.25 1004.95L1325.98 1086.94"
+                />
+                <path
+                    ref={K619K618}
+                    className="cls-6"
+                    d="M1511.72 2005.37L1398.38 2005.37"
+                />
+                <path
+                    ref={K631K610}
+                    className="cls-6"
+                    d="M1326.58 385.83L1326.58 587.98"
+                />
+                <path
+                    ref={K631D6582}
+                    className="cls-6"
+                    d="M1326.58 336.58L1326.58 385.83"
+                />
+                <path
+                    ref={K631D6592}
+                    className="cls-6"
+                    d="M1299.48 385.24L1326.58 385.24"
+                />
             </g>
 
             {/* Floor 7*/}
@@ -1802,74 +1995,14 @@ function RouteFinder({
                     />
                 </g>
                 <g id="classes" ref={classes7}>
-                    <path
-                        className="cls-5"
-                        id="D7581"
-                        d="M419.79 114.91L323.52 211.17 231.74 211.17 231.74 280.4 244.2 292.86 237.54 299.52 237.54 339.25 288.46 339.25 338.91 288.8 510.51 460.4 632.03 338.88 420.05 126.91 419.79 114.91z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id="D7591"
-                        d="M237.54 299.52L237.54 616.47 70.14 616.47 70.33 280.4 231.74 280.4 244 292.67 237.38 299.29"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E7611"}
-                        transform="rotate(-45 1007.959 3229.49)"
-                        d="M1629.96 1646.12h352.47v229.52h-352.47z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E7621"}
-                        d="M416.49 1259.92l-170.31 170.3v157.85l81.99 81.99 249.13-249.13-160.81-161.01z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E7591"}
-                        transform="rotate(-45 1200.5 3370.337)"
-                        d="M1859.06 1780.75h279.36v241.97h-279.36z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E7511"}
-                        d="M713.26 1951.76l-297.89 297.89-121.78-121.78 101.14-101.14v-38.24h40.35l157.45-157.45 120.73 120.72z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E7901"}
-                        d="M416.19 1257.64L371 1302.84 280.9 1302.84 280.9 1068.15 373.57 1068.15 416.21 1110.79 416.19 1257.64z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"D7501"}
-                        d="M333.2 853.16L407 779.65 577.17 949.83 416.55 1110.44 307.3 1001.19 307.3 878.95 320.58 865.72"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"D7511"}
-                        transform="rotate(-45 1060.841 2372.885)"
-                        d="M1725.09 783.96H1993.08V1024.6H1725.09z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"D7571"}
-                        d="M618.12 568.27L596.36 590.03 766.65 760.32 910.05 616.91 632.03 338.88 510.38 460.53 618.12 568.27z"
-                    />
-
-                    <path
-                        className="cls-5"
-                        id={"E7701"}
-                        d="M72.97 1332.58L196.4 1332.58 196.4 1754.82 73.5 1754.82 72.97 1332.58z"
-                    />
+                    {seventhFloorRoomsArray.map((item) => (
+                        <Room
+                            className={item.className}
+                            id={item.id}
+                            transform={item.transform}
+                            d={item.d}
+                        />
+                    ))}{" "}
                 </g>
                 <g id="toilets">
                     <path
@@ -2185,12 +2318,12 @@ function RouteFinder({
                     className="cls-6"
                     d="M216.97 2088.45 214.34 2087.92 173.19 2087.92"
                 />
-
             </g>
 
             {/* Floor 5*/}
             <g display={floor5Visibility} id="_5_drawn_base">
                 <g id="misc">
+                    <path className="cls-4" d="M80.75 603.21H334.73V776.09H80.75z"/>
                     <path
                         className="cls-4"
                         d="M188.62 890.03L238.66 839.98 434.42 839.98 335.29 939.12 325.24 929.06 276.18 978.12 188.62 890.03z"
@@ -2246,82 +2379,48 @@ function RouteFinder({
                 </g>
                 <g id="toilets">
                     <path
+                        id="V53"
                         className="cls-3"
                         transform="rotate(-45 346.04 1289.696)"
                         d="M517.34 1075.37H714.27V1140.08H517.34z"
                     />
                     <path
+                        id="V51"
                         className="cls-3"
                         d="M1459.3 1985.19L1308.18 1985.19 1308.18 1912.66 1475.13 1912.66 1522.27 1959.81 1496.88 1985.19 1459.3 1985.19z"
                     />
                     <path
+                        id="V52"
                         className="cls-3"
                         d="M1549.7 433.3L1406.29 576.71 1452.18 622.6 1595.79 479 1549.7 433.3z"
                     />
                 </g>
                 <g id="stairsElevator">
                     <path
+                        id="R51"
                         className="cls-1"
                         d="M1140.84 1981.9H1238.29V2242.21H1140.84z"
                     />
                     <path
+                        id="R53"
                         className="cls-1"
                         d="M1308.97 744.84L1079.52 744.84 1079.52 603.21 1144.4 603.21 1144.4 632.88 1308.97 632.88 1308.97 744.84z"
                     />
                     <path
+                        id="H51"
                         className="cls-1"
                         d="M1247.65 824.79H1308.97V993.3199999999999H1247.65z"
                     />
                 </g>
                 <g id="classes">
-                    <path className="cls-5" d="M80.75 603.21H334.73V776.09H80.75z"/>
-                    <path className="cls-5" d="M334.73 603.21H822.38V776.09H334.73z"/>
-                    <path
-                        className="cls-5"
-                        d="M253.76 1020.05L168.12 1105.7 498.18 1435.76 663.48 1270.47 495.87 1102.86 497.62 1101.12 410.06 1013.55 361.1 1062.51 315.61 1017.02 283.57 1049.06 253.76 1020.05z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M495.87 1102.86L663.48 1270.47 982.86 951.08 982.86 940.66 885.87 843.68 754.34 843.68 495.87 1102.86z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1140.84 1328.36H1260.71V1790.4299999999998H1140.84z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1519.17 1902.51L1492.53 1929.15 1522.73 1959.35 1496.88 1985.19 1459.3 1985.19 1459.3 2024.09 1355.39 2128.01 1387.57 2160.18 1390.99 2156.75 1476.05 2241.81 1481.46 2241.81 1749.08 1974.18 1628.62 1853.72 1549.5 1932.84 1519.17 1902.51z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1527.45 1857.31L1545.91 1875.77 1519.17 1902.51 1549.5 1932.84 1628.62 1853.72 1749.28 1974.38 1975.17 1748.49 1805.72 1579.04 1527.45 1857.31z"
-                    />
-                    <path
-                        className="cls-5"
-                        transform="rotate(-45 1523.542 1956.628)"
-                        d="M1596.54 1660.16H1990.07V1889.17H1596.54z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1433.54 1300.22L1318.68 1415.08 1318.68 1648.53 1365.52 1695.37 1643.79 1417.1 1480.22 1253.54 1433.54 1300.22z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1345.76 1064.88L1437.35 1064.88 1480.17 1107.71 1480.17 1253.59 1433.54 1300.22 1345.76 1300.22 1345.76 1064.88z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1803.81 784.07L1480.27 1107.61 1437.35 1064.69 1372.27 999.61 1372.27 876.97 1633.66 615.58 1803.81 784.07z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1633.37 615.28L1683.41 565.24 1575.12 456.94 1697.85 334.2 1975.76 612.12 1803.81 784.07 1633.37 615.28z"
-                    />
-                    <path
-                        className="cls-5"
-                        d="M1353.28 366.25L1303.43 366.25 1303.43 1.5 1479.68 1.5 1479.68 116.03 1697.85 334.2 1574.22 457.83 1402.14 285.74 1353.68 334.2 1353.28 366.25z"
-                    />
-                    <path className="cls-5" d="M1144.4 283.96H1303.43V632.88H1144.4z"/>
+                    {seventhFloorRoomsArray.map((item) => (
+                        <Room
+                            className={item.className}
+                            id={item.id}
+                            transform={item.transform}
+                            d={item.d}
+                        />
+                    ))}{" "}
                 </g>
                 <g id="walls">
                     <path
@@ -2364,7 +2463,7 @@ function RouteFinder({
                     <path className="cls-8" d="M1296.72 744.84L1247.65 744.75"/>
                     <path className="cls-8" d="M800.82 776.15L783.01 776.11"/>
                     <path className="cls-8" d="M394.14 776.11L376.33 776.08"/>
-                    <path className="cls-8" d="M284.34 776.09L266.53 776.06"/>
+                    {/*Henkilöstön työtilan ovi <path className="cls-8" d="M284.34 776.09L266.53 776.06" /> */}
                     <path className="cls-8" d="M1303.42 572.63L1303.45 554.82"/>
                     <path className="cls-8" d="M1260.69 1359.22L1260.73 1341.41"/>
                     <path className="cls-8" d="M1260.69 1741.44L1260.73 1723.63"/>
@@ -2377,85 +2476,364 @@ function RouteFinder({
                 </g>
             </g>
             <g display={floor5Visibility} id="_5_routes">
-                <path ref={K51K52} className="cls-6" d="M1326.58 1086.94L1326.58 1278.21"/>
-                <path ref={K51K53} className="cls-6" d="M1326.58 1003.96L1326.58 1086.94"/>
+                <path
+                    ref={K51K52}
+                    className="cls-6"
+                    d="M1326.58 1086.94L1326.58 1278.21"
+                />
+                <path
+                    ref={K51K53}
+                    className="cls-6"
+                    d="M1326.58 1003.96L1326.58 1086.94"
+                />
                 <path ref={K53K54} className="cls-6" d="M1326.58 887.199v116.761"/>
                 <path ref={K55K54} className="cls-6" d="M1325.976 805.715v80.546"/>
-                <path ref={K55K56} className="cls-6" d="M1326.58 676.95L1326.58 806.42"/>
-                <path ref={K56K57} className="cls-6" d="M1326.58 653.6L1326.58 676.95"/>
-                <path ref={K57K58} className="cls-6" d="M1326.58 628.14L1326.58 653.6"/>
-                <path ref={K58K59} className="cls-6" d="M1326.58 564.12L1326.58 628.14"/>
-                <path ref={K59D5581} className="cls-6" d="M1326.58 366.25L1326.58 564.12"/>
-                <path ref={K510K511} className="cls-6" d="M1290.77 2025.21L1290.77 2087.03"/>
-                <path ref={K510K512} className="cls-6" d="M1290.77 2005.57L1290.77 2025.21"/>
-                <path ref={K512K513} className="cls-6" d="M1290.77 1732.53L1290.77 2005.57"/>
-                <path ref={K513K514} className="cls-6" d="M1290.77 1672.66L1290.77 1732.53"/>
-                <path ref={K514K515} className="cls-6" d="M1290.77 1350.31L1290.77 1672.66"/>
-                <path ref={K516E5511} className="cls-6" d="M1372.14 2145.15L1360.14 2157.15"/>
-                <path ref={K511K516} className="cls-6" d="M1359.71 2157.02L1290.91 2088.21"/>
-                {/*<path ref={K511R521} className="cls-6" d="M1238.22 2087.03L1290.77 2087.03"/>*/}
-                <path ref={K510R522} className="cls-6" d="M1238.29 2025.41L1290.77 2025.41"/>
-                <path ref={K512V51} className="cls-6" d="M1398.38 2005.37L1290.77 2005.37"/>
-                <path ref={K513E5701} className="cls-6" d="M1260.73 1732.53L1290.77 1732.53"/>
-                <path ref={K517E5591} className="cls-6" d="M1497.15 1879.48L1536.25 1885.43"/>
-                <path ref={K517E5512} className="cls-6" d="M1503.46 1918.22L1497.15 1879.76"/>
-                <path ref={K514K518} className="cls-6" d="M1320.74 1703.42L1290.72 1673.4"/>
-                <path ref={K519K518} className="cls-9" d="M1326.41 1709.09L1320.74 1703.42"/>
-                <path ref={K519K520} className="cls-6" d="M1363.68 1746.36L1326.41 1709.09"/>
-                <path ref={K520K517} className="cls-6" d="M1496.95 1879.63L1363.68 1746.36"/>
-                <path ref={K513K518} className="cls-6" d="M1291.37 1732.53L1320.61 1703.29"/>
-                <path ref={K519E5621} className="cls-6" d="M1352.52 1682.46L1326.15 1708.83"/>
-                <path ref={K520E5611} className="cls-6" d="M1389.92 1719.77L1363.5 1746.18"/>
-                <path ref={K515E5702} className="cls-6" d="M1260.71 1350.31L1290.18 1350.31"/>
-                <path ref={K52E5901} className="cls-6" d="M1345.75 1278.21L1327.07 1278.21"/>
-                <path ref={K52K515} className="cls-6" d="M1326.58 1278.71L1290.77 1350.05"/>
-                <path ref={K51E5902} className="cls-6" d="M1326.58 1086.94L1346.14 1086.94"/>
-                <path ref={K521D5571} className="cls-6" d="M1656.45 592.2L1639.01 574.76"/>
-                <path ref={K522K54} className="cls-6" d="M1430.73 782.86L1326.58 886.99"/>
-                <path ref={K522K523} className="cls-6" d="M1579.23 634.39L1430.73 782.86"/>
-                <path ref={K521K523} className="cls-6" d="M1638.41 575.23L1579.23 634.39"/>
-                <path ref={K522D5501} className="cls-6" d="M1448.55 800.69L1430.73 782.86"/>
-                <path ref={K523D5502} className="cls-6" d="M1597.83 651.81L1579.82 633.8"/>
-                <path ref={K57R511} className="cls-6" d="M1308.97 653.46L1326.58 653.46"/>
-                <path ref={K58K524} className="cls-6" d="M1432.58 520.79L1326.58 626.82"/>
-                <path ref={K524D5582} className="cls-6" d="M1534.86 418.47L1432.58 520.79"/>
-                <path ref={K524V52} className="cls-6" d="M1447.4 535.6L1432.58 520.79"/>
-                <path ref={K59D5691} className="cls-6" d="M1303.42 563.72L1326.58 563.72"/>
-                <path ref={K525K55} className="cls-6" d="M1272.35 806.97L1326.58 806.97"/>
-                <path ref={K525K526} className="cls-6" d="M1228.53 806.97L1272.35 806.97"/>
-                <path ref={K526K527} className="cls-6" d="M792.25 806.97L1228.53 806.97"/>
-                <path ref={K527K528} className="cls-6" d="M764.23 806.97L792.25 806.97"/>
-                <path ref={K528K529} className="cls-6" d="M579.38 806.97L764.23 806.97"/>
-                <path ref={K529K530} className="cls-6" d="M489.48 806.97L579.38 806.97"/>
+                <path
+                    ref={K55K56}
+                    className="cls-6"
+                    d="M1326.58 676.95L1326.58 806.42"
+                />
+                <path
+                    ref={K56K57}
+                    className="cls-6"
+                    d="M1326.58 653.6L1326.58 676.95"
+                />
+                <path
+                    ref={K57K58}
+                    className="cls-6"
+                    d="M1326.58 628.14L1326.58 653.6"
+                />
+                <path
+                    ref={K58K59}
+                    className="cls-6"
+                    d="M1326.58 564.12L1326.58 628.14"
+                />
+                <path
+                    ref={K59D5581}
+                    className="cls-6"
+                    d="M1326.58 366.25L1326.58 564.12"
+                />
+                <path
+                    ref={K510K511}
+                    className="cls-6"
+                    d="M1290.77 2025.21L1290.77 2087.03"
+                />
+                <path
+                    ref={K510K512}
+                    className="cls-6"
+                    d="M1290.77 2005.57L1290.77 2025.21"
+                />
+                <path
+                    ref={K512K513}
+                    className="cls-6"
+                    d="M1290.77 1732.53L1290.77 2005.57"
+                />
+                <path
+                    ref={K513K514}
+                    className="cls-6"
+                    d="M1290.77 1672.66L1290.77 1732.53"
+                />
+                <path
+                    ref={K514K515}
+                    className="cls-6"
+                    d="M1290.77 1350.31L1290.77 1672.66"
+                />
+                <path
+                    ref={K516E5511}
+                    className="cls-6"
+                    d="M1372.14 2145.15L1360.14 2157.15"
+                />
+                <path
+                    ref={K511K516}
+                    className="cls-6"
+                    d="M1359.71 2157.02L1290.91 2088.21"
+                />
+                {/*
+                    <path
+                    ref={K511R521}
+                    className="cls-6"
+                    d="M1238.22 2087.03L1290.77 2087.03"
+                />
+                */}
+                <path
+                    ref={K510R522}
+                    className="cls-6"
+                    d="M1238.29 2025.41L1290.77 2025.41"
+                />
+                <path
+                    ref={K512V51}
+                    className="cls-6"
+                    d="M1398.38 2005.37L1290.77 2005.37"
+                />
+                <path
+                    ref={K513E5701}
+                    className="cls-6"
+                    d="M1260.73 1732.53L1290.77 1732.53"
+                />
+                <path
+                    ref={K517E5591}
+                    className="cls-6"
+                    d="M1497.15 1879.48L1536.25 1885.43"
+                />
+                <path
+                    ref={K517E5512}
+                    className="cls-6"
+                    d="M1503.46 1918.22L1497.15 1879.76"
+                />
+                <path
+                    ref={K514K518}
+                    className="cls-6"
+                    d="M1320.74 1703.42L1290.72 1673.4"
+                />
+                <path
+                    ref={K519K518}
+                    className="cls-9"
+                    d="M1326.41 1709.09L1320.74 1703.42"
+                />
+                <path
+                    ref={K519K520}
+                    className="cls-6"
+                    d="M1363.68 1746.36L1326.41 1709.09"
+                />
+                <path
+                    ref={K520K517}
+                    className="cls-6"
+                    d="M1496.95 1879.63L1363.68 1746.36"
+                />
+                <path
+                    ref={K513K518}
+                    className="cls-6"
+                    d="M1291.37 1732.53L1320.61 1703.29"
+                />
+                <path
+                    ref={K519E5621}
+                    className="cls-6"
+                    d="M1352.52 1682.46L1326.15 1708.83"
+                />
+                <path
+                    ref={K520E5611}
+                    className="cls-6"
+                    d="M1389.92 1719.77L1363.5 1746.18"
+                />
+                <path
+                    ref={K515E5702}
+                    className="cls-6"
+                    d="M1260.71 1350.31L1290.18 1350.31"
+                />
+                <path
+                    ref={K52E5901}
+                    className="cls-6"
+                    d="M1345.75 1278.21L1327.07 1278.21"
+                />
+                <path
+                    ref={K52K515}
+                    className="cls-6"
+                    d="M1326.58 1278.71L1290.77 1350.05"
+                />
+                <path
+                    ref={K51E5902}
+                    className="cls-6"
+                    d="M1326.58 1086.94L1346.14 1086.94"
+                />
+                <path
+                    ref={K521D5571}
+                    className="cls-6"
+                    d="M1656.45 592.2L1639.01 574.76"
+                />
+                <path
+                    ref={K522K54}
+                    className="cls-6"
+                    d="M1430.73 782.86L1326.58 886.99"
+                />
+                <path
+                    ref={K522K523}
+                    className="cls-6"
+                    d="M1579.23 634.39L1430.73 782.86"
+                />
+                <path
+                    ref={K521K523}
+                    className="cls-6"
+                    d="M1638.41 575.23L1579.23 634.39"
+                />
+                <path
+                    ref={K522D5501}
+                    className="cls-6"
+                    d="M1448.55 800.69L1430.73 782.86"
+                />
+                <path
+                    ref={K523D5502}
+                    className="cls-6"
+                    d="M1597.83 651.81L1579.82 633.8"
+                />
+                <path
+                    ref={K57R511}
+                    className="cls-6"
+                    d="M1308.97 653.46L1326.58 653.46"
+                />
+                <path
+                    ref={K58K524}
+                    className="cls-6"
+                    d="M1432.58 520.79L1326.58 626.82"
+                />
+                <path
+                    ref={K524D5582}
+                    className="cls-6"
+                    d="M1534.86 418.47L1432.58 520.79"
+                />
+                <path
+                    ref={K524V52}
+                    className="cls-6"
+                    d="M1447.4 535.6L1432.58 520.79"
+                />
+                <path
+                    ref={K59D5691}
+                    className="cls-6"
+                    d="M1303.42 563.72L1326.58 563.72"
+                />
+                <path
+                    ref={K525K55}
+                    className="cls-6"
+                    d="M1272.35 806.97L1326.58 806.97"
+                />
+                <path
+                    ref={K525K526}
+                    className="cls-6"
+                    d="M1228.53 806.97L1272.35 806.97"
+                />
+                <path
+                    ref={K526K527}
+                    className="cls-6"
+                    d="M792.25 806.97L1228.53 806.97"
+                />
+                <path
+                    ref={K527K528}
+                    className="cls-6"
+                    d="M764.23 806.97L792.25 806.97"
+                />
+                <path
+                    ref={K528K529}
+                    className="cls-6"
+                    d="M579.38 806.97L764.23 806.97"
+                />
+                <path
+                    ref={K529K530}
+                    className="cls-6"
+                    d="M489.48 806.97L579.38 806.97"
+                />
                 <path ref={K530K531} className="cls-6" d="M384.623 806.97H489.48"/>
                 <path ref={K531K532} className="cls-6" d="M277.999 806.97h104.857"/>
-                <path ref={K55K522} className="cls-6" d="M1430.03 782.86L1327.3 806.97"/>
-                <path ref={K522K56} className="cls-6" d="M1430.23 782.65L1326.58 676.66"/>
-                <path ref={K525R512} className="cls-6" d="M1272.19 744.84L1272.19 806.97"/>
-                <path ref={K533H51} className="cls-6" d="M1247.85 909.06L1229.32 909.06"/>
-                <path ref={K526K533} className="cls-6" d="M1229.32 806.97L1229.32 908.09"/>
-                <path ref={K533K534} className="cls-6" d="M1229.32 909.68L1229.32 1003.96"/>
-                <path ref={K53K534} className="cls-6" d="M1230.25 1003.96L1326.58 1003.96"/>
-                <path ref={K534K51} className="cls-6" d="M1230.25 1004.95L1325.98 1086.94"/>
-                <path ref={K527C5921} className="cls-6" d="M791.92 776.09L791.92 806.97"/>
-                <path ref={K528K535} className="cls-6" d="M720.53 849.5L763.04 806.97"/>
-                <path ref={K535K536} className="cls-6" d="M671.22 898.82L720.53 849.5"/>
-                <path ref={K536K537} className="cls-6" d="M538.02 1032.07L671.22 898.82"/>
-                <path ref={C5571K537} className="cls-6" d="M483.31 1086.8L538.02 1032.07"/>
-                <path ref={K535C5651} className="cls-6" d="M734.83 863.24L720.81 849.22"/>
-                <path ref={K537C5652} className="cls-6" d="M552.21 1046.56L537.87 1032.21"/>
-                <path ref={K536K529} className="cls-6" d="M670.93 898.47L579.85 807.39"/>
+                <path
+                    ref={K55K522}
+                    className="cls-6"
+                    d="M1430.03 782.86L1327.3 806.97"
+                />
+                <path
+                    ref={K522K56}
+                    className="cls-6"
+                    d="M1430.23 782.65L1326.58 676.66"
+                />
+                <path
+                    ref={K525R512}
+                    className="cls-6"
+                    d="M1272.19 744.84L1272.19 806.97"
+                />
+                <path
+                    ref={K533H51}
+                    className="cls-6"
+                    d="M1247.85 909.06L1229.32 909.06"
+                />
+                <path
+                    ref={K526K533}
+                    className="cls-6"
+                    d="M1229.32 806.97L1229.32 908.09"
+                />
+                <path
+                    ref={K533K534}
+                    className="cls-6"
+                    d="M1229.32 909.68L1229.32 1003.96"
+                />
+                <path
+                    ref={K53K534}
+                    className="cls-6"
+                    d="M1230.25 1003.96L1326.58 1003.96"
+                />
+                <path
+                    ref={K534K51}
+                    className="cls-6"
+                    d="M1230.25 1004.95L1325.98 1086.94"
+                />
+                <path
+                    ref={K527C5921}
+                    className="cls-6"
+                    d="M791.92 776.09L791.92 806.97"
+                />
+                <path
+                    ref={K528K535}
+                    className="cls-6"
+                    d="M720.53 849.5L763.04 806.97"
+                />
+                <path
+                    ref={K535K536}
+                    className="cls-6"
+                    d="M671.22 898.82L720.53 849.5"
+                />
+                <path
+                    ref={K536K537}
+                    className="cls-6"
+                    d="M538.02 1032.07L671.22 898.82"
+                />
+                <path
+                    ref={C5571K537}
+                    className="cls-6"
+                    d="M483.31 1086.8L538.02 1032.07"
+                />
+                <path
+                    ref={K535C5651}
+                    className="cls-6"
+                    d="M734.83 863.24L720.81 849.22"
+                />
+                <path
+                    ref={K537C5652}
+                    className="cls-6"
+                    d="M552.21 1046.56L537.87 1032.21"
+                />
+                <path
+                    ref={K536K529}
+                    className="cls-6"
+                    d="M670.93 898.47L579.85 807.39"
+                />
                 <path ref={K530K538} className="cls-6" d="M397.9 900.71L490.4 808.2"/>
+                {" "}
+                {/* 30-38 */}
                 <path ref={K538K539} className="cls-6" d="M343.9 954.71L397.9 900.71"/>
-                <path ref={K539K540} className="cls-6" d="M280.93 1017.68L343.9 954.71"/>
-                <path ref={K540C5572} className="cls-6" d="M295.66 1036.97L278.65 1019.96"/>
-                <path ref={K538V53} className="cls-6" d="M414.42 918.05L397.49 901.12"/>
-                <path ref={K532C5901} className="cls-6" d="M275.44 776.06L275.44 806.97"/>
-                <path ref={K531C5922} className="cls-6" d="M385.24 776.11L385.24 806.97"/>
+                <path
+                    ref={K539K540}
+                    className="cls-6"
+                    d="M280.93 1017.68L343.9 954.71"
+                />
+                <path
+                    ref={K540C5572}
+                    className="cls-6"
+                    d="M295.66 1036.97L278.65 1019.96"
+                />
+                <path
+                    ref={K538V53}
+                    className="cls-6"
+                    d="M414.42 918.05L397.49 901.12"
+                />
+                <path
+                    ref={K532C5901}
+                    className="cls-6"
+                    d="M275.44 776.06L275.44 806.97"
+                />
+                <path
+                    ref={K531C5922}
+                    className="cls-6"
+                    d="M385.24 776.11L385.24 806.97"
+                />
             </g>
-
         </>
     );
 }
 
-export {RouteFinder, graph};
+export { RouteFinder, graph };

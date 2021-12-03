@@ -2,14 +2,14 @@ import moment from 'moment';
 import { useApiData } from './ApiHooks';
 
 interface requestObj {
-    group: string,
-    room: string,
-    realization: string,
+    group: string[],
+    room: string[],
+    realization: string[],
     startDate: string,
     apiKey: string,
     apiUrl: string,
     rangeStart: string,
-    rooms: string[],
+    rangeEnd: string,
 }
 
 const useModalData = () => {
@@ -21,28 +21,28 @@ const useModalData = () => {
             const today = moment().format('YYYY-MM-DD');
             const todayStart = today + 'T08:00:00';
             let requestObject: requestObj = {
-                group: '',
-                room: '',
-                realization: '',
+                group: [],
+                room: [],
+                realization: [],
                 startDate: todayStart,
                 apiKey: '',
                 apiUrl: '',
                 rangeStart: '',
-                rooms: [],
+                rangeEnd: '',
             };
             for (let i = 0; i < realizationStartsWith.length; i++) {
                 if (keyword.startsWith(realizationStartsWith[i])) {
-                    requestObject.realization = keyword;
+                    requestObject.realization.push(keyword);
                     break;
                 }
             }
-            if (requestObject.realization === '') {
+            if (requestObject.realization.length === 0) {
                 if (keyword.startsWith('KM')) {
                     console.log('ROOM', keyword);
-                    requestObject.room = keyword;
+                    requestObject.room.push(keyword);
                 } else {
                     console.log('GROUP', keyword);
-                    requestObject.group = keyword;
+                    requestObject.group.push(keyword);
                 }
             }
             const reservations = await postGetMetropoliaData(requestObject);
