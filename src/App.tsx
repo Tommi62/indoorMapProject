@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 // import RouteFinder from './Components/RouteFinder';
 import Nav from "./Components/Nav";
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import Modal from "./Components/Modal";
 import MapViewer from "./Components/MapViewer";
-import { Button } from "@mui/material";
-import { useApiData } from "./Hooks/ApiHooks";
 import data from "./Data/classrooms.json";
 
 const useStyles = makeStyles(() => ({
@@ -28,7 +26,7 @@ const App = () => {
   const [keyWord, setKeyWord] = useState("");
   const [updateShortcuts, setUpdateShortcuts] = useState(Date.now());
   const [updateOwnList, setUpdateOwnList] = useState(Date.now());
-  const [floorSelect, setFloorSelect] = useState<keyof typeof data>("7");
+  const [floorSelect, setFloorSelect] = useState<keyof typeof data>("2");
   const [modalContent, setModalContent] = useState<modalContentArray[]>([
     {
       success: false,
