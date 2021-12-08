@@ -34,6 +34,20 @@ interface navigateToNextClass {
   update: number,
 }
 
+interface resources {
+  code: string,
+  id: string,
+  name: string,
+  type: string,
+}
+
+interface nextClassArray {
+  startDate: string,
+  endDate: string,
+  subject: string,
+  resources: resources[],
+}
+
 interface propTypes {
   update: paramObj;
   setModalOpen: Function;
@@ -46,6 +60,8 @@ interface propTypes {
   setFloor: Function;
   availableRooms: string[];
   navigateToNextClass: navigateToNextClass,
+  nextClassArray: nextClassArray[],
+  setNextClassArray: Function,
 }
 
 const ReactSvgViewer = ({
@@ -60,6 +76,8 @@ const ReactSvgViewer = ({
   setFloor,
   availableRooms,
   navigateToNextClass,
+  nextClassArray,
+  setNextClassArray,
 }: propTypes) => {
   const [map, setMap] = useState<any>();
   const { getModalData } = useModalData();
@@ -71,6 +89,12 @@ const ReactSvgViewer = ({
   const [isVisible, setIsVisible] = useState(false);
   const [svgSize, setSvgSize] = useState("");
   const [boundsReady, setBoundsReady] = useState(false);
+  const [realNextClassArray, setRealNextClassArray] = useState<nextClassArray[]>([]);
+  const [emptyNextClassArrays, setEmptyNextClassArrays] = useState(Date.now());
+  const [anotherClass, setAnotherClass] = useState({
+    roomCode: '',
+    update: Date.now(),
+  })
 
   useEffect(() => {
     setIsVisible(false);
@@ -128,6 +152,7 @@ const ReactSvgViewer = ({
   };
 
   const mapClick = (e: any) => {
+    setEmptyNextClassArrays(Date.now());
     let str = e.originalEvent.target.id;
     console.log("event", e.latlng);
     if (isNaN(str.charAt(0)) && str !== "") {
@@ -139,15 +164,50 @@ const ReactSvgViewer = ({
 
   useEffect(() => {
     try {
-      if (navigateToNextClass.to !== '') {
+      if (navigateToNextClass.to !== '' && nextClassArray.length > 0) {
         navigateFrom(navigateToNextClass.from);
         navigateTo(navigateToNextClass.to);
         setFloor('2');
+        setTimeout(() => {
+          setRealNextClassArray(nextClassArray);
+        }, 500);
       }
     } catch (error: any) {
       console.log(error.message);
     }
-  }, [navigateToNextClass]);
+  }, [nextClassArray]);
+
+  useEffect(() => {
+    try {
+      if (realNextClassArray.length > 0) {
+        setIsVisible(true);
+        setPopupPosition([67.0111887034459, -111.85380415976664]);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [realNextClassArray]);
+
+  useEffect(() => {
+    try {
+      if (realNextClassArray.length > 0) {
+        setNextClassArray([]);
+        setRealNextClassArray([]);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [emptyNextClassArrays]);
+
+  useEffect(() => {
+    try {
+      if (anotherClass.roomCode !== '') {
+        navigateTo(anotherClass.roomCode);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [anotherClass]);
 
   useEffect(() => {
     if (map !== undefined) {
@@ -326,6 +386,8 @@ const ReactSvgViewer = ({
             showNav={showNav}
             getDataAndOpenModal={getDataAndOpenModal}
             showNavigationButtons={showNavigationButtons}
+            nextClassArray={realNextClassArray}
+            setAnotherClass={setAnotherClass}
           ></LeafletPopup>
         </>
       )}

@@ -34,6 +34,7 @@ interface propTypes {
   modalOpen: any;
   floorSelect: keyof typeof data;
   setFloorSelect: Function;
+  setNoOwnListNotification: Function;
 }
 
 interface paramObj {
@@ -56,9 +57,13 @@ interface resourcesArray {
   id: string,
   type: string,
   code: string,
+  name: string,
 }
 
 interface classesArray {
+  startDate: string,
+  endDate: string,
+  subject: string,
   resources: resourcesArray[],
 }
 
@@ -66,6 +71,13 @@ interface navigateToNextClass {
   from: string,
   to: string,
   update: number,
+}
+
+interface nextClassArray {
+  startDate: string,
+  endDate: string,
+  subject: string,
+  resources: resourcesArray[],
 }
 
 const MapViewer = ({
@@ -78,11 +90,13 @@ const MapViewer = ({
   modalOpen,
   floorSelect,
   setFloorSelect,
+  setNoOwnListNotification
 }: propTypes) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { postGetMetropoliaData } = useApiData();
   const [availableRooms, setAvailableRooms] = useState<string[]>([]);
+  const [nextClassArray, setNextClassArray] = useState<nextClassArray[]>([]);
   const [navigateToNextClass, setNavigateToNextClass] = useState<navigateToNextClass>({
     from: 'U21',
     to: '',
@@ -189,7 +203,14 @@ const MapViewer = ({
             requestObject.realization = [];
             groups = await postGetMetropoliaData(requestObject);
           }
-          const nextClassArray = realizations.reservations.concat(groups.reservations);
+          let nextClassArray;
+          if (realizations.reservations !== undefined && groups.reservations !== undefined) {
+            nextClassArray = realizations.reservations.concat(groups.reservations);
+          } else if (realizations.reservations !== undefined) {
+            nextClassArray = realizations.reservations;
+          } else {
+            nextClassArray = groups.reservations;
+          }
           nextClassArray.sort((a: any, b: any) => (a.startDate > b.startDate) ? 1 : ((b.startDate > a.startDate) ? -1 : 0));
           console.log('NEXTCLASSARRAY', nextClassArray);
 
@@ -220,7 +241,13 @@ const MapViewer = ({
           }
           console.log('FinalNextClassArray', finalNextClassArray);
           goToMyNextClass(finalNextClassArray);
+        } else {
+          setModalOpen(true);
+          setNoOwnListNotification(true);
         }
+      } else {
+        setModalOpen(true);
+        setNoOwnListNotification(true);
       }
       handleClose();
     } catch (error: any) {
@@ -239,6 +266,7 @@ const MapViewer = ({
             update: Date.now(),
           };
           setNavigateToNextClass(navigateObject);
+          setNextClassArray(classesArray);
           break;
         }
       }
@@ -288,6 +316,8 @@ const MapViewer = ({
         setFloor={setFloorSelect}
         availableRooms={availableRooms}
         navigateToNextClass={navigateToNextClass}
+        nextClassArray={nextClassArray}
+        setNextClassArray={setNextClassArray}
       />
       <ButtonGroup orientation="vertical" className="floorButtons">
         <Button id="7" className={active7} onClick={changeFloor}>
