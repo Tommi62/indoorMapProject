@@ -51,23 +51,10 @@ const App = () => {
     const [temp, setTemp] = useState()
     const { getLocalServerData } = useApiData();
 
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const temp2 = await getLocalServerData()
-                console.log("HELLOOOO")
-                setTemp(temp2)
-            } catch (error: any) {
-                console.log(error.message);
-            }
-        })();
-    }, []);
-
-
-    // const temp: string = useApiData().getLocalServerData()
-
-    const button = () => {
+    const button = async () => {
+        const temp2 = await getLocalServerData()
+        console.log("HELLOOOO")
+        setTemp(temp2)
 
         /*
         setUpdate({
