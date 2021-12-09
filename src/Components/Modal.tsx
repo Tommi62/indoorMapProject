@@ -12,12 +12,13 @@ import tippy, { followCursor } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import FazerMenu from "./FazerMenu";
+import CloseIcon from '@mui/icons-material/Close';
 
 const useStyles = makeStyles((theme) => ({
   box: {
     [theme.breakpoints.down(1000)]: {
-      width: "75vw!important",
-      maxHeight: '80vh!important',
+      width: "85vw!important",
+      maxHeight: '95vh!important',
     },
   },
   shortcut: {
@@ -25,8 +26,15 @@ const useStyles = makeStyles((theme) => ({
   },
   shortcutButton: {
     [theme.breakpoints.down(600)]: {
-      fontSize: '0.7rem!important',
+      fontSize: '0.6rem!important',
     },
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 1,
+    right: 1,
+    fontSize: '1.1rem!important',
+    cursor: 'pointer'
   }
 }));
 
@@ -216,6 +224,7 @@ const Modal = ({
         }}
         className={classes.box}
       >
+        <CloseIcon className={classes.closeButton} onClick={handleClose} />
         {noOwnListNotification ? (
           <>
             <Grid justifyContent="center">
@@ -245,7 +254,7 @@ const Modal = ({
                     <FullCalendar
                       locales={[fiLocale]}
                       locale="fi"
-                      dayHeaderContent={false}
+                      dayHeaderContent={keyWord}
                       plugins={[timeGridPlugin, interactionPlugin]}
                       headerToolbar={{
                         left: "prev",
@@ -319,9 +328,9 @@ const Modal = ({
                       {!isRoom &&
                         <>
                           {isInYourOwnList ? (
-                            <Button className={classes.shortcutButton} onClick={() => remove('ownList')}>Remove from list</Button>
+                            <Button className={classes.shortcutButton} onClick={() => remove('ownList')}>Remove from my classes</Button>
                           ) : (
-                            <Button className={classes.shortcutButton} onClick={() => add('ownList')}>Add to list</Button>
+                            <Button className={classes.shortcutButton} onClick={() => add('ownList')}>Add to my classes</Button>
                           )}
                         </>
                       }

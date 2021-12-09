@@ -108,6 +108,7 @@ const MapViewer = ({
     "6": "",
     "7": "",
   });
+  const [closePopup, setClosePopup] = useState(Date.now());
 
   useEffect(() => {
     try {
@@ -128,12 +129,14 @@ const MapViewer = ({
   }, [buttonStyles]);
 
   const navigateTo = (id: string) => {
+    setClosePopup(Date.now());
     setShowNav(false);
     setEnd(id);
     setToggle(Date.now());
   };
 
   const navigateFrom = (id: string) => {
+    setClosePopup(Date.now());
     if (floorSelect !== id.charAt(1)) {
       setFloorSelect(id.charAt(1));
     }
@@ -396,6 +399,7 @@ const MapViewer = ({
         setClickLocation={setClickLocation}
         popupID={popupID}
         setPopupID={setPopupID}
+        closePopup={closePopup}
       />
       <ButtonGroup orientation="vertical" className="floorButtons">
         <Button

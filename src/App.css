@@ -431,7 +431,7 @@ div[role="navigation"] {
 
 @media only screen and (max-width: 600px) {
   .fc-toolbar-title {
-    font-size: 0.8rem !important;
+    font-size: 0.7rem !important;
   }
 
   .fc-button {
@@ -445,11 +445,19 @@ div[role="navigation"] {
     font-size: 1rem !important;
   }
 
+  .fc-col-header-cell-cushion {
+    font-size: 0.7rem!important;
+  }
+
   .popupText {
     font-size: 0.7rem!important;
   }
 
   .popupButton {
     font-size: 0.6rem!important;
+  }
+
+  .popup {
+    max-width: 80vw!important;
   }
 }

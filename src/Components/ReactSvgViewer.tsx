@@ -84,6 +84,7 @@ interface propTypes {
   setClickLocation: Function;
   setPopupID: Function;
   buttonStyles: buttonStyles;
+  closePopup: number;
 }
 
 const ReactSvgViewer = ({
@@ -115,6 +116,7 @@ const ReactSvgViewer = ({
   setClickLocation,
   popupID,
   setPopupID,
+  closePopup,
 }: propTypes) => {
   const [map, setMap] = useState<any>();
   const { getModalData } = useModalData();
@@ -262,7 +264,7 @@ const ReactSvgViewer = ({
     } catch (error: any) {
       console.log(error.message);
     }
-  }, [floor, marker]);
+  }, [floor, marker, closePopup]);
 
   useEffect(() => {
     try {

@@ -62,9 +62,17 @@ function LeafletPopup({
       if (nextClassArray.length > 0) {
         let array = [];
         for (let i = 0; i < nextClassArray.length; i++) {
-          const time = moment(nextClassArray[i].startDate).format('DD.MM.YYYY');
-          const time2 = moment(nextClassArray[i].startDate).locale('fi').format('LT');
-          const fullTime = time + ' ' + time2;
+          const now = moment().format('YYYY-MM-DD');
+          const now2 = moment().locale('fi').format('LT');
+          const timeNow = now + 'T' + now2;
+          let fullTime = '';
+          if (nextClassArray[i].startDate < timeNow) {
+            fullTime = 'Now';
+          } else {
+            const time = moment(nextClassArray[i].startDate).format('DD.MM.YYYY');
+            const time2 = moment(nextClassArray[i].startDate).locale('fi').format('LT');
+            fullTime = time + ' ' + time2;
+          }
           let room = '';
           for (let j = 0; j < nextClassArray[i].resources.length; j++) {
             if (nextClassArray[i].resources[j].type === 'room') {
@@ -102,7 +110,7 @@ function LeafletPopup({
   };
 
   return (
-    <Popup position={popupPosition} onClose={handlePopupClose}>
+    <Popup position={popupPosition} onClose={handlePopupClose} className="popup">
       {nextClassArray.length > 0 ? (
         <>
           {parsedArray.length > 0 &&
