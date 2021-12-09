@@ -45,6 +45,10 @@ interface propTypes {
   setClickLocation: Function;
   popupID: any;
   clickLocation: boolean;
+  open: boolean;
+  setOpen: Function;
+  end: string;
+  start: string;
 }
 
 const NavDrawer = ({
@@ -55,9 +59,12 @@ const NavDrawer = ({
   setClickLocation,
   popupID,
   clickLocation,
+  open,
+  setOpen,
+  end,
+  start,
 }: propTypes) => {
   const matches = useMediaQuery("(max-width:600px)");
-  const [open, setOpen] = useState(false);
   const [from, setFrom] = useState("KMU21");
   const [to, setTo] = useState("KMU21");
   const [selectedInput, setSelectedInput] = useState("");
@@ -69,6 +76,18 @@ const NavDrawer = ({
   useEffect(() => {
     console.log("toggled", open);
   }, [open]);
+
+  useEffect(() => {
+    if (end !== "") {
+      setTo("KM" + end);
+    }
+  }, [end]);
+
+  useEffect(() => {
+    if (start !== "") {
+      setFrom("KM" + start);
+    }
+  }, [start]);
 
   const handleClick = () => {
     const handleTo = to.substring(2).toUpperCase();
@@ -88,8 +107,8 @@ const NavDrawer = ({
   };
 
   useEffect(() => {
-    console.log("idchange setopen", open);
-  }, [open]);
+    console.log("popup shouldvisible", clickLocation);
+  }, [clickLocation]);
 
   useEffect(() => {
     console.log("idchange", popupID, clickLocation, selectedInput);
@@ -111,6 +130,13 @@ const NavDrawer = ({
     setOpen(false);
     console.log(popupID);
   };
+
+  useEffect(() => {
+    console.log("clicklocation", clickLocation);
+    if (!clickLocation) {
+      setSelectedInput("");
+    }
+  }, [clickLocation]);
 
   return (
     <Root>

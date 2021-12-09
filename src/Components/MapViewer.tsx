@@ -42,10 +42,10 @@ interface requestObj {
 }
 
 interface resourcesArray {
-  code: string,
-  id: string,
-  name: string,
-  type: string,
+  code: string;
+  id: string;
+  name: string;
+  type: string;
 }
 
 interface classesArray {
@@ -66,10 +66,10 @@ interface buttonStyles {
 }
 
 interface nextClassArray {
-  startDate: string,
-  endDate: string,
-  subject: string,
-  resources: resourcesArray[],
+  startDate: string;
+  endDate: string;
+  subject: string;
+  resources: resourcesArray[];
 }
 
 const MapViewer = ({
@@ -82,7 +82,7 @@ const MapViewer = ({
   modalOpen,
   floorSelect,
   setFloorSelect,
-  setNoOwnListNotification
+  setNoOwnListNotification,
 }: propTypes) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -102,6 +102,7 @@ const MapViewer = ({
   const [end, setEnd] = useState("");
   const [toggle, setToggle] = useState(Date.now());
   const [popupID, setPopupID] = useState("");
+  const [openState, setOpenState] = useState(false);
   const [buttonStyles, setButtonStyles] = useState<buttonStyles>({
     "2": "",
     "5": "",
@@ -155,14 +156,15 @@ const MapViewer = ({
   const [active2, setActive2] = useState("");
 
   const changeFloor = (e: any) => {
-    console.log("LOGI", e.target.id);
-    if (e.target.id === "") {
-      setFloorSelect(e.target.innerText);
-    } else {
-      setFloorSelect(e.target.id);
+    if (e.target.id !== floorSelect) {
+      if (e.target.id === "") {
+        setFloorSelect(e.target.innerText);
+      } else {
+        setFloorSelect(e.target.id);
+      }
+      setMarker("");
+      setAvailableRooms([]);
     }
-    setMarker("");
-    setAvailableRooms([]);
   };
 
   const getAvailableRooms = async () => {
@@ -258,15 +260,22 @@ const MapViewer = ({
             groups = await postGetMetropoliaData(requestObject);
           }
           let nextClassArray;
-          if (realizations.reservations !== undefined && groups.reservations !== undefined) {
-            nextClassArray = realizations.reservations.concat(groups.reservations);
+          if (
+            realizations.reservations !== undefined &&
+            groups.reservations !== undefined
+          ) {
+            nextClassArray = realizations.reservations.concat(
+              groups.reservations
+            );
           } else if (realizations.reservations !== undefined) {
             nextClassArray = realizations.reservations;
           } else {
             nextClassArray = groups.reservations;
           }
-          nextClassArray.sort((a: any, b: any) => (a.startDate > b.startDate) ? 1 : ((b.startDate > a.startDate) ? -1 : 0));
-          console.log('NEXTCLASSARRAY', nextClassArray);
+          nextClassArray.sort((a: any, b: any) =>
+            a.startDate > b.startDate ? 1 : b.startDate > a.startDate ? -1 : 0
+          );
+          console.log("NEXTCLASSARRAY", nextClassArray);
 
           let finalNextClassArray = [];
           let count = -1;
@@ -276,7 +285,7 @@ const MapViewer = ({
             if (
               i === 0 ||
               nextClassArray[i].startDate ===
-              finalNextClassArray[count].startDate ||
+                finalNextClassArray[count].startDate ||
               nextClassArray[i].startDate < now
             ) {
               if (i === 0) {
@@ -317,10 +326,10 @@ const MapViewer = ({
   const goToMyNextClass = (classesArray: nextClassArray[]) => {
     try {
       for (let i = 0; i < classesArray[0].resources.length; i++) {
-        if (classesArray[0].resources[i].type === 'room') {
+        if (classesArray[0].resources[i].type === "room") {
           const splittedRoom = classesArray[0].resources[i].code.substr(2);
           const navigateObject = {
-            from: 'U21',
+            from: "U21",
             to: splittedRoom,
             update: Date.now(),
           };
@@ -396,6 +405,7 @@ const MapViewer = ({
         setClickLocation={setClickLocation}
         popupID={popupID}
         setPopupID={setPopupID}
+        open={openState}
       />
       <ButtonGroup orientation="vertical" className="floorButtons">
         <Button
@@ -458,6 +468,10 @@ const MapViewer = ({
         setClickLocation={setClickLocation}
         popupID={popupID}
         clickLocation={clickLocation}
+        open={openState}
+        setOpen={setOpenState}
+        end={end}
+        start={start}
       ></NavDrawer>
     </>
   );
