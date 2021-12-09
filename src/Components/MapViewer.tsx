@@ -10,19 +10,7 @@ import moment from "moment";
 import "moment/locale/fi";
 import data from "../Data/classrooms.json";
 import { useApiData } from "../Hooks/ApiHooks";
-
-/* const options = {
-  backdrop: "static",
-  button: false,
-  navbar: false,
-  title: false,
-  inline: true,
-  slideOnTouch: false,
-  zIndex: 1,
-  zoomRatio: 0.4,
-  tooltip: false,
-  toggleOnDblclick: false,
-}; */
+import NavDrawer from "./NavDrawer";
 
 interface propTypes {
   update: paramObj;
@@ -34,6 +22,7 @@ interface propTypes {
   modalOpen: any;
   floorSelect: keyof typeof data;
   setFloorSelect: Function;
+  setNoOwnListNotification: Function;
 }
 
 interface paramObj {
@@ -42,30 +31,45 @@ interface paramObj {
 }
 
 interface requestObj {
-  group: string[],
-  room: string[],
-  realization: string[],
-  startDate: string,
-  apiKey: string,
-  apiUrl: string,
-  rangeStart: string,
-  rangeEnd: string,
+  group: string[];
+  room: string[];
+  realization: string[];
+  startDate: string;
+  apiKey: string;
+  apiUrl: string;
+  rangeStart: string;
+  rangeEnd: string;
 }
 
 interface resourcesArray {
-  id: string,
-  type: string,
   code: string,
+  id: string,
+  name: string,
+  type: string,
 }
 
 interface classesArray {
-  resources: resourcesArray[],
+  resources: resourcesArray[];
 }
 
 interface navigateToNextClass {
-  from: string,
-  to: string,
-  update: number,
+  from: string;
+  to: string;
+  update: number;
+}
+
+interface buttonStyles {
+  2: string;
+  5: string;
+  6: string;
+  7: string;
+}
+
+interface nextClassArray {
+  startDate: string,
+  endDate: string,
+  subject: string,
+  resources: resourcesArray[],
 }
 
 const MapViewer = ({
@@ -78,19 +82,69 @@ const MapViewer = ({
   modalOpen,
   floorSelect,
   setFloorSelect,
+  setNoOwnListNotification
 }: propTypes) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { postGetMetropoliaData } = useApiData();
   const [availableRooms, setAvailableRooms] = useState<string[]>([]);
-  const [navigateToNextClass, setNavigateToNextClass] = useState<navigateToNextClass>({
-    from: 'U21',
-    to: '',
-    update: Date.now(),
+  const [nextClassArray, setNextClassArray] = useState<nextClassArray[]>([]);
+  const [navigateToNextClass, setNavigateToNextClass] =
+    useState<navigateToNextClass>({
+      from: "U21",
+      to: "",
+      update: Date.now(),
+    });
+  const [isVisible, setIsVisible] = useState(false);
+  const [showNav, setShowNav] = useState(false);
+  const [clickLocation, setClickLocation] = useState(false);
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
+  const [toggle, setToggle] = useState(Date.now());
+  const [popupID, setPopupID] = useState("");
+  const [buttonStyles, setButtonStyles] = useState<buttonStyles>({
+    "2": "",
+    "5": "",
+    "6": "",
+    "7": "",
   });
+
+  useEffect(() => {
+    try {
+      if (buttonStyles[floorSelect] === "endButton blink") {
+        buttonStyles[floorSelect] = "endButton";
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [floorSelect]);
+
+  useEffect(() => {
+    try {
+      console.log(buttonStyles);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }, [buttonStyles]);
+
+  const navigateTo = (id: string) => {
+    setShowNav(false);
+    setEnd(id);
+    setToggle(Date.now());
+  };
+
+  const navigateFrom = (id: string) => {
+    if (floorSelect !== id.charAt(1)) {
+      setFloorSelect(id.charAt(1));
+    }
+    setStart(id);
+    setShowNav(false);
+    setToggle(Date.now());
+  };
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
+    setIsVisible(false);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -113,37 +167,47 @@ const MapViewer = ({
 
   const getAvailableRooms = async () => {
     try {
-      const dateNow = moment().locale('fi').format('YYYY-MM-DD');
-      const timeNow = moment().locale('fi').format('LT').replace('.', ':');
-      const now = dateNow + 'T' + timeNow;
+      const dateNow = moment().locale("fi").format("YYYY-MM-DD");
+      const timeNow = moment().locale("fi").format("LT").replace(".", ":");
+      const now = dateNow + "T" + timeNow;
       let roomArray = [];
       for (let i = 0; i < data[floorSelect].length; i++) {
-        if (!data[floorSelect][i].name.startsWith('V') && !data[floorSelect][i].name.startsWith('S') && !data[floorSelect][i].name.startsWith('H')) {
-          roomArray.push('KM' + data[floorSelect][i].name);
+        if (
+          !data[floorSelect][i].name.startsWith("V") &&
+          !data[floorSelect][i].name.startsWith("S") &&
+          !data[floorSelect][i].name.startsWith("H")
+        ) {
+          roomArray.push("KM" + data[floorSelect][i].name);
         }
-      };
+      }
       let requestObject: requestObj = {
         group: [],
         room: roomArray,
         realization: [],
-        startDate: '',
-        apiKey: '',
-        apiUrl: '',
+        startDate: "",
+        apiKey: "",
+        apiUrl: "",
         rangeStart: now,
-        rangeEnd: '',
+        rangeEnd: "",
       };
       const reservedRooms = await postGetMetropoliaData(requestObject);
       if (reservedRooms.reservations.length !== 0) {
         for (let i = 0; i < reservedRooms.reservations.length; i++) {
-          for (let j = 0; j < reservedRooms.reservations[i].resources.length; j++) {
-            if (reservedRooms.reservations[i].resources[j].type === 'room') {
-              roomArray = roomArray.filter(e => e !== reservedRooms.reservations[i].resources[j].code);
+          for (
+            let j = 0;
+            j < reservedRooms.reservations[i].resources.length;
+            j++
+          ) {
+            if (reservedRooms.reservations[i].resources[j].type === "room") {
+              roomArray = roomArray.filter(
+                (e) => e !== reservedRooms.reservations[i].resources[j].code
+              );
               break;
             }
           }
         }
       }
-      console.log('Rooms available', roomArray);
+      console.log("Rooms available", roomArray);
       setAvailableRooms(roomArray);
       handleClose();
     } catch (error: any) {
@@ -159,24 +223,28 @@ const MapViewer = ({
         let groupArray = [];
         if (ownListArray.length > 0) {
           for (let i = 0; i < ownListArray.length; i++) {
-            if (ownListArray[i].startsWith('TX00') || ownListArray[i].startsWith('TU00') || ownListArray[i].startsWith('XX00')) {
+            if (
+              ownListArray[i].startsWith("TX00") ||
+              ownListArray[i].startsWith("TU00") ||
+              ownListArray[i].startsWith("XX00")
+            ) {
               realizationArray.push(ownListArray[i]);
             } else {
               groupArray.push(ownListArray[i]);
             }
           }
-          const dateNow = moment().locale('fi').format('YYYY-MM-DD');
-          const timeNow = moment().locale('fi').format('LT').replace('.', ':');
-          const now = dateNow + 'T' + timeNow;
+          const dateNow = moment().locale("fi").format("YYYY-MM-DD");
+          const timeNow = moment().locale("fi").format("LT").replace(".", ":");
+          const now = dateNow + "T" + timeNow;
           let requestObject: requestObj = {
             group: [],
             room: [],
             realization: [],
-            startDate: '',
-            apiKey: '',
-            apiUrl: '',
+            startDate: "",
+            apiKey: "",
+            apiUrl: "",
             rangeStart: now,
-            rangeEnd: '2121-12-02T11:00',
+            rangeEnd: "2121-12-02T11:00",
           };
           let realizations = [];
           let groups = [];
@@ -189,7 +257,14 @@ const MapViewer = ({
             requestObject.realization = [];
             groups = await postGetMetropoliaData(requestObject);
           }
-          const nextClassArray = realizations.reservations.concat(groups.reservations);
+          let nextClassArray;
+          if (realizations.reservations !== undefined && groups.reservations !== undefined) {
+            nextClassArray = realizations.reservations.concat(groups.reservations);
+          } else if (realizations.reservations !== undefined) {
+            nextClassArray = realizations.reservations;
+          } else {
+            nextClassArray = groups.reservations;
+          }
           nextClassArray.sort((a: any, b: any) => (a.startDate > b.startDate) ? 1 : ((b.startDate > a.startDate) ? -1 : 0));
           console.log('NEXTCLASSARRAY', nextClassArray);
 
@@ -198,7 +273,12 @@ const MapViewer = ({
           let alreadyExists = false;
           for (let i = 0; i < nextClassArray.length; i++) {
             alreadyExists = false;
-            if (i === 0 || nextClassArray[i].startDate === finalNextClassArray[count].startDate || nextClassArray[i].startDate < now) {
+            if (
+              i === 0 ||
+              nextClassArray[i].startDate ===
+              finalNextClassArray[count].startDate ||
+              nextClassArray[i].startDate < now
+            ) {
               if (i === 0) {
                 finalNextClassArray.push(nextClassArray[i]);
                 count++;
@@ -206,7 +286,7 @@ const MapViewer = ({
                 for (let j = 0; j < finalNextClassArray.length; j++) {
                   if (nextClassArray[i].id === finalNextClassArray[j].id) {
                     alreadyExists = true;
-                    break
+                    break;
                   }
                 }
                 if (!alreadyExists) {
@@ -218,9 +298,15 @@ const MapViewer = ({
               break;
             }
           }
-          console.log('FinalNextClassArray', finalNextClassArray);
+          console.log("FinalNextClassArray", finalNextClassArray);
           goToMyNextClass(finalNextClassArray);
+        } else {
+          setModalOpen(true);
+          setNoOwnListNotification(true);
         }
+      } else {
+        setModalOpen(true);
+        setNoOwnListNotification(true);
       }
       handleClose();
     } catch (error: any) {
@@ -228,20 +314,29 @@ const MapViewer = ({
     }
   };
 
-  const goToMyNextClass = (classesArray: classesArray[]) => {
-    for (let i = 0; i < classesArray[0].resources.length; i++) {
-      if (classesArray[0].resources[i].type === 'room') {
-        const tempStr = classesArray[0].resources[i].code.substr(2)
-        const navigateObject = {
-          from: 'U21',
-          to: tempStr,
-          update: Date.now(),
-        };
-        setNavigateToNextClass(navigateObject);
-        break;
+  const goToMyNextClass = (classesArray: nextClassArray[]) => {
+    try {
+      for (let i = 0; i < classesArray[0].resources.length; i++) {
+        if (classesArray[0].resources[i].type === 'room') {
+          const splittedRoom = classesArray[0].resources[i].code.substr(2);
+          const navigateObject = {
+            from: 'U21',
+            to: splittedRoom,
+            update: Date.now(),
+          };
+          setNavigateToNextClass(navigateObject);
+          setNextClassArray(classesArray);
+          break;
+        }
       }
+    } catch (error: any) {
+      console.log(error.message);
     }
-  }
+  };
+
+  useEffect(() => {
+    console.log("styles", buttonStyles);
+  }, [buttonStyles]);
 
   useEffect(() => {
     try {
@@ -284,18 +379,51 @@ const MapViewer = ({
         setFloor={setFloorSelect}
         availableRooms={availableRooms}
         navigateToNextClass={navigateToNextClass}
+        nextClassArray={nextClassArray}
+        setNextClassArray={setNextClassArray}
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+        showNav={showNav}
+        setShowNav={setShowNav}
+        start={start}
+        end={end}
+        navigateFrom={navigateFrom}
+        navigateTo={navigateTo}
+        toggle={toggle}
+        setButtonStyles={setButtonStyles}
+        buttonStyles={buttonStyles}
+        clickLocation={clickLocation}
+        setClickLocation={setClickLocation}
+        popupID={popupID}
+        setPopupID={setPopupID}
       />
       <ButtonGroup orientation="vertical" className="floorButtons">
-        <Button id="7" className={active7} onClick={changeFloor}>
+        <Button
+          id="7"
+          className={{ active7 } + " " + buttonStyles[7]}
+          onClick={changeFloor}
+        >
           7
         </Button>
-        <Button id="6" className={active6} onClick={changeFloor}>
+        <Button
+          id="6"
+          className={{ active6 } + " " + buttonStyles[6]}
+          onClick={changeFloor}
+        >
           6
         </Button>
-        <Button id="5" className={active5} onClick={changeFloor}>
+        <Button
+          id="5"
+          className={{ active5 } + " " + buttonStyles[5]}
+          onClick={changeFloor}
+        >
           5
         </Button>
-        <Button id="2" className={active2} onClick={changeFloor}>
+        <Button
+          id="2"
+          className={{ active2 } + " " + buttonStyles[2]}
+          onClick={changeFloor}
+        >
           2
         </Button>
         <Button
@@ -322,6 +450,15 @@ const MapViewer = ({
         <MenuItem onClick={whatsMyNextClass}>Go to my next class</MenuItem>
       </Menu>
       <MapColorcodeSVG />
+      <NavDrawer
+        navigateFrom={navigateFrom}
+        navigateTo={navigateTo}
+        setMarker={setMarker}
+        setFloor={setFloorSelect}
+        setClickLocation={setClickLocation}
+        popupID={popupID}
+        clickLocation={clickLocation}
+      ></NavDrawer>
     </>
   );
 };
