@@ -217,6 +217,32 @@ g {
   padding-left: 6px;
 }
 
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.startButton {
+  color: red !important;
+}
+
+.endButton {
+  color: red !important;
+}
+
+.blink span {
+  animation: blinker 1s linear infinite;
+}
+
+.endButton:active span {
+  animation: none;
+}
+
+.middleButton {
+  color: rgb(255, 204, 204) !important;
+}
+
 .floorButtons {
   position: absolute;
   z-index: 401;

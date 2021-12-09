@@ -29,9 +29,16 @@ interface dataArray {
 }
 
 interface navigateToNextClass {
-  from: string,
-  to: string,
-  update: number,
+  from: string;
+  to: string;
+  update: number;
+}
+
+interface buttonStyles {
+  2: string;
+  5: string;
+  6: string;
+  7: string;
 }
 
 interface resources {
@@ -54,6 +61,9 @@ interface propTypes {
   setModalContent: Function;
   setKeyWord: Function;
   setMarker: Function;
+  setIsVisible: Function;
+  setShowNav: Function;
+  isVisible: boolean;
   marker: any;
   modalOpen: any;
   floor: keyof typeof data;
@@ -62,6 +72,18 @@ interface propTypes {
   navigateToNextClass: navigateToNextClass,
   nextClassArray: nextClassArray[],
   setNextClassArray: Function,
+  start: any;
+  end: any;
+  toggle: any;
+  popupID: any;
+  navigateFrom: Function;
+  navigateTo: Function;
+  showNav: boolean;
+  clickLocation: boolean;
+  setButtonStyles: Function;
+  setClickLocation: Function;
+  setPopupID: Function;
+  buttonStyles: buttonStyles;
 }
 
 const ReactSvgViewer = ({
@@ -78,15 +100,25 @@ const ReactSvgViewer = ({
   navigateToNextClass,
   nextClassArray,
   setNextClassArray,
+  isVisible,
+  setIsVisible,
+  start,
+  end,
+  showNav,
+  setShowNav,
+  navigateFrom,
+  navigateTo,
+  toggle,
+  setButtonStyles,
+  buttonStyles,
+  clickLocation,
+  setClickLocation,
+  popupID,
+  setPopupID,
 }: propTypes) => {
   const [map, setMap] = useState<any>();
   const { getModalData } = useModalData();
-  const [showNav, setShowNav] = useState(false);
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
   const [popupPosition, setPopupPosition] = useState<any>([0, 0]);
-  const [popupID, setPopupID] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
   const [svgSize, setSvgSize] = useState("");
   const [boundsReady, setBoundsReady] = useState(false);
   const [realNextClassArray, setRealNextClassArray] = useState<nextClassArray[]>([]);
@@ -100,6 +132,12 @@ const ReactSvgViewer = ({
     setIsVisible(false);
     setMarker("");
   }, [modalOpen]);
+
+  useEffect(() => {
+    if (map !== undefined) {
+      map.closePopup();
+    }
+  }, [toggle]);
 
   const svgRef = useRef<any>();
   const markerRef = useRef<any>();
@@ -123,21 +161,6 @@ const ReactSvgViewer = ({
   const hideNavigationButtons = () => {
     setShowNav(false);
   };
-  const navigateTo = (id: string) => {
-    setShowNav(false);
-    setEnd(id);
-    setTimeout(() => {
-      map.closePopup();
-    }, 1);
-  };
-
-  const navigateFrom = (id: string) => {
-    setStart(id);
-    setShowNav(false);
-    setTimeout(() => {
-      map.closePopup();
-    }, 1);
-  };
 
   const getDataAndOpenModal = async () => {
     map.closePopup();
@@ -151,15 +174,24 @@ const ReactSvgViewer = ({
     setModalOpen(true);
   };
 
+  //displays popups on map when clicking on rooms with ids
   const mapClick = (e: any) => {
     setEmptyNextClassArrays(Date.now());
-    let str = e.originalEvent.target.id;
-    console.log("event", e.latlng);
-    if (isNaN(str.charAt(0)) && str !== "") {
-      setIsVisible(true);
-      setPopupPosition(e.latlng);
-      setPopupID(str);
+    if (clickLocation) {
+      let str = e.originalEvent.target.id;
+      if (isNaN(str.charAt(0)) && str !== "") {
+        setPopupID(str);
+        setIsVisible(false);
+      }
+    } else {
+      let str = e.originalEvent.target.id;
+      if (isNaN(str.charAt(0)) && str !== "") {
+        setIsVisible(true);
+        setPopupPosition(e.latlng);
+        setPopupID(str);
+      }
     }
+    setClickLocation(false);
   };
 
   useEffect(() => {
@@ -211,6 +243,7 @@ const ReactSvgViewer = ({
 
   useEffect(() => {
     if (map !== undefined) {
+      map.off("click touchstart", mapClick);
       map.on("click touchstart", mapClick);
     }
   }, [map]);
@@ -230,14 +263,6 @@ const ReactSvgViewer = ({
       console.log(error.message);
     }
   }, [floor, marker]);
-
-  useEffect(() => {
-    try {
-      console.log(marker);
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  }, [marker]);
 
   useEffect(() => {
     try {
@@ -288,10 +313,6 @@ const ReactSvgViewer = ({
   const [bounds, setBounds] = useState<any>();
 
   useEffect(() => {
-    console.log("eventti map", map);
-  }, [map]);
-
-  useEffect(() => {
     if (bounds !== undefined) {
       map.flyToBounds(bounds);
     }
@@ -304,7 +325,6 @@ const ReactSvgViewer = ({
         const xlng = markerBoundsElement.getBounds()._northEast.lng;
         const ylat = markerBoundsElement.getBounds()._southWest.lat;
         const ylng = markerBoundsElement.getBounds()._southWest.lng;
-        console.log("useEffect eventti", xlat, xlng, ylat, ylng);
         setBounds([
           [xlat, xlng],
           [ylat, ylng],
@@ -349,6 +369,7 @@ const ReactSvgViewer = ({
       center={[0, -60]}
       zoom={1}
       maxZoom={3}
+      zoomControl={false}
       scrollWheelZoom={true}
       style={{ width: "100vw", height: "calc(100vh - 64px)" }}
       whenCreated={(mapInstance) => {
@@ -372,6 +393,8 @@ const ReactSvgViewer = ({
             end={end}
             floor={floor}
             availableRooms={availableRooms}
+            setButtonStyles={setButtonStyles}
+            buttonStyles={buttonStyles}
           />
         </svg>
       </SVGOverlay>
