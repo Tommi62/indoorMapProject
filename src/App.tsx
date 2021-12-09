@@ -53,7 +53,6 @@ const App = () => {
 
     const button = async () => {
         const temp2 = await getLocalServerData()
-        console.log("HELLOOOO")
         setTemp(temp2)
 
         /*
