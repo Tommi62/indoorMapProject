@@ -5,6 +5,8 @@ import { Popup } from "react-leaflet";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import "moment/locale/fi";
+import { gridClasses } from "@mui/material";
+import { ClassNames } from "@emotion/react";
 
 interface resources {
   code: string,
@@ -104,27 +106,32 @@ function LeafletPopup({
       {nextClassArray.length > 0 ? (
         <>
           {parsedArray.length > 0 &&
-            < Grid container justifyContent="center" direction="column">
-              <Typography
-                variant="body1"
-                component="div"
-              >
-                <b>Next class:</b> {parsedArray[0].subject} <br></br>
-                <b>Time:</b> {parsedArray[0].time} <br></br>
-                <b>Room:</b> {parsedArray[0].room}
-              </Typography>
+            <Grid container direction="column" className="popupGrid">
+              <Grid item>
+                <Typography
+                  variant="body1"
+                  component="div"
+                  className="popupText"
+                >
+                  <b>Next class:</b> {parsedArray[0].subject} <br></br>
+                  <b>Time:</b> {parsedArray[0].time} <br></br>
+                  <b>Room:</b> {parsedArray[0].room}
+                </Typography>
+              </Grid>
               {anotherClassesArray.length > 0 &&
                 <>
-                  <Typography variant="body1" component="div">
-                    <br></br>You also have other classes at the same time:
-                  </Typography>
+                  <Grid item>
+                    <Typography variant="body1" component="div" className="popupText">
+                      <br></br>You also have other classes at the same time:
+                    </Typography>
+                  </Grid>
                   {anotherClassesArray.map((item) => (
-                    <Grid container direction="row">
-                      <Typography variant="body1" component="div">
+                    <Grid container item direction="row">
+                      <Typography variant="body1" component="div" className="popupText">
                         <br></br><b>Subject:</b> {item.subject}<br></br>
                         <b>Room:</b> {item.room}<br></br>
                       </Typography>
-                      <Button variant="outlined" onClick={() => goToAnotherClass(item.roomCode)}>Go to this class</Button>
+                      <Button variant="outlined" className="popupButton" onClick={() => goToAnotherClass(item.roomCode)}>Go to this class</Button>
                     </Grid>
                   ))}{' '}
                 </>

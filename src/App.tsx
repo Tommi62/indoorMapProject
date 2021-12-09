@@ -40,9 +40,6 @@ const App = () => {
     },
   ]);
 
-  //testing to fetch data from mobile app
-  //console.log(useApiData().getLocalServerData())
-
   const [restaurantMenu, setRestaurantMenu] = useState(false);
   const [marker, setMarker] = useState("");
   const [noOwnListNotification, setNoOwnListNotification] = useState(false);
@@ -52,12 +49,8 @@ const App = () => {
     endNode: "",
   });
 
-  const button = () => {
-    setUpdate({
-      startNode: "U21",
-      endNode: "D6571",
-    });
-  };
+  const [temp, setTemp] = useState()
+  const { getLocalServerData } = useApiData();
 
   return (
     <>
@@ -73,9 +66,6 @@ const App = () => {
       />
       <Grid className={classes.root} container justifyContent="center">
         <Grid container item justifyContent="center">
-          {/*
-            <Button onClick={button}> Click me </Button>
-          */}
           <MapViewer
             floorSelect={floorSelect}
             setFloorSelect={setFloorSelect}

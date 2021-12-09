@@ -390,6 +390,13 @@ div[role="navigation"] {
   border-color: var(--fc-button-border-color, #2c3e50);
 }
 
+.popupGrid {
+  max-height: 30vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex-wrap: nowrap!important;
+}
+
 @media only screen and (max-width: 1200px) {
   .fc-toolbar-title {
     font-size: 1.5rem !important;
@@ -398,7 +405,7 @@ div[role="navigation"] {
 
 @media only screen and (max-width: 600px) {
   .fc-toolbar-title {
-    font-size: 0.7rem !important;
+    font-size: 0.8rem !important;
   }
 
   .fc-button {
@@ -410,5 +417,13 @@ div[role="navigation"] {
 
   .fc .fc-button .fc-icon {
     font-size: 1rem !important;
+  }
+
+  .popupText {
+    font-size: 0.7rem!important;
+  }
+
+  .popupButton {
+    font-size: 0.6rem!important;
   }
 }

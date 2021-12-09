@@ -68,13 +68,10 @@ const useApiData = () => {
 
     const getLocalServerData = async () => {
         const fetchOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
+            method: 'GET'
         };
         try {
-            const result = await doFetch("http://localhost:4590", fetchOptions);
+            const result = await doFetch("http://127.0.0.1:5000", fetchOptions);
             return result;
         } catch (e: any) {
             alert(e.message);
