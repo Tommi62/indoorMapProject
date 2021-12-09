@@ -66,6 +66,10 @@ const NavDrawer = ({
     setOpen(newOpen);
   };
 
+  useEffect(() => {
+    console.log("toggled", open);
+  }, [open]);
+
   const handleClick = () => {
     const handleTo = to.substring(2).toUpperCase();
     const handleFrom = from.substring(2).toUpperCase();
@@ -84,16 +88,22 @@ const NavDrawer = ({
   };
 
   useEffect(() => {
-    if (clickLocation === false) {
-      setOpen(true);
+    console.log("idchange setopen", open);
+  }, [open]);
+
+  useEffect(() => {
+    console.log("idchange", popupID, clickLocation, selectedInput);
+    if (clickLocation !== false) {
       if (selectedInput === "to") {
         setTo("KM" + popupID);
+        setOpen(true);
       }
       if (selectedInput === "from") {
         setFrom("KM" + popupID);
+        setOpen(true);
       }
     }
-  }, [clickLocation]);
+  }, [popupID]);
 
   const setToLocation = () => {
     setSelectedInput("to");
@@ -173,7 +183,6 @@ const NavDrawer = ({
                   id="outlined-basic"
                   onChange={(e: any) => {
                     setFrom(e.target.value);
-                    toggleDrawer(true);
                   }}
                   margin="dense"
                   label="From"
@@ -194,7 +203,6 @@ const NavDrawer = ({
                   id="outlined-basic"
                   onChange={(e: any) => {
                     setTo(e.target.value);
-                    toggleDrawer(true);
                   }}
                   margin="dense"
                   label="To"
