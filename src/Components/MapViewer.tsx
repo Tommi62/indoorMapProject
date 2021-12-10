@@ -405,6 +405,7 @@ const MapViewer = ({
                 setClickLocation={setClickLocation}
                 popupID={popupID}
                 setPopupID={setPopupID}
+                open={openState}
             />
 
             <ButtonGroup orientation="vertical" className="floorButtons">
@@ -472,6 +473,10 @@ const MapViewer = ({
                 setClickLocation={setClickLocation}
                 popupID={popupID}
                 clickLocation={clickLocation}
+                open={openState}
+                setOpen={setOpenState}
+                end={end}
+                start={start}
             ></NavDrawer>
         </>
     );
