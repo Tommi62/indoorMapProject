@@ -443,7 +443,7 @@ const MapViewer = ({
         </Button>
 
       </ButtonGroup>
-      <ButtonGroup orientation="vertical" className="tempButton">
+      <ButtonGroup orientation="vertical" className="arrowButton">
         <Button
           id="basic-button"
           aria-controls="basic-menu"

@@ -192,6 +192,11 @@ g {
   align-items: center;
 }
 
+.MuiDrawer-root>.MuiPaper-root {
+  height: 100%!important;
+  border-radius: 0 8px 8px 0!important;
+}
+
 .colorCode .colorCodeSVG {
   height: 6rem;
   width: 6rem;
@@ -249,16 +254,15 @@ g {
   right: 10px;
   top: 75px;
   background-color: rgba(255, 255, 255, 0.9);
+  min-width: 40px;
+  max-width: 40px;
 }
-.tempButton{
+.arrowButton{
   position: absolute!important;
   z-index: 401;
   right: 10px;
   top: 250px;
   background-color: rgba(255, 255, 255, 0.9);
-}
-
-.MuiButtonGroup-grouped {
   min-width: 40px;
   max-width: 40px;
 }
@@ -279,36 +283,6 @@ g {
 }
 .buttonActive {
   background-color: rgb(238, 238, 238) !important;
-}
-
-/* Lines */
-.cls-6 {
-  stroke: #ff0000 !important;
-  stroke-width: 14px !important;
-  stroke-linecap: round !important;
-  fill: none;
-}
-
-/* Walls */
-.cls-7 {
-  stroke-width: 8px !important;
-  stroke-linejoin: round;
-  stroke: #000000;
-  stroke-linecap: round !important;
-  fill: none;
-}
-
-/* Doors */
-.cls-8 {
-  stroke: #f55 !important;
-  stroke-width: 13px !important;
-}
-
-.cls-9 {
-  stroke-width: 12px !important;
-}
-.cls-10 {
-  visibility: hidden;
 }
 
 .leaflet-container {
