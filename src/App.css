@@ -194,7 +194,7 @@ g {
 
 .MuiDrawer-root>.MuiPaper-root {
   height: 100%!important;
-  border-radius: 0 8px 8px 0!important;
+  border-radius: 8px!important;
 }
 
 .colorCode .colorCodeSVG {
@@ -226,6 +226,10 @@ g {
   50% {
     opacity: 0;
   }
+}
+
+#basic-button{
+  height: 32px;
 }
 
 .startButton {

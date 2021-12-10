@@ -300,6 +300,8 @@ const NavDrawer = ({
                             zIndex: 1000,
                             background: "rgba(255, 255, 255, 0.9)",
                             border: "1px solid rgba(0, 0, 0, 0.23)",
+                            maxWidth: "40px",
+                            maxHeight: "40px"
                         }}
                         onClick={toggleDrawer(true)}
                     >
