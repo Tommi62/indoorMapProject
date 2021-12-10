@@ -177,6 +177,7 @@ const NavDrawer = ({
             ModalProps={{
               keepMounted: true,
             }}
+            className={"lol"}
           >
             <StyledBox
               sx={{
