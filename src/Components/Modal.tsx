@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, List, ListItem, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import MuiModal from "@mui/material/Modal";
 import { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import FazerMenu from "./FazerMenu";
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -67,6 +68,8 @@ interface propTypes {
   setRestaurantMenu: Function;
   noOwnListNotification: boolean;
   setNoOwnListNotification: Function;
+  showGroupsAndRealizations: string[];
+  setShowGroupsAndRealizations: Function;
 }
 
 const Modal = ({
@@ -83,7 +86,9 @@ const Modal = ({
   setRestaurantMenu,
   setMarker,
   noOwnListNotification,
-  setNoOwnListNotification
+  setNoOwnListNotification,
+  showGroupsAndRealizations,
+  setShowGroupsAndRealizations,
 }: propTypes) => {
   const classes = useStyles();
   const [isShortcut, setIsShortcut] = useState(false);
@@ -100,6 +105,7 @@ const Modal = ({
     setModalOpen(false);
     setRestaurantMenu(false);
     setNoOwnListNotification(false);
+    setShowGroupsAndRealizations([]);
     setModalContent([
       {
         success: false,
@@ -147,6 +153,23 @@ const Modal = ({
     } else {
       setIsInYourOwnList(false);
       setUpdateOwnList(Date.now());
+    }
+  };
+
+  const targetGRRemove = (name: string) => {
+    if (localStorage.getItem('ownList') !== null) {
+      const ownList = JSON.parse(localStorage.getItem('ownList')!);
+      for (let i = 0; i < ownList.length; i++) {
+        if (ownList[i] === name) {
+          ownList.splice(i, 1);
+          localStorage.setItem('ownList', JSON.stringify(ownList));
+          if (ownList.length === 0) {
+            setNoOwnListNotification(true);
+          }
+          break;
+        }
+      }
+      setShowGroupsAndRealizations(ownList);
     }
   };
 
@@ -225,127 +248,153 @@ const Modal = ({
         className={classes.box}
       >
         <CloseIcon className={classes.closeButton} onClick={handleClose} />
-        {noOwnListNotification ? (
-          <>
-            <Grid justifyContent="center">
-              <Typography
-                variant="h6"
-                component="h2"
-                style={{ textAlign: "center" }}
-              >
-                There is nothing in your own list!
-              </Typography>
-              <Typography
-                variant="body1"
-                component="div"
-              >
-                Please add realizations and/or groups to your own list to use this feature.
-              </Typography>
+        {showGroupsAndRealizations.length > 0 ? (
+          <Grid container direction="column">
+            <Typography
+              variant="h6"
+              component="h6"
+              style={{ textAlign: "center" }}
+              className={'grHeader'}
+            >
+              Your groups and realizations
+            </Typography>
+            <Grid container item direction="column">
+              {showGroupsAndRealizations.map((item) => (
+                <Grid container item justifyContent="space-between">
+                  <Typography className={'grItem'} variant="body1" component="div">
+                    {item}
+                  </Typography>
+                  <DeleteIcon className={'deleteIcon'} onClick={() => targetGRRemove(item)} />
+                </Grid>
+              ))}{" "}
             </Grid>
-          </>
+          </Grid>
         ) : (
           <>
-            {restaurantMenu ? (
-              <FazerMenu />
+            {noOwnListNotification ? (
+              <>
+                <Grid justifyContent="center">
+                  <Typography
+                    variant="h6"
+                    component="h6"
+                    className={'noOwnListHeader'}
+                  >
+                    There is nothing in your own list!
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    component="div"
+                    className={'noOwnListText'}
+                  >
+                    Please add realizations and/or groups to your own list to use this feature.
+                  </Typography>
+                </Grid>
+              </>
             ) : (
               <>
-                {modalContent[0].success ? (
-                  <>
-                    <FullCalendar
-                      locales={[fiLocale]}
-                      locale="fi"
-                      dayHeaderContent={keyWord}
-                      plugins={[timeGridPlugin, interactionPlugin]}
-                      headerToolbar={{
-                        left: "prev",
-                        center: "title",
-                        right: "next",
-                      }}
-                      initialView="timeGridDay"
-                      allDaySlot={false}
-                      slotLabelFormat={[{ hour: "numeric", minute: "2-digit" }]}
-                      slotMinTime="08:00:00"
-                      slotMaxTime="21:00:00"
-                      height={"70vh"}
-                      views={{
-                        timeGrid: {
-                          visibleRange: {
-                            start: calendarStartAndEnd.start,
-                            end: calendarStartAndEnd.end,
-                          },
-                        },
-                      }}
-                      events={modalContent.map((data) => {
-                        return {
-                          title: data.name + " " + data.group + " " + data.room,
-                          start: new Date(data.startDate),
-                          end: new Date(data.endDate),
-                          extendedProps: {
-                            subject: data.name,
-                            group: data.group,
-                            room: data.room,
-                          },
-                        };
-                      })}
-                      eventClick={(e) =>
-                        console.log(e.event._def.extendedProps.room)
-                      }
-                      nowIndicator={true}
-                      eventMouseEnter={(arg) => {
-                        tippy(arg.el, {
-                          content:
-                            "Aihe: " +
-                            arg.event._def.extendedProps.subject +
-                            "<br>" +
-                            "Ryhmä(t): " +
-                            arg.event._def.extendedProps.group +
-                            "<br>" +
-                            "Tila: " +
-                            arg.event._def.extendedProps.room,
-                          allowHTML: true,
-                          theme: "calendar",
-                          animation: "scale",
-                          arrow: false,
-                          followCursor: true,
-                          plugins: [followCursor],
-                        });
-                      }}
-                    />
-                    <Grid
-                      container
-                      justifyContent="center"
-                      className={classes.shortcut}
-                    >
-                      {isShortcut ? (
-                        <Button className={classes.shortcutButton} onClick={() => remove('shortcuts')}>Remove shortcut</Button>
-                      ) : (
-                        <>
-                          {!shortcutLimiter && (
-                            <Button className={classes.shortcutButton} onClick={() => add('shortcuts')}>Add shortcut</Button>
-                          )}
-                        </>
-                      )}
-                      {!isRoom &&
-                        <>
-                          {isInYourOwnList ? (
-                            <Button className={classes.shortcutButton} onClick={() => remove('ownList')}>Remove from my classes</Button>
-                          ) : (
-                            <Button className={classes.shortcutButton} onClick={() => add('ownList')}>Add to my classes</Button>
-                          )}
-                        </>
-                      }
-                    </Grid>
-                  </>
+                {restaurantMenu ? (
+                  <FazerMenu />
                 ) : (
                   <>
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                      style={{ textAlign: "center" }}
-                    >
-                      No search results found
-                    </Typography>
+                    {modalContent[0].success ? (
+                      <>
+                        <FullCalendar
+                          locales={[fiLocale]}
+                          locale="fi"
+                          dayHeaderContent={keyWord}
+                          plugins={[timeGridPlugin, interactionPlugin]}
+                          headerToolbar={{
+                            left: "prev",
+                            center: "title",
+                            right: "next",
+                          }}
+                          initialView="timeGridDay"
+                          allDaySlot={false}
+                          slotLabelFormat={[{ hour: "numeric", minute: "2-digit" }]}
+                          slotMinTime="08:00:00"
+                          slotMaxTime="21:00:00"
+                          height={"70vh"}
+                          views={{
+                            timeGrid: {
+                              visibleRange: {
+                                start: calendarStartAndEnd.start,
+                                end: calendarStartAndEnd.end,
+                              },
+                            },
+                          }}
+                          events={modalContent.map((data) => {
+                            return {
+                              title: data.name + " " + data.group + " " + data.room,
+                              start: new Date(data.startDate),
+                              end: new Date(data.endDate),
+                              extendedProps: {
+                                subject: data.name,
+                                group: data.group,
+                                room: data.room,
+                              },
+                            };
+                          })}
+                          eventClick={(e) =>
+                            console.log(e.event._def.extendedProps.room)
+                          }
+                          nowIndicator={true}
+                          eventMouseEnter={(arg) => {
+                            tippy(arg.el, {
+                              content:
+                                "Aihe: " +
+                                arg.event._def.extendedProps.subject +
+                                "<br>" +
+                                "Ryhmä(t): " +
+                                arg.event._def.extendedProps.group +
+                                "<br>" +
+                                "Tila: " +
+                                arg.event._def.extendedProps.room,
+                              allowHTML: true,
+                              theme: "calendar",
+                              animation: "scale",
+                              arrow: false,
+                              followCursor: true,
+                              plugins: [followCursor],
+                            });
+                          }}
+                        />
+                        <Grid
+                          container
+                          justifyContent="center"
+                          className={classes.shortcut}
+                        >
+                          {isShortcut ? (
+                            <Button className={classes.shortcutButton} onClick={() => remove('shortcuts')}>Remove shortcut</Button>
+                          ) : (
+                            <>
+                              {!shortcutLimiter && (
+                                <Button className={classes.shortcutButton} onClick={() => add('shortcuts')}>Add shortcut</Button>
+                              )}
+                            </>
+                          )}
+                          {!isRoom &&
+                            <>
+                              {isInYourOwnList ? (
+                                <Button className={classes.shortcutButton} onClick={() => remove('ownList')}>Remove from my classes</Button>
+                              ) : (
+                                <Button className={classes.shortcutButton} onClick={() => add('ownList')}>Add to my classes</Button>
+                              )}
+                            </>
+                          }
+                        </Grid>
+                      </>
+                    ) : (
+                      <>
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h2"
+                          style={{ textAlign: "center" }}
+                        >
+                          No search results found
+                        </Typography>
+                      </>
+                    )}
                   </>
                 )}
               </>

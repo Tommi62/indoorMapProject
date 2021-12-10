@@ -23,6 +23,7 @@ interface propTypes {
   floorSelect: keyof typeof data;
   setFloorSelect: Function;
   setNoOwnListNotification: Function;
+  setShowGroupsAndRealizations: Function;
 }
 
 interface paramObj {
@@ -83,6 +84,7 @@ const MapViewer = ({
   floorSelect,
   setFloorSelect,
   setNoOwnListNotification,
+  setShowGroupsAndRealizations,
 }: propTypes) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -346,6 +348,21 @@ const MapViewer = ({
     }
   };
 
+  const showMyGroupsAndRealizations = () => {
+    if (localStorage.getItem("ownList") !== null) {
+      const ownListArray = JSON.parse(localStorage.getItem("ownList")!);
+      if (ownListArray.length > 0) {
+        setShowGroupsAndRealizations(ownListArray);
+      } else {
+        setNoOwnListNotification(true);
+      }
+    } else {
+      setNoOwnListNotification(true);
+    }
+    setModalOpen(true);
+    handleClose();
+  };
+
   useEffect(() => {
     console.log("styles", buttonStyles);
   }, [buttonStyles]);
@@ -464,8 +481,9 @@ const MapViewer = ({
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={getAvailableRooms}>Show available rooms</MenuItem>
-        <MenuItem onClick={whatsMyNextClass}>Go to my next class</MenuItem>
+        <MenuItem className={'ddMenuButton'} onClick={getAvailableRooms}>Show available rooms</MenuItem>
+        <MenuItem className={'ddMenuButton'} onClick={whatsMyNextClass}>Go to my next class</MenuItem>
+        <MenuItem className={'ddMenuButton'} onClick={showMyGroupsAndRealizations}>Show my groups and realizations</MenuItem>
       </Menu>
 
       <MapColorcodeSVG />
