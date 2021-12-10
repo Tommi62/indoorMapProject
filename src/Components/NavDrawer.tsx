@@ -6,7 +6,7 @@ import { grey } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { InputAdornment, TextField } from "@material-ui/core";
+import { createTheme, InputAdornment, TextField } from "@material-ui/core";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import { IconButton } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -21,6 +21,15 @@ const Root = styled("div")(({ theme }) => ({
       ? grey[100]
       : theme.palette.background.default,
 }));
+
+const buttonTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#F46036",
+      contrastText: "#FFF",
+    },
+  },
+});
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
@@ -179,7 +188,7 @@ const NavDrawer = ({
             }}
             onClick={toggleDrawer(true)}
           >
-            <DirectionsIcon />
+            <DirectionsIcon className="dirIcon" />
           </IconButton>
 
           <SwipeableDrawer

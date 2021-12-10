@@ -1,10 +1,10 @@
 .App {
-    text-align: center;
+  text-align: center;
 }
 
 .App-logo {
-    height: 40vmin;
-    pointer-events: none;
+  height: 40vmin;
+  pointer-events: none;
 }
 
 .leaflet-marker-icon,
@@ -12,255 +12,253 @@
 .leaflet-image-layer,
 .leaflet-pane > svg path,
 .leaflet-tile-container {
-    pointer-events: auto !important;
+  pointer-events: auto !important;
 }
 
 svg:focus {
-    outline: none;
+  outline: none;
 }
 
 g {
-    cursor: default;
+  cursor: default;
 }
 
 /* Stairs/elevators */
 .cls-1 {
-    fill: #ec008c;
-    stroke-width: 8px !important;
-    stroke-linejoin: round;
-    stroke: rgb(0, 0, 0);
-    transition: fill 0.3s;
+  fill: #ec008c;
+  stroke-width: 8px !important;
+  stroke-linejoin: round;
+  stroke: rgb(0, 0, 0);
+  transition: fill 0.3s;
 }
 
 .cls-1:active {
-    fill: #ff61c0;
+  fill: #ff61c0;
 }
 
 .cls-1:hover {
-    fill: #ff61c0;
+  fill: #ff61c0;
 }
 
 /* Hallways */
 .cls-2 {
-    stroke-width: 8px !important;
-    stroke-linejoin: round;
-    stroke: rgb(0, 0, 0);
-    fill: #ffffff;
+  stroke-width: 8px !important;
+  stroke-linejoin: round;
+  stroke: rgb(0, 0, 0);
+  fill: #ffffff;
 }
 
 /*Toilets/dressing rooms*/
 .cls-3 {
-    stroke-width: 8px !important;
-    stroke-linejoin: round;
-    stroke: rgb(0, 0, 0);
-    fill: #ffc60b;
-    transition: fill 0.3s;
+  stroke-width: 8px !important;
+  stroke-linejoin: round;
+  stroke: rgb(0, 0, 0);
+  fill: #ffc60b;
+  transition: fill 0.3s;
 }
 
 .cls-3:active {
-    fill: #ffde6f;
+  fill: #ffde6f;
 }
 
 .cls-3:hover {
-    fill: #ffde6f;
+  fill: #ffde6f;
 }
 
 /* Unauthorized placeMs */
 .cls-4 {
-    stroke-width: 8px !important;
-    stroke-linejoin: round;
-    stroke: rgb(0, 0, 0);
-    fill: #7f7f7f;
+  stroke-width: 8px !important;
+  stroke-linejoin: round;
+  stroke: rgb(0, 0, 0);
+  fill: #7f7f7f;
 }
 
 .cls-11 {
-    stroke-width: 8px !important;
-    stroke-linejoin: round;
-    stroke: rgb(0, 0, 0);
-    fill: #7f7f7f;
+  stroke-width: 8px !important;
+  stroke-linejoin: round;
+  stroke: rgb(0, 0, 0);
+  fill: #7f7f7f;
 }
 
 /* Classes */
 .cls-5 {
-    stroke-width: 8px !important;
-    stroke: rgb(0, 0, 0);
-    stroke-linejoin: round;
-    fill: rgb(0, 174, 239);
-    transition: fill 0.3s;
+  stroke-width: 8px !important;
+  stroke: rgb(0, 0, 0);
+  stroke-linejoin: round;
+  fill: rgb(0, 174, 239);
+  transition: fill 0.3s;
 }
 
 .cls-5:active {
-    fill: rgb(99, 213, 255);
+  fill: rgb(99, 213, 255);
 }
 
 .cls-5:hover {
-    fill: rgb(99, 213, 255);
+  fill: rgb(99, 213, 255);
 }
 
 .cls-5-available {
-    stroke-width: 8px !important;
-    stroke: rgb(0, 0, 0);
-    stroke-linejoin: round;
-    fill: #44ffd1;
-    transition: fill 0.3s;
+  stroke-width: 8px !important;
+  stroke: rgb(0, 0, 0);
+  stroke-linejoin: round;
+  fill: #44ffd1;
+  transition: fill 0.3s;
 }
 
 .cls-5-available:active {
-    fill: rgb(59, 253, 166);
+  fill: rgb(59, 253, 166);
 }
 
 .cls-5-available:hover {
-    fill: rgb(59, 253, 166);
+  fill: rgb(59, 253, 166);
 }
 
 /* Lines */
 .cls-6 {
-    stroke: #ff0000 !important;
-    stroke-width: 14px !important;
-    stroke-linecap: round !important;
-    fill: none;
+  stroke: #ff0000 !important;
+  stroke-width: 14px !important;
+  stroke-linecap: round !important;
+  fill: none;
 }
 
 /* Walls */
 .cls-7 {
-    stroke-width: 8px !important;
-    stroke-linejoin: round;
-    stroke: #000000;
-    stroke-linecap: round !important;
-    fill: none;
+  stroke-width: 8px !important;
+  stroke-linejoin: round;
+  stroke: #000000;
+  stroke-linecap: round !important;
+  fill: none;
 }
 
 /* Doors */
 .cls-8 {
-    stroke: #f55 !important;
-    stroke-width: 13px !important;
+  stroke: #f55 !important;
+  stroke-width: 13px !important;
 }
 
 .cls-9 {
-    stroke-width: 12px !important;
+  stroke-width: 12px !important;
 }
 
 .cls-10 {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .navbar {
-    z-index: 1000;
+  z-index: 1000;
 }
 
 @keyframes slideInFromLeft {
-    0% {
-        transform: translateX(-103%);
-    }
-    100% {
-        transform: translateX(0);
-    }
+  0% {
+    transform: translateX(-103%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideInFromRight {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(-103%);
-    }
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-103%);
+  }
 }
 
 .rotate180 {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .rotate0 {
-    transform: rotate(0deg);
+  transform: rotate(0deg);
 }
 
 .slideRight {
-    transform: translateX(-103%);
-    animation: 0.5s 0s 1 slideInFromRight;
+  transform: translateX(-103%);
+  animation: 0.5s 0s 1 slideInFromRight;
 }
 
 .slideLeft {
-    animation: 0.5s 0s 1 slideInFromLeft;
+  animation: 0.5s 0s 1 slideInFromLeft;
 }
 
 .css-1b9efhx {
-    border: none !important;
-    border-radius: 10px;
+  border: none !important;
+  border-radius: 10px;
 }
 
 .makeStyles-closeButton-13 {
-    top: 5px !important;
-    right: 5px !important;
+  top: 5px !important;
+  right: 5px !important;
 }
 
 .colorCode {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    margin: 1.25rem;
-    z-index: 400;
-    display: flex;
-    align-items: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 1.25rem;
+  z-index: 400;
+  display: flex;
+  align-items: center;
 }
 
 .MuiDrawer-root > .MuiPaper-root {
-    height: 100% !important;
-    border-radius: 8px !important;
+  height: 100% !important;
+  border-radius: 8px !important;
 }
 
 .colorCode .colorCodeSVG {
-    height: 7rem;
-    width: 7rem;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 3px;
-    padding: 0 8px;
+  height: 7rem;
+  width: 7rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 3px;
+  padding: 0 8px;
 }
 
 .colorCode button {
-    width: 1rem;
-    min-width: 1rem;
-    border-bottom-left-radius: 0 !important;
-    border-top-left-radius: 0 !important;
-    background-color: rgba(255, 255, 255, 0.856) !important;
-    border-radius: 3px;
+  width: 1rem;
+  min-width: 1rem;
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  background-color: rgba(255, 255, 255, 0.856) !important;
+  border-radius: 3px;
 }
 
 .colorCode .colorcodeArrow {
-    opacity: 0.8;
-    transition: transform 0.3s;
-    height: 1rem;
-    width: 0.8rem;
-    padding-left: 6px;
+  opacity: 0.8;
+  transition: transform 0.3s;
+  height: 1rem;
+  width: 0.8rem;
+  padding-left: 6px;
 }
 
 @keyframes blinker {
-    50% {
-        opacity: 0;
-    }
+  50% {
+    opacity: 0;
+  }
 }
 
 #basic-button {
-    height: 32px;
-    box-shadow:
-            rgb(0 0 0 / 20%) 0px 2px 4px -1px,
-            rgb(0 0 0 / 1%) 0px 4px 5px 0px,
-            rgb(0 0 0 / 12%) 0px 1px 10px 0px;
+  height: 32px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px, rgb(0 0 0 / 1%) 0px 4px 5px 0px,
+    rgb(0 0 0 / 12%) 0px 1px 10px 0px;
 }
 
 .startButton {
-    color: red !important;
+  color: red !important;
 }
 
 .endButton {
-    color: red !important;
+  color: red !important;
 }
 
 .blink span {
-    animation: blinker 1s linear infinite;
+  animation: blinker 1s linear infinite;
 }
 
 .endButton:active span {
-    animation: none;
+  animation: none;
 }
 
 /*
@@ -269,211 +267,223 @@ g {
 }*/
 
 .floorButtons {
-    position: absolute;
-    z-index: 401;
-    right: 10px;
-    top: 75px;
-    background-color: rgba(255, 255, 255, 0.9);
-    min-width: 40px;
-    max-width: 40px;
+  position: absolute;
+  z-index: 401;
+  right: 10px;
+  top: 75px;
+  background-color: rgba(255, 255, 255, 0.9);
+  min-width: 40px;
+  max-width: 40px;
 }
 
 .arrowButton {
-    position: absolute !important;
-    z-index: 401;
-    right: 10px;
-    top: 250px;
-    background-color: rgba(255, 255, 255, 0.9);
-    min-width: 40px;
-    max-width: 40px;
+  position: absolute !important;
+  z-index: 401;
+  right: 10px;
+  top: 250px;
+  background-color: rgba(255, 255, 255, 0.9);
+  min-width: 40px;
+  max-width: 40px;
 }
 
 .availableRoomsButton {
-    position: absolute !important;
-    z-index: 401;
-    right: 10px;
-    top: 245px;
-    padding: 0.2rem 0.45rem !important;
-    min-width: 1.5rem !important;
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    border: 0.01rem solid lightgrey !important;
+  position: absolute !important;
+  z-index: 401;
+  right: 10px;
+  top: 245px;
+  padding: 0.2rem 0.45rem !important;
+  min-width: 1.5rem !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border: 0.01rem solid lightgrey !important;
 }
 
 .availableRoomsButton:hover {
-    background-color: rgba(243, 243, 243, 0.9) !important;
+  background-color: rgba(243, 243, 243, 0.9) !important;
 }
 
 .buttonActive {
-    background-color: rgb(238, 238, 238) !important;
+  background-color: #7f7f7f !important;
+}
+
+.buttonActive span {
+  color: white;
+}
+
+.dirIcon {
+  color: #f46036;
+}
+
+.goButton {
+  color: #00aeef;
 }
 
 .leaflet-container {
-    background: rgb(255, 255, 255);
+  background: rgb(255, 255, 255);
 }
 
 div[role="navigation"] {
-    display: none;
+  display: none;
 }
 
 #prefix__hissiviiva {
-    stroke: #a6ff0075;
+  stroke: #a6ff0075;
 }
 
 .leaflet-bottom {
-    display: none;
+  display: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
 .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
 .navbar.MuiPaper-elevation4 {
-    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 1%),
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 1%),
     0px 1px 10px 0px rgb(0 0 0 / 12%);
 }
 
 .App-link {
-    color: #61dafb;
+  color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .fc-timegrid-event {
-    cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 .tippy-box[data-theme~="calendar"] {
-    background-color: #3788d8;
-    color: white;
+  background-color: #3788d8;
+  color: white;
 }
 
 .css-1235hhr-MuiButtonBase-root-MuiIconButton-root {
-    padding: 8px 8px 1px 8px !important;
+  padding: 8px 8px 1px 8px !important;
 }
 
 .fc-button:not(:disabled) {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .fc-button-primary {
-    color: #fff;
-    color: #fff;
-    color: var(--fc-button-text-color, #fff);
-    background-color: #2c3e50;
-    background-color: #2c3e50;
-    background-color: var(--fc-button-bg-color, #2c3e50);
-    border-color: #2c3e50;
-    border-color: #2c3e50;
-    border-color: var(--fc-button-border-color, #2c3e50);
+  color: #fff;
+  color: #fff;
+  color: var(--fc-button-text-color, #fff);
+  background-color: #2c3e50;
+  background-color: #2c3e50;
+  background-color: var(--fc-button-bg-color, #2c3e50);
+  border-color: #2c3e50;
+  border-color: #2c3e50;
+  border-color: var(--fc-button-border-color, #2c3e50);
 }
 
 .fc-button {
-    display: inline-block;
-    font-weight: 400;
-    text-align: center;
-    vertical-align: middle;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 0.4em 0.65em;
-    font-size: 1em;
-    line-height: 1.5;
-    border-radius: 0.25em;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.4em 0.65em;
+  font-size: 1em;
+  line-height: 1.5;
+  border-radius: 0.25em;
 }
 
 .fc-button {
-    -webkit-appearance: button;
+  -webkit-appearance: button;
 }
 
 .fc-button {
-    border-radius: 0.2rem;
-    overflow: visible;
-    text-transform: none;
-    margin: 0;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
+  border-radius: 0.2rem;
+  overflow: visible;
+  text-transform: none;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .fc-button-primary {
-    color: #fff;
-    color: #fff;
-    color: #fff;
-    color: var(--fc-button-text-color, #fff);
-    background-color: #2c3e50;
-    background-color: #2c3e50;
-    background-color: #2c3e50;
-    background-color: var(--fc-button-bg-color, #2c3e50);
-    border-color: #2c3e50;
-    border-color: #2c3e50;
-    border-color: #2c3e50;
-    border-color: var(--fc-button-border-color, #2c3e50);
+  color: #fff;
+  color: #fff;
+  color: #fff;
+  color: var(--fc-button-text-color, #fff);
+  background-color: #2c3e50;
+  background-color: #2c3e50;
+  background-color: #2c3e50;
+  background-color: var(--fc-button-bg-color, #2c3e50);
+  border-color: #2c3e50;
+  border-color: #2c3e50;
+  border-color: #2c3e50;
+  border-color: var(--fc-button-border-color, #2c3e50);
 }
 
 .popupGrid {
-    max-height: 30vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    flex-wrap: nowrap !important;
+  max-height: 30vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex-wrap: nowrap !important;
 }
 
 @media only screen and (max-width: 1200px) {
-    .fc-toolbar-title {
-        font-size: 1.5rem !important;
-    }
+  .fc-toolbar-title {
+    font-size: 1.5rem !important;
+  }
 }
 
 @media only screen and (max-width: 600px) {
-    .fc-toolbar-title {
-        font-size: 0.7rem !important;
-    }
+  .fc-toolbar-title {
+    font-size: 0.7rem !important;
+  }
 
-    .fc-button {
-        padding: 0 !important;
-        line-height: 0 !important;
-        height: 1.4rem !important;
-        width: 1.4rem !important;
-    }
+  .fc-button {
+    padding: 0 !important;
+    line-height: 0 !important;
+    height: 1.4rem !important;
+    width: 1.4rem !important;
+  }
 
-    .fc .fc-button .fc-icon {
-        font-size: 1rem !important;
-    }
+  .fc .fc-button .fc-icon {
+    font-size: 1rem !important;
+  }
 
-    .fc-col-header-cell-cushion {
-        font-size: 0.7rem !important;
-    }
+  .fc-col-header-cell-cushion {
+    font-size: 0.7rem !important;
+  }
 
-    .popupText {
-        font-size: 0.7rem !important;
-    }
+  .popupText {
+    font-size: 0.7rem !important;
+  }
 
-    .popupButton {
-        font-size: 0.6rem !important;
-    }
+  .popupButton {
+    font-size: 0.6rem !important;
+  }
 
-    .popup {
-        max-width: 80vw !important;
-    }
+  .popup {
+    max-width: 80vw !important;
+  }
 }
