@@ -1,4 +1,10 @@
-import { AppBar, InputBase, Toolbar, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  InputBase,
+  Paper,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { alpha } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";
@@ -10,6 +16,7 @@ import { Button, IconButton, Menu, Drawer, Box } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuIcon from "@material-ui/icons/Menu";
 import data from "../Data/classrooms.json";
+import logo from "../Media/Misc/metropolia_s_oranssi.svg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
   scButton: {
     marginRight: "0.5rem!important",
-    backgroundColor: "#3f51b5!important",
+    backgroundColor: "#ec7430!important",
     "&:hover": {
       backgroundColor: alpha(theme.palette.common.white, 0.15) + "!important",
     },
@@ -282,15 +289,21 @@ const Nav = ({
                 ))}{" "}
               </Box>
             </Drawer>
-            <Typography
-              onClick={refresh}
-              className={classes.title}
-              variant="h6"
-              color="inherit"
-              noWrap
-            >
-              App
-            </Typography>
+            <Box
+              component="img"
+              src={logo}
+              style={{
+                height: "3rem",
+                backgroundColor: "white",
+                padding: "6px 12px",
+                borderRadius: "6px",
+                boxShadow:
+                  "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 1%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
+              }}
+              alt="Metropolia logo"
+              sx={{ display: { xs: "none", sm: "block" } }}
+            ></Box>
+
             <div className={classes.grow} />
             {shortcutArray.length !== 0 && (
               <>
