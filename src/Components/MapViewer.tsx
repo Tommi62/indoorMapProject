@@ -82,7 +82,7 @@ const MapViewer = ({
   modalOpen,
   floorSelect,
   setFloorSelect,
-  setNoOwnListNotification
+  setNoOwnListNotification,
 }: propTypes) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -102,6 +102,7 @@ const MapViewer = ({
   const [end, setEnd] = useState("");
   const [toggle, setToggle] = useState(Date.now());
   const [popupID, setPopupID] = useState("");
+  const [openState, setOpenState] = useState(false);
   const [buttonStyles, setButtonStyles] = useState<buttonStyles>({
     "2": "",
     "5": "",
@@ -158,14 +159,15 @@ const MapViewer = ({
   const [active2, setActive2] = useState("");
 
   const changeFloor = (e: any) => {
-    console.log("LOGI", e.target.id);
-    if (e.target.id === "") {
-      setFloorSelect(e.target.innerText);
-    } else {
-      setFloorSelect(e.target.id);
+    if (e.target.id !== floorSelect) {
+      if (e.target.id === "") {
+        setFloorSelect(e.target.innerText);
+      } else {
+        setFloorSelect(e.target.id);
+      }
+      setMarker("");
+      setAvailableRooms([]);
     }
-    setMarker("");
-    setAvailableRooms([]);
   };
 
   const getAvailableRooms = async () => {
@@ -261,15 +263,22 @@ const MapViewer = ({
             groups = await postGetMetropoliaData(requestObject);
           }
           let nextClassArray;
-          if (realizations.reservations !== undefined && groups.reservations !== undefined) {
-            nextClassArray = realizations.reservations.concat(groups.reservations);
+          if (
+            realizations.reservations !== undefined &&
+            groups.reservations !== undefined
+          ) {
+            nextClassArray = realizations.reservations.concat(
+              groups.reservations
+            );
           } else if (realizations.reservations !== undefined) {
             nextClassArray = realizations.reservations;
           } else {
             nextClassArray = groups.reservations;
           }
-          nextClassArray.sort((a: any, b: any) => (a.startDate > b.startDate) ? 1 : ((b.startDate > a.startDate) ? -1 : 0));
-          console.log('NEXTCLASSARRAY', nextClassArray);
+          nextClassArray.sort((a: any, b: any) =>
+            a.startDate > b.startDate ? 1 : b.startDate > a.startDate ? -1 : 0
+          );
+          console.log("NEXTCLASSARRAY", nextClassArray);
 
           let finalNextClassArray = [];
           let count = -1;
@@ -320,10 +329,10 @@ const MapViewer = ({
   const goToMyNextClass = (classesArray: nextClassArray[]) => {
     try {
       for (let i = 0; i < classesArray[0].resources.length; i++) {
-        if (classesArray[0].resources[i].type === 'room') {
+        if (classesArray[0].resources[i].type === "room") {
           const splittedRoom = classesArray[0].resources[i].code.substr(2);
           const navigateObject = {
-            from: 'U21',
+            from: "U21",
             to: splittedRoom,
             update: Date.now(),
           };
@@ -400,36 +409,41 @@ const MapViewer = ({
         popupID={popupID}
         setPopupID={setPopupID}
         closePopup={closePopup}
+        open={openState}
       />
+
       <ButtonGroup orientation="vertical" className="floorButtons">
         <Button
           id="7"
-          className={{ active7 } + " " + buttonStyles[7]}
+          className={active7 + " " + buttonStyles[7]}
           onClick={changeFloor}
         >
           7
         </Button>
         <Button
           id="6"
-          className={{ active6 } + " " + buttonStyles[6]}
+          className={active6 + " " + buttonStyles[6]}
           onClick={changeFloor}
         >
           6
         </Button>
         <Button
           id="5"
-          className={{ active5 } + " " + buttonStyles[5]}
+          className={active5 + " " + buttonStyles[5]}
           onClick={changeFloor}
         >
           5
         </Button>
         <Button
           id="2"
-          className={{ active2 } + " " + buttonStyles[2]}
+          className={active2 + " " + buttonStyles[2]}
           onClick={changeFloor}
         >
           2
         </Button>
+
+      </ButtonGroup>
+      <ButtonGroup orientation="vertical" className="tempButton">
         <Button
           id="basic-button"
           aria-controls="basic-menu"
@@ -453,6 +467,7 @@ const MapViewer = ({
         <MenuItem onClick={getAvailableRooms}>Show available rooms</MenuItem>
         <MenuItem onClick={whatsMyNextClass}>Go to my next class</MenuItem>
       </Menu>
+
       <MapColorcodeSVG />
       <NavDrawer
         navigateFrom={navigateFrom}
@@ -462,6 +477,10 @@ const MapViewer = ({
         setClickLocation={setClickLocation}
         popupID={popupID}
         clickLocation={clickLocation}
+        open={openState}
+        setOpen={setOpenState}
+        end={end}
+        start={start}
       ></NavDrawer>
     </>
   );

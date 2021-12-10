@@ -248,7 +248,7 @@ const Nav = ({
   return (
     <>
       <div className={classes.root}>
-        <AppBar position="static" className="navbar">
+        <AppBar position="absolute" className="navbar">
           <Toolbar>
             <IconButton
               edge="start"

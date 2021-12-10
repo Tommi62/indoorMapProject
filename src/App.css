@@ -238,10 +238,10 @@ g {
 .endButton:active span {
   animation: none;
 }
-
+/*
 .middleButton {
   color: rgb(255, 204, 204) !important;
-}
+}*/
 
 .floorButtons {
   position: absolute;
@@ -249,6 +249,18 @@ g {
   right: 10px;
   top: 75px;
   background-color: rgba(255, 255, 255, 0.9);
+}
+.tempButton{
+  position: absolute!important;
+  z-index: 401;
+  right: 10px;
+  top: 250px;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.MuiButtonGroup-grouped {
+  min-width: 40px;
+  max-width: 40px;
 }
 
 .availableRoomsButton {
@@ -330,6 +342,11 @@ div[role="navigation"] {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.navbar.MuiPaper-elevation4 {
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 1%),
+    0px 1px 10px 0px rgb(0 0 0 / 12%);
 }
 
 .App-link {
@@ -420,7 +437,7 @@ div[role="navigation"] {
   max-height: 30vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  flex-wrap: nowrap!important;
+  flex-wrap: nowrap !important;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -450,11 +467,11 @@ div[role="navigation"] {
   }
 
   .popupText {
-    font-size: 0.7rem!important;
+    font-size: 0.7rem !important;
   }
 
   .popupButton {
-    font-size: 0.6rem!important;
+    font-size: 0.6rem !important;
   }
 
   .popup {
