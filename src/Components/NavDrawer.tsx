@@ -179,12 +179,14 @@ const NavDrawer = ({
           <IconButton
             color="primary"
             style={{
+              border: "1px solid rgba(0, 0, 0, 0.23)",
               position: "absolute",
               bottom: "20px",
               right: "10px",
               zIndex: 1000,
               background: "rgba(255, 255, 255, 0.9)",
-              border: "1px solid rgba(0, 0, 0, 0.23)",
+              maxWidth: "40px",
+              maxHeight: "40px"
             }}
             onClick={toggleDrawer(true)}
           >
@@ -330,7 +332,7 @@ const NavDrawer = ({
             }}
             onClick={toggleDrawer(true)}
           >
-            <DirectionsIcon />
+            <DirectionsIcon className="dirIcon" />
           </IconButton>
           <SwipeableDrawer
             anchor="right"
