@@ -68,6 +68,7 @@ const NavDrawer = ({
   const [from, setFrom] = useState("KMU21");
   const [to, setTo] = useState("KMU21");
   const [selectedInput, setSelectedInput] = useState("");
+  const [sliderCSS, setSliderCSS] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -137,21 +138,34 @@ const NavDrawer = ({
       setSelectedInput("");
     }
   }, [clickLocation]);
+
+  useEffect(() => {
+    if (open) {
+      setSliderCSS(true);
+    } else {
+      setTimeout(() => {
+        setSliderCSS(false);
+      }, 200);
+    }
+  }, [open]);
+
   return (
     <Root>
       {matches ? (
         <>
           <CssBaseline />
-          <Global
-            styles={{
-              ".MuiDrawer-root > .MuiPaper-root": {
-                height: `calc(30% - ${drawerBleeding}px)`,
-                overflow: "visible",
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
-              },
-            }}
-          />
+          {sliderCSS && (
+            <Global
+              styles={{
+                ".MuiDrawer-root > .MuiPaper-root": {
+                  height: `calc(30% - ${drawerBleeding}px)`,
+                  overflow: "visible",
+                  borderTopLeftRadius: 8,
+                  borderTopRightRadius: 8,
+                },
+              }}
+            />
+          )}
           <IconButton
             color="primary"
             style={{
@@ -272,24 +286,26 @@ const NavDrawer = ({
       ) : (
         <>
           <CssBaseline />
-          <Global
-            styles={{
-              ".MuiDrawer-root > .MuiPaper-root": {
-                height: `13rem`,
-                width: `25rem`,
-                overflow: "visible",
-                borderRadius: 8,
-                margin: "1rem",
-              },
-              ".css-1160xiw-MuiPaper-root-MuiDrawer-paper": {
-                top: "auto !important",
-                bottom: "0",
-              },
-              ".css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop": {
-                backgroundColor: "rgb(0 0 0 / 0%) !important",
-              },
-            }}
-          />
+          {sliderCSS && (
+            <Global
+              styles={{
+                ".MuiDrawer-root > .MuiPaper-root": {
+                  height: `13rem`,
+                  width: `25rem`,
+                  overflow: "visible",
+                  borderRadius: 8,
+                  margin: "1rem",
+                },
+                ".css-1160xiw-MuiPaper-root-MuiDrawer-paper": {
+                  top: "auto !important",
+                  bottom: "0",
+                },
+                ".css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop": {
+                  backgroundColor: "rgb(0 0 0 / 0%) !important",
+                },
+              }}
+            />
+          )}
           <IconButton
             color="primary"
             style={{
