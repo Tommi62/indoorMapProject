@@ -440,6 +440,26 @@ div[role="navigation"] {
   flex-wrap: nowrap !important;
 }
 
+.grHeader {
+  margin-bottom: 0.5rem!important;
+  line-height: 1.2rem!important;
+}
+
+.grItem {
+  margin: 0.2rem 0!important;
+}
+
+.deleteIcon {
+  font-size: 1.3rem!important;
+  cursor: pointer;
+}
+
+.noOwnListHeader {
+  text-align: center!important;
+  margin-bottom: 0.5rem!important;
+  line-height: 1.2!important;
+}
+
 @media only screen and (max-width: 1200px) {
   .fc-toolbar-title {
     font-size: 1.5rem !important;
@@ -476,5 +496,25 @@ div[role="navigation"] {
 
   .popup {
     max-width: 80vw!important;
+  }
+
+  .grHeader {
+    font-size: 0.9rem!important;
+  }
+
+  .grItem {
+    font-size: 0.7rem!important;
+  }
+
+  .ddMenuButton {
+    font-size: 0.8rem!important;
+  }
+
+  .noOwnListHeader {
+    font-size: 1rem!important;
+  }
+
+  .noOwnListText {
+    font-size: 0.8rem!important;
   }
 }

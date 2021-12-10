@@ -55,6 +55,7 @@ const App = () => {
   const [restaurantMenu, setRestaurantMenu] = useState(false);
   const [marker, setMarker] = useState("");
   const [noOwnListNotification, setNoOwnListNotification] = useState(false);
+  const [showGroupsAndRealizations, setShowGroupsAndRealizations] = useState<string[]>([]);
 
   const [update, setUpdate] = useState({
     startNode: "",
@@ -89,6 +90,7 @@ const App = () => {
             marker={marker}
             setMarker={setMarker}
             setNoOwnListNotification={setNoOwnListNotification}
+            setShowGroupsAndRealizations={setShowGroupsAndRealizations}
           />
         </Grid>
       </Grid>
@@ -107,6 +109,8 @@ const App = () => {
         setRestaurantMenu={setRestaurantMenu}
         noOwnListNotification={noOwnListNotification}
         setNoOwnListNotification={setNoOwnListNotification}
+        showGroupsAndRealizations={showGroupsAndRealizations}
+        setShowGroupsAndRealizations={setShowGroupsAndRealizations}
       />
     </>
   );
