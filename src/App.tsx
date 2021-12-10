@@ -17,12 +17,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 const darkTheme = createTheme({
-  /* palette: {
+  palette: {
     primary: {
-      main: "rgba(40, 44, 52, 0.2)",
-      contrastText: "#000",
+      main: "#F46036",
+      contrastText: "#FFF",
     },
-  }, */
+  },
 });
 
 interface modalContentArray {

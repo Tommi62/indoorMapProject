@@ -65,7 +65,7 @@ g {
   fill: #ffde6f;
 }
 
-/* Unauthorized places */
+/* Unauthorized placeMs */
 .cls-4 {
   stroke-width: 8px !important;
   stroke-linejoin: round;
@@ -101,7 +101,7 @@ g {
   stroke-width: 8px !important;
   stroke: rgb(0, 0, 0);
   stroke-linejoin: round;
-  fill: rgb(0, 222, 122);
+  fill: #44ffd1;
   transition: fill 0.3s;
 }
 
@@ -139,6 +139,7 @@ g {
 .cls-9 {
   stroke-width: 12px !important;
 }
+
 .cls-10 {
   visibility: hidden;
 }
@@ -182,6 +183,16 @@ g {
   animation: 0.5s 0s 1 slideInFromLeft;
 }
 
+.css-1b9efhx {
+  border: none !important;
+  border-radius: 10px;
+}
+
+.makeStyles-closeButton-13 {
+  top: 5px !important;
+  right: 5px !important;
+}
+
 .colorCode {
   position: absolute;
   left: 0;
@@ -192,9 +203,14 @@ g {
   align-items: center;
 }
 
+.MuiDrawer-root > .MuiPaper-root {
+  height: 100% !important;
+  border-radius: 8px !important;
+}
+
 .colorCode .colorCodeSVG {
-  height: 6rem;
-  width: 6rem;
+  height: 7rem;
+  width: 7rem;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 3px;
   padding: 0 8px;
@@ -223,6 +239,12 @@ g {
   }
 }
 
+#basic-button {
+  height: 32px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px, rgb(0 0 0 / 1%) 0px 4px 5px 0px,
+    rgb(0 0 0 / 12%) 0px 1px 10px 0px;
+}
+
 .startButton {
   color: red !important;
 }
@@ -238,6 +260,7 @@ g {
 .endButton:active span {
   animation: none;
 }
+
 /*
 .middleButton {
   color: rgb(255, 204, 204) !important;
@@ -249,16 +272,16 @@ g {
   right: 10px;
   top: 75px;
   background-color: rgba(255, 255, 255, 0.9);
+  min-width: 40px;
+  max-width: 40px;
 }
-.tempButton{
-  position: absolute!important;
+
+.arrowButton {
+  position: absolute !important;
   z-index: 401;
   right: 10px;
   top: 250px;
   background-color: rgba(255, 255, 255, 0.9);
-}
-
-.MuiButtonGroup-grouped {
   min-width: 40px;
   max-width: 40px;
 }
@@ -277,38 +300,21 @@ g {
 .availableRoomsButton:hover {
   background-color: rgba(243, 243, 243, 0.9) !important;
 }
+
 .buttonActive {
-  background-color: rgb(238, 238, 238) !important;
+  background-color: #7f7f7f !important;
 }
 
-/* Lines */
-.cls-6 {
-  stroke: #ff0000 !important;
-  stroke-width: 14px !important;
-  stroke-linecap: round !important;
-  fill: none;
+.buttonActive span {
+  color: white;
 }
 
-/* Walls */
-.cls-7 {
-  stroke-width: 8px !important;
-  stroke-linejoin: round;
-  stroke: #000000;
-  stroke-linecap: round !important;
-  fill: none;
+.dirIcon {
+  color: #f46036;
 }
 
-/* Doors */
-.cls-8 {
-  stroke: #f55 !important;
-  stroke-width: 13px !important;
-}
-
-.cls-9 {
-  stroke-width: 12px !important;
-}
-.cls-10 {
-  visibility: hidden;
+.goButton {
+  color: #00aeef;
 }
 
 .leaflet-container {
@@ -406,9 +412,11 @@ div[role="navigation"] {
   line-height: 1.5;
   border-radius: 0.25em;
 }
+
 .fc-button {
   -webkit-appearance: button;
 }
+
 .fc-button {
   border-radius: 0.2rem;
   overflow: visible;
@@ -418,6 +426,7 @@ div[role="navigation"] {
   font-size: inherit;
   line-height: inherit;
 }
+
 .fc-button-primary {
   color: #fff;
   color: #fff;
@@ -483,7 +492,7 @@ div[role="navigation"] {
   }
 
   .fc-col-header-cell-cushion {
-    font-size: 0.7rem!important;
+    font-size: 0.7rem !important;
   }
 
   .popupText {
@@ -495,7 +504,7 @@ div[role="navigation"] {
   }
 
   .popup {
-    max-width: 80vw!important;
+    max-width: 80vw !important;
   }
 
   .grHeader {

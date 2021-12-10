@@ -1244,16 +1244,16 @@ function RouteFinder({
         />
 
         {/* Floor 7 */}
-        <path ref={R711X71} className="cls-6" d="M1272.19 744.84v62.13" />
-        <path ref={R712X71} className="cls-6" d="M1272.19 744.84v62.13" />
+        <path ref={R711X71} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
+        <path ref={R712X71} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
 
         {/* Floor 6*/}
-        <path ref={R611X61} className="cls-6" d="M1272.19 744.84v62.13" />
-        <path ref={R612X61} className="cls-6" d="M1272.19 744.84v62.13" />
+        <path ref={R611X61} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
+        <path ref={R612X61} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
 
         {/* Floor 5 */}
-        <path ref={R511X51} className="cls-6" d="M1272.19 744.84v62.13" />
-        <path ref={R512X51} className="cls-6" d="M1272.19 744.84v62.13" />
+        <path ref={R511X51} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
+        <path ref={R512X51} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
 
         {/* Elevators */}
         <path ref={H21H71} className="cls-6" d="M1272.19 744.84v62.13" />
