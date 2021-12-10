@@ -13,7 +13,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const drawerBleeding = 0;
-const drawerBleedingLarge = 20;
 
 const Root = styled("div")(({ theme }) => ({
   height: "100%",
@@ -141,9 +140,11 @@ const NavDrawer = ({
 
   useEffect(() => {
     if (open) {
+      console.log("slider styles true");
       setSliderCSS(true);
     } else {
       setTimeout(() => {
+        console.log("slider styles false");
         setSliderCSS(false);
       }, 200);
     }
@@ -158,10 +159,10 @@ const NavDrawer = ({
             <Global
               styles={{
                 ".MuiDrawer-root > .MuiPaper-root": {
-                  height: `calc(30% - ${drawerBleeding}px)`,
-                  overflow: "visible",
-                  borderTopLeftRadius: 8,
-                  borderTopRightRadius: 8,
+                  height: `calc(30% - ${drawerBleeding}px)!important`,
+                  overflow: "visible!important",
+                  borderTopLeftRadius: "8px !important",
+                  borderTopRightRadius: "8px !important",
                 },
               }}
             />
@@ -290,15 +291,15 @@ const NavDrawer = ({
             <Global
               styles={{
                 ".MuiDrawer-root > .MuiPaper-root": {
-                  height: `13rem`,
-                  width: `25rem`,
-                  overflow: "visible",
-                  borderRadius: 8,
-                  margin: "1rem",
+                  height: `13rem !important`,
+                  width: `25rem !important`,
+                  overflow: "visible !important",
+                  borderRadius: "8px !important",
+                  margin: "1rem !important",
                 },
                 ".css-1160xiw-MuiPaper-root-MuiDrawer-paper": {
                   top: "auto !important",
-                  bottom: "0",
+                  bottom: "0 !important",
                 },
                 ".css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop": {
                   backgroundColor: "rgb(0 0 0 / 0%) !important",
@@ -309,9 +310,10 @@ const NavDrawer = ({
           <IconButton
             color="primary"
             style={{
+              border: "1px solid rgba(0, 0, 0, 0.23)",
               position: "absolute",
               bottom: "20px",
-              right: "20px",
+              right: "10px",
               zIndex: 1000,
               background: "rgba(255, 255, 255, 0.9)",
             }}
