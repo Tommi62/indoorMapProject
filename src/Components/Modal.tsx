@@ -341,13 +341,13 @@ const Modal = ({
                           eventMouseEnter={(arg) => {
                             tippy(arg.el, {
                               content:
-                                "Aihe: " +
+                                "Subject: " +
                                 arg.event._def.extendedProps.subject +
                                 "<br>" +
-                                "Ryhmä(t): " +
+                                "Group(s): " +
                                 arg.event._def.extendedProps.group +
                                 "<br>" +
-                                "Tila: " +
+                                "Room: " +
                                 arg.event._def.extendedProps.room,
                               allowHTML: true,
                               theme: "calendar",
