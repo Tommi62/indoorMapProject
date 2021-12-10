@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
 const darkTheme = createTheme({
   palette: {
     primary: {
-      main: "rgb(233 92 12)",
+      main: "#F46036",
       contrastText: "#FFF",
     },
   },
