@@ -292,7 +292,19 @@ g {
   background-color: rgba(243, 243, 243, 0.9) !important;
 }
 .buttonActive {
-  background-color: rgb(238, 238, 238) !important;
+  background-color: #7f7f7f !important;
+}
+
+.buttonActive span {
+  color: white;
+}
+
+.dirIcon {
+  color: #f46036;
+}
+
+.goButton {
+  color: #00aeef;
 }
 
 .leaflet-container {
