@@ -101,7 +101,7 @@ g {
   stroke-width: 8px !important;
   stroke: rgb(0, 0, 0);
   stroke-linejoin: round;
-  fill: rgb(0, 222, 122);
+  fill: #44ffd1;
   transition: fill 0.3s;
 }
 
@@ -182,6 +182,16 @@ g {
   animation: 0.5s 0s 1 slideInFromLeft;
 }
 
+.css-1b9efhx {
+  border: none !important;
+  border-radius: 10px;
+}
+
+.makeStyles-closeButton-13 {
+  top: 5px !important;
+  right: 5px !important;
+}
+
 .colorCode {
   position: absolute;
   left: 0;
@@ -198,8 +208,8 @@ g {
 }
 
 .colorCode .colorCodeSVG {
-  height: 6rem;
-  width: 6rem;
+  height: 7rem;
+  width: 7rem;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 3px;
   padding: 0 8px;
@@ -261,8 +271,8 @@ g {
   min-width: 40px;
   max-width: 40px;
 }
-.arrowButton{
-  position: absolute!important;
+.arrowButton {
+  position: absolute !important;
   z-index: 401;
   right: 10px;
   top: 250px;
@@ -441,7 +451,7 @@ div[role="navigation"] {
   }
 
   .fc-col-header-cell-cushion {
-    font-size: 0.7rem!important;
+    font-size: 0.7rem !important;
   }
 
   .popupText {
@@ -453,6 +463,6 @@ div[role="navigation"] {
   }
 
   .popup {
-    max-width: 80vw!important;
+    max-width: 80vw !important;
   }
 }
