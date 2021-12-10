@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
   scButton: {
     marginRight: "0.5rem!important",
-    backgroundColor: "#ec7430!important",
+    backgroundColor: "#f66f49!important",
     "&:hover": {
       backgroundColor: alpha(theme.palette.common.white, 0.15) + "!important",
     },
