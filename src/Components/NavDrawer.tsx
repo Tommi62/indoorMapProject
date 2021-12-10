@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import {Global} from "@emotion/react";
 import {styled} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import {grey} from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
@@ -38,29 +38,36 @@ const Puller = styled(Box)(({theme}) => ({
 }));
 
 interface propTypes {
-    navigateTo: Function;
-    navigateFrom: Function;
-    setMarker: Function;
-    setFloor: Function;
-    setClickLocation: Function;
-    popupID: any;
-    clickLocation: boolean;
+  navigateTo: Function;
+  navigateFrom: Function;
+  setMarker: Function;
+  setFloor: Function;
+  setClickLocation: Function;
+  popupID: any;
+  clickLocation: boolean;
+  open: boolean;
+  setOpen: Function;
+  end: string;
+  start: string;
 }
 
 const NavDrawer = ({
-                       navigateTo,
-                       navigateFrom,
-                       setFloor,
-                       setMarker,
-                       setClickLocation,
-                       popupID,
-                       clickLocation,
-                   }: propTypes) => {
-    const matches = useMediaQuery("(max-width:600px)");
-    const [open, setOpen] = useState(false);
-    const [from, setFrom] = useState("KMU21");
-    const [to, setTo] = useState("KMU21");
-    const [selectedInput, setSelectedInput] = useState("");
+  navigateTo,
+  navigateFrom,
+  setFloor,
+  setMarker,
+  setClickLocation,
+  popupID,
+  clickLocation,
+  open,
+  setOpen,
+  end,
+  start,
+}: propTypes) => {
+  const matches = useMediaQuery("(max-width:600px)");
+  const [from, setFrom] = useState("KMU21");
+  const [to, setTo] = useState("KMU21");
+  const [selectedInput, setSelectedInput] = useState("");
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
@@ -70,12 +77,24 @@ const NavDrawer = ({
         console.log("toggled", open);
     }, [open]);
 
-    const handleClick = () => {
-        const handleTo = to.substring(2).toUpperCase();
-        const handleFrom = from.substring(2).toUpperCase();
-        navigateTo(handleTo);
-        navigateFrom(handleFrom);
-        setOpen(false);
+  useEffect(() => {
+    if (end !== "") {
+      setTo("KM" + end);
+    }
+  }, [end]);
+
+  useEffect(() => {
+    if (start !== "") {
+      setFrom("KM" + start);
+    }
+  }, [start]);
+
+  const handleClick = () => {
+    const handleTo = to.substring(2).toUpperCase();
+    const handleFrom = from.substring(2).toUpperCase();
+    navigateTo(handleTo);
+    navigateFrom(handleFrom);
+    setOpen(false);
 
         console.log("navigate", handleTo, handleFrom);
     };
@@ -87,23 +106,23 @@ const NavDrawer = ({
         console.log(popupID);
     };
 
-    useEffect(() => {
-        console.log("idchange setopen", open);
-    }, [open]);
+  useEffect(() => {
+    console.log("popup shouldvisible", clickLocation);
+  }, [clickLocation]);
 
-    useEffect(() => {
-        console.log("idchange", popupID, clickLocation, selectedInput);
-        if (clickLocation !== false) {
-            if (selectedInput === "to") {
-                setTo("KM" + popupID);
-                setOpen(true);
-            }
-            if (selectedInput === "from") {
-                setFrom("KM" + popupID);
-                setOpen(true);
-            }
-        }
-    }, [popupID]);
+  useEffect(() => {
+    console.log("idchange", popupID, clickLocation, selectedInput);
+    if (clickLocation !== false) {
+      if (selectedInput === "to") {
+        setTo("KM" + popupID);
+        setOpen(true);
+      }
+      if (selectedInput === "from") {
+        setFrom("KM" + popupID);
+        setOpen(true);
+      }
+    }
+  }, [popupID]);
 
     const setToLocation = () => {
         setSelectedInput("to");
@@ -112,7 +131,12 @@ const NavDrawer = ({
         console.log(popupID);
     };
 
-    return (
+    useEffect(() => {
+    console.log("clicklocation", clickLocation);
+    if (!clickLocation) {
+      setSelectedInput("");
+    }
+  }, [clickLocation]);return (
         <Root>
             {matches ? (
                 <>

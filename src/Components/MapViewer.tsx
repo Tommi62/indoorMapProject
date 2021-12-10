@@ -82,7 +82,7 @@ const MapViewer = ({
                        modalOpen,
                        floorSelect,
                        setFloorSelect,
-                       setNoOwnListNotification
+                       setNoOwnListNotification,
                    }: propTypes) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -102,7 +102,8 @@ const MapViewer = ({
     const [end, setEnd] = useState("");
     const [toggle, setToggle] = useState(Date.now());
     const [popupID, setPopupID] = useState("");
-    const [buttonStyles, setButtonStyles] = useState<buttonStyles>({
+    const [openState, setOpenState] = useState(false);
+  const [buttonStyles, setButtonStyles] = useState<buttonStyles>({
         "2": "",
         "5": "",
         "6": "",
@@ -154,16 +155,17 @@ const MapViewer = ({
     const [active5, setActive5] = useState("");
     const [active2, setActive2] = useState("");
 
-    const changeFloor = (e: any) => {
-        console.log("LOGI", e.target.id);
-        if (e.target.id === "") {
-            setFloorSelect(e.target.innerText);
-        } else {
-            setFloorSelect(e.target.id);
-        }
-        setMarker("");
-        setAvailableRooms([]);
-    };
+  const changeFloor = (e: any) => {
+    if (e.target.id !== floorSelect) {
+      if (e.target.id === "") {
+        setFloorSelect(e.target.innerText);
+      } else {
+        setFloorSelect(e.target.id);
+      }
+      setMarker("");
+      setAvailableRooms([]);
+    }
+  };
 
     const getAvailableRooms = async () => {
         try {
@@ -215,112 +217,119 @@ const MapViewer = ({
         }
     };
 
-    const whatsMyNextClass = async () => {
-        try {
-            if (localStorage.getItem("ownList") !== null) {
-                const ownListArray = JSON.parse(localStorage.getItem("ownList")!);
-                let realizationArray = [];
-                let groupArray = [];
-                if (ownListArray.length > 0) {
-                    for (let i = 0; i < ownListArray.length; i++) {
-                        if (
-                            ownListArray[i].startsWith("TX00") ||
-                            ownListArray[i].startsWith("TU00") ||
-                            ownListArray[i].startsWith("XX00")
-                        ) {
-                            realizationArray.push(ownListArray[i]);
-                        } else {
-                            groupArray.push(ownListArray[i]);
-                        }
-                    }
-                    const dateNow = moment().locale("fi").format("YYYY-MM-DD");
-                    const timeNow = moment().locale("fi").format("LT").replace(".", ":");
-                    const now = dateNow + "T" + timeNow;
-                    let requestObject: requestObj = {
-                        group: [],
-                        room: [],
-                        realization: [],
-                        startDate: "",
-                        apiKey: "",
-                        apiUrl: "",
-                        rangeStart: now,
-                        rangeEnd: "2121-12-02T11:00",
-                    };
-                    let realizations = [];
-                    let groups = [];
-                    if (realizationArray.length > 0) {
-                        requestObject.realization = realizationArray;
-                        realizations = await postGetMetropoliaData(requestObject);
-                    }
-                    if (groupArray.length > 0) {
-                        requestObject.group = groupArray;
-                        requestObject.realization = [];
-                        groups = await postGetMetropoliaData(requestObject);
-                    }
-                    let nextClassArray;
-                    if (realizations.reservations !== undefined && groups.reservations !== undefined) {
-                        nextClassArray = realizations.reservations.concat(groups.reservations);
-                    } else if (realizations.reservations !== undefined) {
-                        nextClassArray = realizations.reservations;
-                    } else {
-                        nextClassArray = groups.reservations;
-                    }
-                    nextClassArray.sort((a: any, b: any) => (a.startDate > b.startDate) ? 1 : ((b.startDate > a.startDate) ? -1 : 0));
-                    console.log('NEXTCLASSARRAY', nextClassArray);
-
-                    let finalNextClassArray = [];
-                    let count = -1;
-                    let alreadyExists = false;
-                    for (let i = 0; i < nextClassArray.length; i++) {
-                        alreadyExists = false;
-                        if (
-                            i === 0 ||
-                            nextClassArray[i].startDate ===
-                            finalNextClassArray[count].startDate ||
-                            nextClassArray[i].startDate < now
-                        ) {
-                            if (i === 0) {
-                                finalNextClassArray.push(nextClassArray[i]);
-                                count++;
-                            } else {
-                                for (let j = 0; j < finalNextClassArray.length; j++) {
-                                    if (nextClassArray[i].id === finalNextClassArray[j].id) {
-                                        alreadyExists = true;
-                                        break;
-                                    }
-                                }
-                                if (!alreadyExists) {
-                                    finalNextClassArray.push(nextClassArray[i]);
-                                    count++;
-                                }
-                            }
-                        } else {
-                            break;
-                        }
-                    }
-                    console.log("FinalNextClassArray", finalNextClassArray);
-                    goToMyNextClass(finalNextClassArray);
-                } else {
-                    setModalOpen(true);
-                    setNoOwnListNotification(true);
-                }
+  const whatsMyNextClass = async () => {
+    try {
+      if (localStorage.getItem("ownList") !== null) {
+        const ownListArray = JSON.parse(localStorage.getItem("ownList")!);
+        let realizationArray = [];
+        let groupArray = [];
+        if (ownListArray.length > 0) {
+          for (let i = 0; i < ownListArray.length; i++) {
+            if (
+              ownListArray[i].startsWith("TX00") ||
+              ownListArray[i].startsWith("TU00") ||
+              ownListArray[i].startsWith("XX00")
+            ) {
+              realizationArray.push(ownListArray[i]);
             } else {
-                setModalOpen(true);
-                setNoOwnListNotification(true);
+              groupArray.push(ownListArray[i]);
             }
-            handleClose();
-        } catch (error: any) {
-            console.log(error.message);
+          }
+          const dateNow = moment().locale("fi").format("YYYY-MM-DD");
+          const timeNow = moment().locale("fi").format("LT").replace(".", ":");
+          const now = dateNow + "T" + timeNow;
+          let requestObject: requestObj = {
+            group: [],
+            room: [],
+            realization: [],
+            startDate: "",
+            apiKey: "",
+            apiUrl: "",
+            rangeStart: now,
+            rangeEnd: "2121-12-02T11:00",
+          };
+          let realizations = [];
+          let groups = [];
+          if (realizationArray.length > 0) {
+            requestObject.realization = realizationArray;
+            realizations = await postGetMetropoliaData(requestObject);
+          }
+          if (groupArray.length > 0) {
+            requestObject.group = groupArray;
+            requestObject.realization = [];
+            groups = await postGetMetropoliaData(requestObject);
+          }
+          let nextClassArray;
+          if (
+            realizations.reservations !== undefined &&
+            groups.reservations !== undefined
+          ) {
+            nextClassArray = realizations.reservations.concat(
+              groups.reservations
+            );
+          } else if (realizations.reservations !== undefined) {
+            nextClassArray = realizations.reservations;
+          } else {
+            nextClassArray = groups.reservations;
+          }
+          nextClassArray.sort((a: any, b: any) =>
+            a.startDate > b.startDate ? 1 : b.startDate > a.startDate ? -1 : 0
+          );
+          console.log("NEXTCLASSARRAY", nextClassArray);
+
+          let finalNextClassArray = [];
+          let count = -1;
+          let alreadyExists = false;
+          for (let i = 0; i < nextClassArray.length; i++) {
+            alreadyExists = false;
+            if (
+              i === 0 ||
+              nextClassArray[i].startDate ===
+                finalNextClassArray[count].startDate ||
+              nextClassArray[i].startDate < now
+            ) {
+              if (i === 0) {
+                finalNextClassArray.push(nextClassArray[i]);
+                count++;
+              } else {
+                for (let j = 0; j < finalNextClassArray.length; j++) {
+                  if (nextClassArray[i].id === finalNextClassArray[j].id) {
+                    alreadyExists = true;
+                    break;
+                  }
+                }
+                if (!alreadyExists) {
+                  finalNextClassArray.push(nextClassArray[i]);
+                  count++;
+                }
+              }
+            } else {
+              break;
+            }
+          }
+          console.log("FinalNextClassArray", finalNextClassArray);
+          goToMyNextClass(finalNextClassArray);
+        } else {
+          setModalOpen(true);
+          setNoOwnListNotification(true);
         }
-    };
+      } else {
+        setModalOpen(true);
+        setNoOwnListNotification(true);
+      }
+      handleClose();
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
     const goToMyNextClass = (classesArray: nextClassArray[]) => {
         try {
             for (let i = 0; i < classesArray[0].resources.length; i++) {
-                if (classesArray[0].resources[i].type === 'room') {
+                if (classesArray[0].resources[i].type === "room") {
                     const splittedRoom = classesArray[0].resources[i].code.substr(2);
                     const navigateObject = {
-                        from: 'U21',
+                        from: "U21",
                         to: splittedRoom,
                         update: Date.now(),
                     };

@@ -42,17 +42,17 @@ interface buttonStyles {
 }
 
 interface resources {
-  code: string,
-  id: string,
-  name: string,
-  type: string,
+  code: string;
+  id: string;
+  name: string;
+  type: string;
 }
 
 interface nextClassArray {
-  startDate: string,
-  endDate: string,
-  subject: string,
-  resources: resources[],
+  startDate: string;
+  endDate: string;
+  subject: string;
+  resources: resources[];
 }
 
 interface propTypes {
@@ -69,9 +69,9 @@ interface propTypes {
   floor: keyof typeof data;
   setFloor: Function;
   availableRooms: string[];
-  navigateToNextClass: navigateToNextClass,
-  nextClassArray: nextClassArray[],
-  setNextClassArray: Function,
+  navigateToNextClass: navigateToNextClass;
+  nextClassArray: nextClassArray[];
+  setNextClassArray: Function;
   start: any;
   end: any;
   toggle: any;
@@ -84,6 +84,7 @@ interface propTypes {
   setClickLocation: Function;
   setPopupID: Function;
   buttonStyles: buttonStyles;
+  open: boolean;
 }
 
 const ReactSvgViewer = ({
@@ -115,18 +116,21 @@ const ReactSvgViewer = ({
   setClickLocation,
   popupID,
   setPopupID,
+  open,
 }: propTypes) => {
   const [map, setMap] = useState<any>();
   const { getModalData } = useModalData();
   const [popupPosition, setPopupPosition] = useState<any>([0, 0]);
   const [svgSize, setSvgSize] = useState("");
   const [boundsReady, setBoundsReady] = useState(false);
-  const [realNextClassArray, setRealNextClassArray] = useState<nextClassArray[]>([]);
+  const [realNextClassArray, setRealNextClassArray] = useState<
+    nextClassArray[]
+  >([]);
   const [emptyNextClassArrays, setEmptyNextClassArrays] = useState(Date.now());
   const [anotherClass, setAnotherClass] = useState({
-    roomCode: '',
+    roomCode: "",
     update: Date.now(),
-  })
+  });
 
   useEffect(() => {
     setIsVisible(false);
@@ -136,8 +140,9 @@ const ReactSvgViewer = ({
   useEffect(() => {
     if (map !== undefined) {
       map.closePopup();
+      setIsVisible(false);
     }
-  }, [toggle]);
+  }, [toggle, open]);
 
   const svgRef = useRef<any>();
   const markerRef = useRef<any>();
@@ -164,6 +169,7 @@ const ReactSvgViewer = ({
 
   const getDataAndOpenModal = async () => {
     map.closePopup();
+    setIsVisible(false);
     const modalData = await getModalData("KM" + popupID);
     if (modalData !== undefined) {
       if (modalData.length !== 0) {
@@ -174,32 +180,33 @@ const ReactSvgViewer = ({
     setModalOpen(true);
   };
 
+  useEffect(() => {
+    console.log("popup visible:", isVisible);
+  }, [isVisible]);
+
+  const getClickLocation = () => {
+    return clickLocation;
+  };
   //displays popups on map when clicking on rooms with ids
   const mapClick = (e: any) => {
     setEmptyNextClassArrays(Date.now());
-    if (clickLocation) {
-      let str = e.originalEvent.target.id;
-      if (isNaN(str.charAt(0)) && str !== "") {
-        setPopupID(str);
-        setIsVisible(false);
-      }
+    let str = e.originalEvent.target.id;
+    if (isNaN(str.charAt(0)) && str !== "") {
+      setIsVisible(true);
+      setPopupPosition(e.latlng);
+      setPopupID(str);
     } else {
-      let str = e.originalEvent.target.id;
-      if (isNaN(str.charAt(0)) && str !== "") {
-        setIsVisible(true);
-        setPopupPosition(e.latlng);
-        setPopupID(str);
-      }
+      setIsVisible(false);
     }
     setClickLocation(false);
   };
 
   useEffect(() => {
     try {
-      if (navigateToNextClass.to !== '' && nextClassArray.length > 0) {
+      if (navigateToNextClass.to !== "" && nextClassArray.length > 0) {
         navigateFrom(navigateToNextClass.from);
         navigateTo(navigateToNextClass.to);
-        setFloor('2');
+        setFloor("2");
         setTimeout(() => {
           setRealNextClassArray(nextClassArray);
         }, 500);
@@ -233,7 +240,7 @@ const ReactSvgViewer = ({
 
   useEffect(() => {
     try {
-      if (anotherClass.roomCode !== '') {
+      if (anotherClass.roomCode !== "") {
         navigateTo(anotherClass.roomCode);
       }
     } catch (error: any) {
@@ -255,9 +262,7 @@ const ReactSvgViewer = ({
   useEffect(() => {
     try {
       if (map !== undefined) {
-        setTimeout(() => {
-          map.closePopup();
-        }, 1);
+        setIsVisible(false);
       }
     } catch (error: any) {
       console.log(error.message);
@@ -371,7 +376,7 @@ const ReactSvgViewer = ({
       maxZoom={3}
       zoomControl={false}
       scrollWheelZoom={true}
-      style={{ width: "100vw", height: "calc(100vh - 64px)" }}
+      style={{ width: "100vw", height: "calc(100vh)" }}
       whenCreated={(mapInstance) => {
         setMap(mapInstance);
       }}

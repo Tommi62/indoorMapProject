@@ -2,14 +2,28 @@ import React, { useState } from "react";
 import "./App.css";
 // import RouteFinder from './Components/RouteFinder';
 import Nav from "./Components/Nav";
-import { Grid, makeStyles } from "@material-ui/core";
+import {
+  createTheme,
+  Grid,
+  makeStyles,
+  ThemeProvider,
+} from "@material-ui/core";
 import Modal from "./Components/Modal";
 import MapViewer from "./Components/MapViewer";
 import data from "./Data/classrooms.json";
 
 const useStyles = makeStyles(() => ({
-  root: {},
+  root: { color: "black" },
 }));
+
+const darkTheme = createTheme({
+  /* palette: {
+    primary: {
+      main: "rgba(40, 44, 52, 0.2)",
+      contrastText: "#000",
+    },
+  }, */
+});
 
 interface modalContentArray {
   success: boolean;
@@ -49,16 +63,19 @@ const App = () => {
 
   return (
     <>
-      <Nav
-        setMarker={setMarker}
-        setModalOpen={setModalOpen}
-        setModalContent={setModalContent}
-        setKeyWord={setKeyWord}
-        updateShortcuts={updateShortcuts}
-        setRestaurantMenu={setRestaurantMenu}
-        floorSelect={floorSelect}
-        setFloorSelect={setFloorSelect}
-      />
+      <ThemeProvider theme={darkTheme}>
+        <Nav
+          setMarker={setMarker}
+          setModalOpen={setModalOpen}
+          setModalContent={setModalContent}
+          setKeyWord={setKeyWord}
+          updateShortcuts={updateShortcuts}
+          setRestaurantMenu={setRestaurantMenu}
+          floorSelect={floorSelect}
+          setFloorSelect={setFloorSelect}
+        />
+      </ThemeProvider>
+
       <Grid className={classes.root} container justifyContent="center">
         <Grid container item justifyContent="center">
           <MapViewer
