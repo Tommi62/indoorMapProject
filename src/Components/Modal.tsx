@@ -176,7 +176,6 @@ const Modal = ({
   useEffect(() => {
     try {
       if (!restaurantMenu) {
-        console.log("UseEffect");
         setIsShortcut(false);
         if (localStorage.getItem("shortcuts") !== null) {
           const shortcutArray = JSON.parse(localStorage.getItem("shortcuts")!);

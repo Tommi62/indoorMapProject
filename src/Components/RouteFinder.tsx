@@ -1,390 +1,392 @@
-import React, {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import data from "../Data/classrooms.json";
 import Room from "./Room";
 
 interface buttonStyles {
-    2: string;
-    5: string;
-    6: string;
-    7: string;
+  2: string;
+  5: string;
+  6: string;
+  7: string;
 }
 
 interface propTypes {
-    update: paramObj;
-    setModalOpen: Function;
-    setModalContent: Function;
-    setKeyWord: Function;
-    marker: string;
-    start: string;
-    end: string;
-    floor: keyof typeof data;
-    availableRooms: string[];
-    setButtonStyles: Function;
-    buttonStyles: buttonStyles;
+  update: paramObj;
+  setModalOpen: Function;
+  setModalContent: Function;
+  setKeyWord: Function;
+  marker: string;
+  start: string;
+  end: string;
+  floor: keyof typeof data;
+  availableRooms: string[];
+  setButtonStyles: Function;
+  buttonStyles: buttonStyles;
 }
 
 interface paramObj {
-    startNode: string;
-    endNode: string;
+  startNode: string;
+  endNode: string;
 }
 
 interface roomsArray {
-    className: string;
-    id: string;
-    transform: any;
-    d: any;
+  className: string;
+  id: string;
+  transform: any;
+  d: any;
 }
 
 // Setting the logic for each point so the algorithm knows from which point can you go to which
 let graph: any = {
-    // Hallways
+  // Hallways
 
-    //Floor 7
-    K71: {K72: 1, D7581: 1, D7591: 1},
-    K72: {D7592: 1, K74: 1, K71: 1},
-    K73: {K74: 1, D7582: 1},
-    K74: {K73: 1, K72: 1, K75: 1},
-    K75: {K74: 1, K76: 1, R711: 1},
-    K76: {K75: 1, K77: 1, K710: 1},
-    K77: {K76: 1, K78: 1, K79: 1, K710: 1},
-    K78: {K77: 1, D7571: 1, D7511: 1},
-    K79: {D7501: 1, K711: 1, K710: 1, K77: 1},
-    K710: {K76: 1, K77: 1, K79: 1, K711: 1, K712: 1},
-    K711: {K79: 1, K710: 1, K715: 1},
-    K712: {K710: 1, K713: 1, R712: 1},
-    K713: {K712: 1, K714: 1},
-    K714: {K713: 1, K717: 1, H71: 1},
-    K715: {K711: 1, K717: 1, K716: 1, E7901: 1},
-    K716: {K715: 1, K718: 1, E7902: 1},
-    K717: {K714: 1, K715: 1},
-    K718: {K716: 1, K719: 1},
-    K719: {K718: 1, K720: 1, E7701: 1},
-    K720: {K719: 1, K721: 1, K722: 1},
-    K721: {K720: 1, K723: 1, K724: 1, E7621: 1},
-    K722: {K720: 1, K723: 1, E7702: 1},
-    K723: {K721: 1, K722: 1, K726: 1},
-    K724: {K721: 1, K725: 1, E7611: 1},
-    K725: {K724: 1, E7591: 1, E7511: 1},
-    K726: {K727: 1, K723: 1, V71: 1},
-    K727: {K726: 1, K728: 1, R73: 1},
-    K728: {K727: 1, E7512: 1},
+  //Floor 7
+  K71: { K72: 1, D7581: 1, D7591: 1 },
+  K72: { D7592: 1, K74: 1, K71: 1 },
+  K73: { K74: 1, D7582: 1 },
+  K74: { K73: 1, K72: 1, K75: 1 },
+  K75: { K74: 1, K76: 1, R711: 1 },
+  K76: { K75: 1, K77: 1, K710: 1 },
+  K77: { K76: 1, K78: 1, K79: 1, K710: 1 },
+  K78: { K77: 1, D7571: 1, D7511: 1 },
+  K79: { D7501: 1, K711: 1, K710: 1, K77: 1 },
+  K710: { K76: 1, K77: 1, K79: 1, K711: 1, K712: 1 },
+  K711: { K79: 1, K710: 1, K715: 1 },
+  K712: { K710: 1, K713: 1, R712: 1 },
+  K713: { K712: 1, K714: 1 },
+  K714: { K713: 1, K717: 1, H71: 1 },
+  K715: { K711: 1, K717: 1, K716: 1, E7901: 1 },
+  K716: { K715: 1, K718: 1, E7902: 1 },
+  K717: { K714: 1, K715: 1 },
+  K718: { K716: 1, K719: 1 },
+  K719: { K718: 1, K720: 1, E7701: 1 },
+  K720: { K719: 1, K721: 1, K722: 1 },
+  K721: { K720: 1, K723: 1, K724: 1, E7621: 1 },
+  K722: { K720: 1, K723: 1, E7702: 1 },
+  K723: { K721: 1, K722: 1, K726: 1 },
+  K724: { K721: 1, K725: 1, E7611: 1 },
+  K725: { K724: 1, E7591: 1, E7511: 1 },
+  K726: { K727: 1, K723: 1, V71: 1 },
+  K727: { K726: 1, K728: 1, R73: 1 },
+  K728: { K727: 1, E7512: 1 },
 
-    // Floor 6
-    K61: {K62: 1, K63: 1, E690: 1},
-    K62: {K61: 1, K616: 1},
-    K63: {K61: 1, K64: 1, K630: 1},
-    K64: {K63: 1, K65: 1, K630: 1},
-    K65: {K64: 1, K66: 1, K624: 1},
-    K66: {K65: 1, K67: 1, K624: 1, K627: 1},
-    K67: {K66: 1, K68: 1, K624: 1},
-    K68: {K67: 1, K69: 1, R611: 1},
-    K69: {K68: 1, K610: 1, K626: 1},
-    K610: {K69: 1, K631: 1, D6591: 1},
-    K611: {K612: 1, K613: 1, R622: 1},
-    K612: {K611: 1, K617: 1 /*R621: 1*/},
-    K613: {K611: 1, K614: 1, V62: 1},
-    K614: {K613: 1, K621: 1, K615: 1},
-    K615: {K614: 1, K620: 1, K616: 1},
-    K616: {K615: 1, K62: 1, E6701: 1},
-    K617: {K618: 1, K612: 1},
-    K618: {K617: 1, V62: 1, E6591: 1},
-    V62: {K618: 1, K613: 1},
-    K620: {K621: 1, K615: 1, E6621: 1},
-    K621: {K620: 1, K622: 1, K614: 1},
-    K622: {K621: 1, E6592: 1, E6611: 1},
-    K624: {K65: 1, K66: 1, K67: 1, V63: 1, D6521: 1},
-    V63: {K624: 1, D6571: 1},
-    K626: {D6581: 1, V61: 1, K69: 1},
-    K627: {K66: 1, K628: 1, R612: 1},
-    K628: {K627: 1, K629: 1},
-    K629: {K628: 1, K630: 1, H61: 1},
-    K630: {K64: 1, K63: 1, K629: 1},
-    K631: {D6592: 1, D6582: 1},
+  // Floor 6
+  K61: { K62: 1, K63: 1, E690: 1 },
+  K62: { K61: 1, K616: 1 },
+  K63: { K61: 1, K64: 1, K630: 1 },
+  K64: { K63: 1, K65: 1, K630: 1 },
+  K65: { K64: 1, K66: 1, K624: 1 },
+  K66: { K65: 1, K67: 1, K624: 1, K627: 1 },
+  K67: { K66: 1, K68: 1, K624: 1 },
+  K68: { K67: 1, K69: 1, R611: 1 },
+  K69: { K68: 1, K610: 1, K626: 1 },
+  K610: { K69: 1, K631: 1, D6591: 1 },
+  K611: { K612: 1, K613: 1, R622: 1 },
+  K612: { K611: 1, K617: 1 /*R621: 1*/ },
+  K613: { K611: 1, K614: 1, V62: 1 },
+  K614: { K613: 1, K621: 1, K615: 1 },
+  K615: { K614: 1, K620: 1, K616: 1 },
+  K616: { K615: 1, K62: 1, E6701: 1 },
+  K617: { K618: 1, K612: 1 },
+  K618: { K617: 1, V62: 1, E6591: 1 },
+  V62: { K618: 1, K613: 1 },
+  K620: { K621: 1, K615: 1, E6621: 1 },
+  K621: { K620: 1, K622: 1, K614: 1 },
+  K622: { K621: 1, E6592: 1, E6611: 1 },
+  K624: { K65: 1, K66: 1, K67: 1, V63: 1, D6521: 1 },
+  V63: { K624: 1, D6571: 1 },
+  K626: { D6581: 1, V61: 1, K69: 1 },
+  K627: { K66: 1, K628: 1, R612: 1 },
+  K628: { K627: 1, K629: 1 },
+  K629: { K628: 1, K630: 1, H61: 1 },
+  K630: { K64: 1, K63: 1, K629: 1 },
+  K631: { D6592: 1, D6582: 1 },
 
-    // Floor 2
-    K21: {K22: 1, U21: 1, K23: 1},
-    K22: {K21: 1, K23: 1, V21: 1},
-    K23: {K21: 1, K22: 1, K24: 1, K26: 1},
-    K24: {K23: 1, K25: 1, K28: 1},
-    K25: {R21: 1, K24: 1},
-    K26: {K23: 1, K27: 1, K29: 1},
-    K27: {K28: 1, K26: 1, K29: 1},
-    K28: {K24: 1, K27: 1, H21: 1},
-    K29: {K26: 1, K27: 1, K213: 1},
-    K210: {K212: 1, K211: 1, PUKKARI: 1},
-    K211: {K210: 1, K214: 1},
-    K212: {K213: 1, K221: 1, K210: 1},
-    K213: {K29: 1, K221: 1, K212: 1},
-    K214: {K211: 1, K215: 1, V23: 1},
-    K215: {K214: 1, K216: 1, R221: 1},
-    K216: {K215: 1, K217: 1},
-    K217: {K218: 1, K216: 1, K220: 1},
-    K218: {K217: 1, K220: 1, K219: 1},
-    K219: {K218: 1, E2041: 1, V22: 1},
-    K220: {RUOKALA: 1, K218: 1, K217: 1},
-    K221: {K212: 1, K213: 1, E2042: 1},
+  // Floor 2
+  K21: { K22: 1, U21: 1, K23: 1 },
+  K22: { K21: 1, K23: 1, V21: 1 },
+  K23: { K21: 1, K22: 1, K24: 1, K26: 1 },
+  K24: { K23: 1, K25: 1, K28: 1 },
+  K25: { R21: 1, K24: 1 },
+  K26: { K23: 1, K27: 1, K29: 1 },
+  K27: { K28: 1, K26: 1, K29: 1 },
+  K28: { K24: 1, K27: 1, H21: 1 },
+  K29: { K26: 1, K27: 1, K213: 1 },
+  K210: { K212: 1, K211: 1, PUKKARI: 1 },
+  K211: { K210: 1, K214: 1 },
+  K212: { K213: 1, K221: 1, K210: 1 },
+  K213: { K29: 1, K221: 1, K212: 1 },
+  K214: { K211: 1, K215: 1, V23: 1 },
+  K215: { K214: 1, K216: 1, R221: 1 },
+  K216: { K215: 1, K217: 1 },
+  K217: { K218: 1, K216: 1, K220: 1 },
+  K218: { K217: 1, K220: 1, K219: 1 },
+  K219: { K218: 1, E2041: 1, V22: 1 },
+  K220: { RUOKALA: 1, K218: 1, K217: 1 },
+  K221: { K212: 1, K213: 1, E2042: 1 },
 
-    // Floor 5
-    K51: {K53: 1, K52: 1, K534: 1, E5902: 1},
-    K52: {K51: 1, E5901: 1, K515: 1},
-    K53: {K51: 1, K54: 1, K534: 1},
-    K54: {K53: 1, K55: 1, K522: 1},
-    K55: {K525: 1, K54: 1, K522: 1, K56: 1},
-    K56: {K57: 1, K522: 1, K55: 1},
-    K57: {R511: 1, K56: 1, K58: 1},
-    K58: {K57: 1, K59: 1, K524: 1},
-    K59: {D5691: 1, D5581: 1, K58: 1},
-    K510: {R522: 1, K511: 1, K512: 1},
-    K511: {K516: 1, K510: 1},
-    K512: {K510: 1, V51: 1, K513: 1},
-    K513: {E5701: 1, K514: 1, K518: 1, K512: 1},
-    K514: {K515: 1, K513: 1, K518: 1},
-    K515: {K514: 1, E5702: 1, K52: 1},
-    K516: {E5511: 1, K511: 1},
-    K517: {K520: 1, E5512: 1, E5591: 1},
-    K518: {K513: 1, K514: 1, K519: 1},
-    K519: {K520: 1, E5621: 1, K518: 1},
-    K520: {E5611: 1, K519: 1, K517: 1},
-    K521: {D5571: 1, K523: 1},
-    K522: {K56: 1, K55: 1, D5501: 1, K523: 1, K54: 1},
-    K523: {K521: 1, D5502: 1, K522: 1},
-    K524: {K58: 1, V52: 1, D5582: 1},
-    K525: {K526: 1, R512: 1, K55: 1},
-    K526: {K527: 1, K525: 1, K533: 1},
-    K527: {K528: 1, C5921: 1, K526: 1},
-    K528: {K527: 1, K529: 1, K535: 1},
-    K529: {K528: 1, K530: 1, K536: 1},
-    K530: {K531: 1, K538: 1, K529: 1},
-    K531: {C5922: 1, K530: 1, K532: 1},
-    K532: {K531: 1, C5901: 1},
-    K533: {K526: 1, K534: 1, H51: 1},
-    K534: {K533: 1, K53: 1, K51: 1},
-    K535: {K528: 1, K536: 1, C5651: 1},
-    K536: {K529: 1, K535: 1, K537: 1},
-    K537: {C5652: 1, C5571: 1, K536: 1},
-    K538: {V53: 1, K539: 1, K530: 1},
-    K539: {K538: 1, K540: 1},
-    K540: {C5572: 1},
+  // Floor 5
+  K51: { K53: 1, K52: 1, K534: 1, E5902: 1 },
+  K52: { K51: 1, E5901: 1, K515: 1 },
+  K53: { K51: 1, K54: 1, K534: 1 },
+  K54: { K53: 1, K55: 1, K522: 1 },
+  K55: { K525: 1, K54: 1, K522: 1, K56: 1 },
+  K56: { K57: 1, K522: 1, K55: 1 },
+  K57: { R511: 1, K56: 1, K58: 1 },
+  K58: { K57: 1, K59: 1, K524: 1 },
+  K59: { D5691: 1, D5581: 1, K58: 1 },
+  K510: { R522: 1, K511: 1, K512: 1 },
+  K511: { K516: 1, K510: 1 },
+  K512: { K510: 1, V51: 1, K513: 1 },
+  K513: { E5701: 1, K514: 1, K518: 1, K512: 1 },
+  K514: { K515: 1, K513: 1, K518: 1 },
+  K515: { K514: 1, E5702: 1, K52: 1 },
+  K516: { E5511: 1, K511: 1 },
+  K517: { K520: 1, E5512: 1, E5591: 1 },
+  K518: { K513: 1, K514: 1, K519: 1 },
+  K519: { K520: 1, E5621: 1, K518: 1 },
+  K520: { E5611: 1, K519: 1, K517: 1 },
+  K521: { D5571: 1, K523: 1 },
+  K522: { K56: 1, K55: 1, D5501: 1, K523: 1, K54: 1 },
+  K523: { K521: 1, D5502: 1, K522: 1 },
+  K524: { K58: 1, V52: 1, D5582: 1 },
+  K525: { K526: 1, R512: 1, K55: 1 },
+  K526: { K527: 1, K525: 1, K533: 1 },
+  K527: { K528: 1, C5921: 1, K526: 1 },
+  K528: { K527: 1, K529: 1, K535: 1 },
+  K529: { K528: 1, K530: 1, K536: 1 },
+  K530: { K531: 1, K538: 1, K529: 1 },
+  K531: { C5922: 1, K530: 1, K532: 1 },
+  K532: { K531: 1, C5901: 1 },
+  K533: { K526: 1, K534: 1, H51: 1 },
+  K534: { K533: 1, K53: 1, K51: 1 },
+  K535: { K528: 1, K536: 1, C5651: 1 },
+  K536: { K529: 1, K535: 1, K537: 1 },
+  K537: { C5652: 1, C5571: 1, K536: 1 },
+  K538: { V53: 1, K539: 1, K530: 1 },
+  K539: { K538: 1, K540: 1 },
+  K540: { C5572: 1 },
 
-    // classrooms
-    // Floor 7
-    D7591: {K71: 1},
-    D7592: {K72: 1},
-    D7581: {K71: 1},
-    D7582: {K73: 1},
-    D7571: {K78: 1},
-    D7511: {K78: 1},
-    D7501: {K79: 1},
-    E7901: {K715: 1},
-    E7902: {K716: 1},
-    E7701: {K719: 1},
-    E7621: {K721: 1},
-    E7702: {K722: 1},
-    E7611: {K724: 1},
-    E7591: {K725: 1},
-    E7511: {K725: 1},
-    E7512: {K728: 1},
-    // Floor 2
-    E2041: {K219: 1},
-    E2042: {K221: 1},
-    // Floor 6
-    D6582: {K631: 1},
-    D6581: {K626: 1},
-    D6592: {K631: 1},
-    D6591: {K610: 1},
-    D6571: {V63: 1},
-    D6521: {K624: 1},
-    E690: {K61: 1},
-    E6701: {K616: 1},
-    E6621: {K620: 1},
-    E6611: {K622: 1},
-    E6592: {K622: 1},
-    E6591: {K618: 1},
-    // Floor 5
-    D5581: {K59: 1},
-    D5582: {K524: 1},
-    D5691: {K59: 1},
-    D5571: {K521: 1},
-    D5502: {K523: 1},
-    D5501: {K522: 1},
-    E5902: {K51: 1},
-    E5901: {K52: 1},
-    E5702: {K515: 1},
-    E5621: {K519: 1},
-    E5701: {K513: 1},
-    E5611: {K520: 1},
-    E5591: {K517: 1},
-    E5512: {K517: 1},
-    E5511: {K516: 1},
-    C5921: {K527: 1},
-    C5651: {K535: 1},
-    C5922: {K531: 1},
-    C5901: {K532: 1},
-    C5572: {K540: 1},
-    C5652: {K537: 1},
-    C5571: {K537: 1},
+  // classrooms
+  // Floor 7
+  D7591: { K71: 1 },
+  D7592: { K72: 1 },
+  D7581: { K71: 1 },
+  D7582: { K73: 1 },
+  D7571: { K78: 1 },
+  D7511: { K78: 1 },
+  D7501: { K79: 1 },
+  E7901: { K715: 1 },
+  E7902: { K716: 1 },
+  E7701: { K719: 1 },
+  E7621: { K721: 1 },
+  E7702: { K722: 1 },
+  E7611: { K724: 1 },
+  E7591: { K725: 1 },
+  E7511: { K725: 1 },
+  E7512: { K728: 1 },
+  // Floor 2
+  E2041: { K219: 1 },
+  E2042: { K221: 1 },
+  // Floor 6
+  D6582: { K631: 1 },
+  D6581: { K626: 1 },
+  D6592: { K631: 1 },
+  D6591: { K610: 1 },
+  D6571: { V63: 1 },
+  D6521: { K624: 1 },
+  E690: { K61: 1 },
+  E6701: { K616: 1 },
+  E6621: { K620: 1 },
+  E6611: { K622: 1 },
+  E6592: { K622: 1 },
+  E6591: { K618: 1 },
+  // Floor 5
+  D5581: { K59: 1 },
+  D5582: { K524: 1 },
+  D5691: { K59: 1 },
+  D5571: { K521: 1 },
+  D5502: { K523: 1 },
+  D5501: { K522: 1 },
+  E5902: { K51: 1 },
+  E5901: { K52: 1 },
+  E5702: { K515: 1 },
+  E5621: { K519: 1 },
+  E5701: { K513: 1 },
+  E5611: { K520: 1 },
+  E5591: { K517: 1 },
+  E5512: { K517: 1 },
+  E5511: { K516: 1 },
+  C5921: { K527: 1 },
+  C5651: { K535: 1 },
+  C5922: { K531: 1 },
+  C5901: { K532: 1 },
+  C5572: { K540: 1 },
+  C5652: { K537: 1 },
+  C5571: { K537: 1 },
 
-    // Elevators
-    // Floor 7
-    H71: {K714: 1, H21: 1, H51: 1, H61: 1},
-    // Floor 2
-    H21: {K28: 1, H71: 1, H51: 1, H61: 1},
-    // Floor 6
-    H61: {K629: 1, H51: 1, H71: 1, H21: 1},
-    // Floor 5
-    H51: {K533: 1, H21: 1, H61: 1, H71: 1},
+  // Elevators
+  // Floor 7
+  H71: { K714: 1, H21: 1, H51: 1, H61: 1 },
+  // Floor 2
+  H21: { K28: 1, H71: 1, H51: 1, H61: 1 },
+  // Floor 6
+  H61: { K629: 1, H51: 1, H71: 1, H21: 1 },
+  // Floor 5
+  H51: { K533: 1, H21: 1, H61: 1, H71: 1 },
 
-    // Toilets
-    // Floor 7
-    V71: {K726: 1},
-    // Floor 2
-    V21: {K22: 1},
-    V22: {K219: 1},
-    V23: {K214: 1},
-    // Floor 6
-    V61: {K626: 1},
-    // Floor 5
-    V51: {K512: 1},
-    V52: {K524: 1},
-    V53: {K538: 1},
+  // Toilets
+  // Floor 7
+  V71: { K726: 1 },
+  // Floor 2
+  V21: { K22: 1 },
+  V22: { K219: 1 },
+  V23: { K214: 1 },
+  // Floor 6
+  V61: { K626: 1 },
+  // Floor 5
+  V51: { K512: 1 },
+  V52: { K524: 1 },
+  V53: { K538: 1 },
 
-    // Stairs
-    // Floor 7
-    R711: {K75: 1, X71: 1},
-    R712: {K712: 1, X71: 1},
-    R73: {K727: 1, R221: 1},
-    X71: {R711: 1, R712: 1, R21: 1, X61: 1, X51: 1},
+  // Stairs
+  // Floor 7
+  R711: { K75: 1, X71: 1 },
+  R712: { K712: 1, X71: 1 },
+  R73: { K727: 1, R221: 1 },
+  X71: { R711: 1, R712: 1, R21: 1, X61: 1, X51: 1 },
 
-    // Floor 2
-    R21: {K25: 1, X71: 1, X51: 1, X61: 1},
-    R221: {K215: 1, R522: 1, R622: 1, R73: 1},
+  // Floor 2
+  R21: { K25: 1, X71: 1, X51: 1, X61: 1 },
+  R221: { K215: 1, R522: 1, R622: 1, R73: 1 },
 
-    // Floor 6
-    R622: {K611: 1, R221: 1},
-    R611: {K68: 1, X61: 1},
-    R612: {K627: 1, X61: 1},
-    X61: {R611: 1, R612: 1, X51: 1, R21: 1, X71: 1},
+  // Floor 6
+  R622: { K611: 1, R221: 1 },
+  R611: { K68: 1, X61: 1 },
+  R612: { K627: 1, X61: 1 },
+  X61: { R611: 1, R612: 1, X51: 1, R21: 1, X71: 1 },
 
-    // Floor 5
-    R522: {K510: 1},
-    R511: {K57: 1, X51: 1},
-    R512: {K525: 1, X51: 1},
-    X51: {R511: 1, R512: 1, X61: 1, X71: 1, R21: 1},
+  // Floor 5
+  R522: { K510: 1 },
+  R511: { K57: 1, X51: 1 },
+  R512: { K525: 1, X51: 1 },
+  X51: { R511: 1, R512: 1, X61: 1, X71: 1, R21: 1 },
 
-    // Uniques
-    RUOKALA: {K220: 1},
-    U21: {K21: 1},
-    PUKKARI: {K210: 1},
+  // Uniques
+  RUOKALA: { K220: 1 },
+  U21: { K21: 1 },
+  PUKKARI: { K210: 1 },
 };
 
 function RouteFinder({
-                         update,
-                         marker,
-                         start,
-                         end,
-                         floor,
-                         availableRooms,
-                         setButtonStyles,
-                     }: propTypes) {
-    const classes7: any = useRef();
-    const [seventhFloorRoomsArray, setSeventhFloorRoomsArray] = useState<roomsArray[]>([]);
+  update,
+  marker,
+  start,
+  end,
+  floor,
+  availableRooms,
+  setButtonStyles,
+}: propTypes) {
+  const classes7: any = useRef();
+  const [seventhFloorRoomsArray, setSeventhFloorRoomsArray] = useState<
+    roomsArray[]
+  >([]);
 
-    // Making refs to all the lines from svg so we can use them later to display and hide lines by their id
-    // Floor 7
-    const D7592K72: any = useRef();
-    const K71K72: any = useRef();
-    const D7591K71: any = useRef();
-    const D7581K71: any = useRef();
-    const K73K74: any = useRef();
-    const D7582K73: any = useRef();
-    const K72K74: any = useRef();
-    const K74K75: any = useRef();
-    const K75R711: any = useRef();
-    const K75K76: any = useRef();
-    const K76K77: any = useRef();
-    const D7571K78: any = useRef();
-    const D7511K78: any = useRef();
-    const K78K77: any = useRef();
-    const D7501K79: any = useRef();
-    const K77K79: any = useRef();
-    const K76K710: any = useRef();
-    const K77K710: any = useRef();
-    const K711K710: any = useRef();
-    const K79K711: any = useRef();
-    const K79K710: any = useRef();
-    const K710K712: any = useRef();
-    const K713K714: any = useRef();
-    const K714H71: any = useRef();
-    const K711K715: any = useRef();
-    const K715E7901: any = useRef();
-    const K715K716: any = useRef();
-    const K716E7902: any = useRef();
-    const K714K717: any = useRef();
-    const K717K715: any = useRef();
-    const K718K716: any = useRef();
-    const K719K718: any = useRef();
-    const E7701K719: any = useRef();
-    const K719K720: any = useRef();
-    const K720K721: any = useRef();
-    const K721E7621: any = useRef();
-    const K722E7702: any = useRef();
-    const K720K722: any = useRef();
-    const K721K723: any = useRef();
-    const K722K723: any = useRef();
-    const K721K724: any = useRef();
-    const E7611K724: any = useRef();
-    const K724K725: any = useRef();
-    const K725E7591: any = useRef();
-    const K725E7511: any = useRef();
-    const K723K726: any = useRef();
-    const K726V71: any = useRef();
-    const K726K727: any = useRef();
-    const K727K728: any = useRef();
-    const K728E7512: any = useRef();
-    const K712R712: any = useRef();
-    const K712K713: any = useRef();
-    const R73K727: any = useRef();
-    const R711X71: any = useRef();
-    const R712X71: any = useRef();
-    // Floor 2
-    const V21K22: any = useRef();
-    const U21K21: any = useRef();
-    const K21K22: any = useRef();
-    const K21K23: any = useRef();
-    const K24K25: any = useRef();
-    const K23K24: any = useRef();
-    const K25R21: any = useRef();
-    const K23K26: any = useRef();
-    const K27K28: any = useRef();
-    const K26K27: any = useRef();
-    const K28H21: any = useRef();
-    const K24K28: any = useRef();
-    const K26K29: any = useRef();
-    const K210K211: any = useRef();
-    const K212K210: any = useRef();
-    const K213K212: any = useRef();
-    const K29K213: any = useRef();
-    const K211K214: any = useRef();
-    const K215K216: any = useRef();
-    const K214K215: any = useRef();
-    const K217K218: any = useRef();
-    const K216K217: any = useRef();
-    const K218K219: any = useRef();
-    const K219V22: any = useRef();
-    const K219E2041: any = useRef();
-    const K217K220: any = useRef();
-    const K220RUOKALA: any = useRef();
-    const K215R221: any = useRef();
-    const K214V23: any = useRef();
-    const K210PUKKARI: any = useRef();
-    const K212K221: any = useRef();
-    const K213K221: any = useRef();
-    const K221E2042: any = useRef();
-    const K22K23: any = useRef();
-    const K218K220: any = useRef();
-    const K29K27: any = useRef();
+  // Making refs to all the lines from svg so we can use them later to display and hide lines by their id
+  // Floor 7
+  const D7592K72: any = useRef();
+  const K71K72: any = useRef();
+  const D7591K71: any = useRef();
+  const D7581K71: any = useRef();
+  const K73K74: any = useRef();
+  const D7582K73: any = useRef();
+  const K72K74: any = useRef();
+  const K74K75: any = useRef();
+  const K75R711: any = useRef();
+  const K75K76: any = useRef();
+  const K76K77: any = useRef();
+  const D7571K78: any = useRef();
+  const D7511K78: any = useRef();
+  const K78K77: any = useRef();
+  const D7501K79: any = useRef();
+  const K77K79: any = useRef();
+  const K76K710: any = useRef();
+  const K77K710: any = useRef();
+  const K711K710: any = useRef();
+  const K79K711: any = useRef();
+  const K79K710: any = useRef();
+  const K710K712: any = useRef();
+  const K713K714: any = useRef();
+  const K714H71: any = useRef();
+  const K711K715: any = useRef();
+  const K715E7901: any = useRef();
+  const K715K716: any = useRef();
+  const K716E7902: any = useRef();
+  const K714K717: any = useRef();
+  const K717K715: any = useRef();
+  const K718K716: any = useRef();
+  const K719K718: any = useRef();
+  const E7701K719: any = useRef();
+  const K719K720: any = useRef();
+  const K720K721: any = useRef();
+  const K721E7621: any = useRef();
+  const K722E7702: any = useRef();
+  const K720K722: any = useRef();
+  const K721K723: any = useRef();
+  const K722K723: any = useRef();
+  const K721K724: any = useRef();
+  const E7611K724: any = useRef();
+  const K724K725: any = useRef();
+  const K725E7591: any = useRef();
+  const K725E7511: any = useRef();
+  const K723K726: any = useRef();
+  const K726V71: any = useRef();
+  const K726K727: any = useRef();
+  const K727K728: any = useRef();
+  const K728E7512: any = useRef();
+  const K712R712: any = useRef();
+  const K712K713: any = useRef();
+  const R73K727: any = useRef();
+  const R711X71: any = useRef();
+  const R712X71: any = useRef();
+  // Floor 2
+  const V21K22: any = useRef();
+  const U21K21: any = useRef();
+  const K21K22: any = useRef();
+  const K21K23: any = useRef();
+  const K24K25: any = useRef();
+  const K23K24: any = useRef();
+  const K25R21: any = useRef();
+  const K23K26: any = useRef();
+  const K27K28: any = useRef();
+  const K26K27: any = useRef();
+  const K28H21: any = useRef();
+  const K24K28: any = useRef();
+  const K26K29: any = useRef();
+  const K210K211: any = useRef();
+  const K212K210: any = useRef();
+  const K213K212: any = useRef();
+  const K29K213: any = useRef();
+  const K211K214: any = useRef();
+  const K215K216: any = useRef();
+  const K214K215: any = useRef();
+  const K217K218: any = useRef();
+  const K216K217: any = useRef();
+  const K218K219: any = useRef();
+  const K219V22: any = useRef();
+  const K219E2041: any = useRef();
+  const K217K220: any = useRef();
+  const K220RUOKALA: any = useRef();
+  const K215R221: any = useRef();
+  const K214V23: any = useRef();
+  const K210PUKKARI: any = useRef();
+  const K212K221: any = useRef();
+  const K213K221: any = useRef();
+  const K221E2042: any = useRef();
+  const K22K23: any = useRef();
+  const K218K220: any = useRef();
+  const K29K27: any = useRef();
 
     // Floor 6
     const K61K62: any = useRef();
@@ -1221,39 +1223,39 @@ function RouteFinder({
                 <path ref={H61H71} className="cls-6" d="M1272.19 744.84v62.13"/>
             </g>
 
-            {/*Floor 2*/}
-            <g display={floor2Visibility} id="_2_drawn_base">
-                <g id="walls">
-                    <path className="cls-1" d="M1140.84 2063.79L1237.76 2063.79"/>
-                    <path
-                        className="cls-2"
-                        d="M1518.12 1870.34L1564.53 1916.75 1575.35 1905.94 1606.36 1936.95"
-                    />
-                    <path
-                        className="cls-2"
-                        d="M1433.98 2046.78L1351.3 2129.46 1327.57 2105.72"
-                    />
-                    <path className="cls-3" d="M1505.59 1975.17L1523.39 1957.37"/>
-                    <path
-                        className="cls-2"
-                        d="M1303.13 1333.4L1340.03 1296.51 1345.37 1296.51"
-                    />
-                    <path
-                        className="cls-2"
-                        d="M1303.43 1.5L1303.43 283.96 1144.4 283.96 1144.4 603.21 901.1 603.21 901.1 516.58 740.88 516.58 740.88 603.21 81.02 603.21 81.02 774.25 1.5 774.25 1.5 939.08 498.18 1435.76 830.49 1103.46 1140.84 1103.46 1140.84 2242.2 1481.46 2242.2 1975.17 1748.49 1480.27 1253.59 1480.27 1107.61 1975.76 612.12 1479.68 116.03 1479.68 1.5 1303.43 1.5z"
-                    />
-                    <polyline
-                        className="cls-2"
-                        points="1518.12 1870.34 1564.53 1916.75 1575.35 1905.94 1606.36 1936.95"
-                    />
-                    <polyline
-                        className="cls-2"
-                        points="1303.13 1333.4 1340.03 1296.51 1345.37 1296.51"
-                    />
-                </g>
-                <g id="misc">
-                    <path
-                        id="E204"
+      {/*Floor 2*/}
+      <g display={floor2Visibility} id="_2_drawn_base">
+        <g id="walls">
+          <path className="cls-1" d="M1140.84 2063.79L1237.76 2063.79" />
+          <path
+            className="cls-2"
+            d="M1518.12 1870.34L1564.53 1916.75 1575.35 1905.94 1606.36 1936.95"
+          />
+          <path
+            className="cls-2"
+            d="M1433.98 2046.78L1351.3 2129.46 1327.57 2105.72"
+          />
+          <path className="cls-3" d="M1505.59 1975.17L1523.39 1957.37" />
+          <path
+            className="cls-2"
+            d="M1303.13 1333.4L1340.03 1296.51 1345.37 1296.51"
+          />
+          <path
+            className="cls-2"
+            d="M1303.43 1.5L1303.43 283.96 1144.4 283.96 1144.4 603.21 901.1 603.21 901.1 516.58 740.88 516.58 740.88 603.21 81.02 603.21 81.02 774.25 1.5 774.25 1.5 939.08 498.18 1435.76 830.49 1103.46 1140.84 1103.46 1140.84 2242.2 1481.46 2242.2 1975.17 1748.49 1480.27 1253.59 1480.27 1107.61 1975.76 612.12 1479.68 116.03 1479.68 1.5 1303.43 1.5z"
+          />
+          <polyline
+            className="cls-2"
+            points="1518.12 1870.34 1564.53 1916.75 1575.35 1905.94 1606.36 1936.95"
+          />
+          <polyline
+            className="cls-2"
+            points="1303.13 1333.4 1340.03 1296.51 1345.37 1296.51"
+          />
+        </g>
+        <g id="misc">
+          <path
+            id="E204"
                         className="cls-5"
                         d="m1975.17 1748.49-441.89-441.89-89.01 89.01-98.51-98.51-5.73-.59-36.9 36.89 84.66 84.66v322.29l176.58 176.57 11.95-11.96 121.19 121.19 277.66-277.66z"
                     />
