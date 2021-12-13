@@ -1,10 +1,4 @@
-import {
-  AppBar,
-  InputBase,
-  Paper,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
+import { AppBar, InputBase, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { alpha } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";

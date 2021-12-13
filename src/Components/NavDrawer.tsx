@@ -112,8 +112,6 @@ const NavDrawer = ({
     navigateTo(handleTo);
     navigateFrom(handleFrom);
     setOpen(false);
-
-    console.log("navigate", handleTo, handleFrom);
   };
 
   const setFromLocation = () => {
@@ -155,13 +153,6 @@ const NavDrawer = ({
     setOpen(false);
     console.log(popupID);
   };
-
-  useEffect(() => {
-    console.log("clicklocation", clickLocation);
-    if (!clickLocation) {
-      setSelectedInput("");
-    }
-  }, [clickLocation]);
 
   useEffect(() => {
     if (open) {

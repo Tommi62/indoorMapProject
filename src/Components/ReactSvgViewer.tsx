@@ -1,9 +1,8 @@
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import {
   MapContainer,
   Marker,
   SVGOverlay,
-  Popup,
   FeatureGroup,
 } from "react-leaflet";
 import { RouteFinder } from "./RouteFinder";
@@ -20,12 +19,6 @@ import LeafletPopup from "./LeafletPopup";
 interface paramObj {
   startNode: string;
   endNode: string;
-}
-
-interface dataArray {
-  name: string;
-  lat: number;
-  lng: number;
 }
 
 interface navigateToNextClass {
@@ -181,10 +174,6 @@ const ReactSvgViewer = ({
     setKeyWord("KM" + popupID);
     setModalOpen(true);
   };
-
-  useEffect(() => {
-    console.log("popup visible:", isVisible);
-  }, [isVisible]);
 
   const getClickLocation = () => {
     return clickLocation;

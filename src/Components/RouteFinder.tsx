@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import data from "../Data/classrooms.json";
@@ -84,19 +84,18 @@ let graph: any = {
   K610: { K69: 1, K631: 1, D6591: 1 },
   K611: { K612: 1, K613: 1, R622: 1 },
   K612: { K611: 1, K617: 1 /*R621: 1*/ },
-  K613: { K611: 1, K614: 1, K619: 1 },
+  K613: { K611: 1, K614: 1, V62: 1 },
   K614: { K613: 1, K621: 1, K615: 1 },
   K615: { K614: 1, K620: 1, K616: 1 },
   K616: { K615: 1, K62: 1, E6701: 1 },
   K617: { K618: 1, K612: 1 },
-  K618: { K617: 1, K619: 1, E6591: 1 },
-  K619: { K618: 1, K613: 1 },
+  K618: { K617: 1, V62: 1, E6591: 1 },
+  V62: { K618: 1, K613: 1 },
   K620: { K621: 1, K615: 1, E6621: 1 },
   K621: { K620: 1, K622: 1, K614: 1 },
   K622: { K621: 1, E6592: 1, E6611: 1 },
-  //K623: {},
-  K624: { K65: 1, K66: 1, K67: 1, K625: 1, D6521: 1 },
-  K625: { K624: 1, D6571: 1 },
+  K624: { K65: 1, K66: 1, K67: 1, V63: 1, D6521: 1 },
+  V63: { K624: 1, D6571: 1 },
   K626: { D6581: 1, V61: 1, K69: 1 },
   K627: { K66: 1, K628: 1, R612: 1 },
   K628: { K627: 1, K629: 1 },
@@ -120,7 +119,7 @@ let graph: any = {
   K213: { K29: 1, K221: 1, K212: 1 },
   K214: { K211: 1, K215: 1, V23: 1 },
   K215: { K214: 1, K216: 1, R221: 1 },
-  K216: { K215: 1, K217: 1 /*, R222: 1*/ },
+  K216: { K215: 1, K217: 1 },
   K217: { K218: 1, K216: 1, K220: 1 },
   K218: { K217: 1, K220: 1, K219: 1 },
   K219: { K218: 1, E2041: 1, V22: 1 },
@@ -138,7 +137,7 @@ let graph: any = {
   K58: { K57: 1, K59: 1, K524: 1 },
   K59: { D5691: 1, D5581: 1, K58: 1 },
   K510: { R522: 1, K511: 1, K512: 1 },
-  K511: { /*R521: 1,*/ K516: 1, K510: 1 },
+  K511: { K516: 1, K510: 1 },
   K512: { K510: 1, V51: 1, K513: 1 },
   K513: { E5701: 1, K514: 1, K518: 1, K512: 1 },
   K514: { K515: 1, K513: 1, K518: 1 },
@@ -195,7 +194,7 @@ let graph: any = {
   D6581: { K626: 1 },
   D6592: { K631: 1 },
   D6591: { K610: 1 },
-  D6571: { K625: 1 },
+  D6571: { V63: 1 },
   D6521: { K624: 1 },
   E690: { K61: 1 },
   E6701: { K616: 1 },
@@ -245,7 +244,6 @@ let graph: any = {
   V22: { K219: 1 },
   V23: { K214: 1 },
   // Floor 6
-  //TODO Missing few toilets
   V61: { K626: 1 },
   // Floor 5
   V51: { K512: 1 },
@@ -262,17 +260,14 @@ let graph: any = {
   // Floor 2
   R21: { K25: 1, X71: 1, X51: 1, X61: 1 },
   R221: { K215: 1, R522: 1, R622: 1, R73: 1 },
-  // R222: {K216: 1},
 
   // Floor 6
-  //R621: {K612: 1},
   R622: { K611: 1, R221: 1 },
   R611: { K68: 1, X61: 1 },
   R612: { K627: 1, X61: 1 },
   X61: { R611: 1, R612: 1, X51: 1, R21: 1, X71: 1 },
 
   // Floor 5
-  //R521: {K511: 1},
   R522: { K510: 1 },
   R511: { K57: 1, X51: 1 },
   R512: { K525: 1, X51: 1 },
@@ -285,9 +280,6 @@ let graph: any = {
 };
 
 function RouteFinder({
-  setModalOpen,
-  setModalContent,
-  setKeyWord,
   update,
   marker,
   start,
@@ -295,12 +287,9 @@ function RouteFinder({
   floor,
   availableRooms,
   setButtonStyles,
-  buttonStyles,
 }: propTypes) {
   const classes7: any = useRef();
-  const [seventhFloorRoomsArray, setSeventhFloorRoomsArray] = useState<
-    roomsArray[]
-  >([]);
+  const [seventhFloorRoomsArray, setSeventhFloorRoomsArray] = useState<roomsArray[]>([]);
 
   // Making refs to all the lines from svg so we can use them later to display and hide lines by their id
   // Floor 7
@@ -387,7 +376,6 @@ function RouteFinder({
   const K219E2041: any = useRef();
   const K217K220: any = useRef();
   const K220RUOKALA: any = useRef();
-  // const K216R222: any = useRef();
   const K215R221: any = useRef();
   const K214V23: any = useRef();
   const K210PUKKARI: any = useRef();
@@ -416,9 +404,8 @@ function RouteFinder({
   const K617K618: any = useRef();
   const K618E6591: any = useRef();
   const K612K617: any = useRef();
-  // const R621K612: any = useRef();
   const R622K611: any = useRef();
-  const K613K619: any = useRef();
+  const K613V62: any = useRef();
   const K620K615: any = useRef();
   const K620K621: any = useRef();
   const K621K622: any = useRef();
@@ -430,8 +417,8 @@ function RouteFinder({
   const K616K62: any = useRef();
   const K61E690: any = useRef();
   const K65K624: any = useRef();
-  const K624K625: any = useRef();
-  const K625D6571: any = useRef();
+  const K624V63: any = useRef();
+  const V63D6571: any = useRef();
   const K624D6521: any = useRef();
   const R611K68: any = useRef();
   const K626K69: any = useRef();
@@ -448,7 +435,7 @@ function RouteFinder({
   const K630K629: any = useRef();
   const K630K64: any = useRef();
   const K630K63: any = useRef();
-  const K619K618: any = useRef();
+  const V62K618: any = useRef();
   const K631K610: any = useRef();
   const K631D6582: any = useRef();
   const K631D6592: any = useRef();
@@ -471,7 +458,6 @@ function RouteFinder({
   const K514K515: any = useRef();
   const K516E5511: any = useRef();
   const K511K516: any = useRef();
-  // const K511R521: any = useRef();
   const K510R522: any = useRef();
   const K512V51: any = useRef();
   const K513E5701: any = useRef();
@@ -641,7 +627,6 @@ function RouteFinder({
     K219E2041: K219E2041,
     K217K220: K217K220,
     K220RUOKALA: K220RUOKALA,
-    // K216R222: K216R222,
     K215R221: K215R221,
     K214V23: K214V23,
     K210PUKKARI: K210PUKKARI,
@@ -670,9 +655,8 @@ function RouteFinder({
     K617K618: K617K618,
     K618E6591: K618E6591,
     K612K617: K612K617,
-    // R621K612: R621K612,
     R622K611: R622K611,
-    K613K619: K613K619,
+    K613V62: K613V62,
     K620K615: K620K615,
     K620K621: K620K621,
     K621K622: K621K622,
@@ -684,8 +668,8 @@ function RouteFinder({
     K616K62: K616K62,
     K61E690: K61E690,
     K65K624: K65K624,
-    K624K625: K624K625,
-    K625D6571: K625D6571,
+    K624V63: K624V63,
+    V63D6571: V63D6571,
     K624D6521: K624D6521,
     R611K68: R611K68,
     K626K69: K626K69,
@@ -702,7 +686,7 @@ function RouteFinder({
     K630K629: K630K629,
     K630K64: K630K64,
     K630K63: K630K63,
-    K619K618: K619K618,
+    V62K618: V62K618,
     K631K610: K631K610,
     K631D6582: K631D6582,
     K631D6592: K631D6592,
@@ -725,7 +709,6 @@ function RouteFinder({
     K514K515: K514K515,
     K516E5511: K516E5511,
     K511K516: K511K516,
-    // K511R521: K511R521,
     K510R522: K510R522,
     K512V51: K512V51,
     K513E5701: K513E5701,
@@ -813,57 +796,34 @@ function RouteFinder({
   const [floor2Visibility, setFloor2Visibility] = useState("none");
   const [floor5Visibility, setFloor5Visibility] = useState("none");
   const [floor6Visibility, setFloor6Visibility] = useState("none");
-  const [updateFloor, setUpdateFloor] = useState(Date.now());
 
   useEffect(() => {
     try {
       if (floor === "2") {
-        console.log("FLOOR2");
         setFloor7Visibility("none");
         setFloor5Visibility("none");
         setFloor6Visibility("none");
         setFloor2Visibility("block");
       } else if (floor === "5") {
-        console.log("FLOOR5");
         setFloor7Visibility("none");
         setFloor5Visibility("block");
         setFloor6Visibility("none");
         setFloor2Visibility("none");
       } else if (floor === "6") {
-        console.log("FLOOR6");
         setFloor7Visibility("none");
         setFloor5Visibility("none");
         setFloor6Visibility("block");
         setFloor2Visibility("none");
       } else if (floor === "7") {
-        console.log("FLOOR7");
         setFloor7Visibility("block");
         setFloor5Visibility("none");
         setFloor6Visibility("none");
         setFloor2Visibility("none");
       }
-      console.log("selected floor " + floor);
     } catch (error: any) {
       console.log(error.message);
     }
   }, [floor]);
-
-  useEffect(() => {
-    try {
-      console.log(
-        "2: " +
-        floor2Visibility +
-        " 5: " +
-        floor5Visibility +
-        " 6: " +
-        floor6Visibility +
-        " 7: " +
-        floor7Visibility
-      );
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  }, [floor2Visibility, floor5Visibility, floor6Visibility, floor7Visibility]);
 
   useEffect(() => {
     try {
@@ -902,10 +862,8 @@ function RouteFinder({
 
   // Get vector length by it's id
   let lengthGetter = (id: any) => {
-    console.log(id);
     const divElement: SVGGeometryElement = lines[id].current;
     divElement.style.display = "none";
-    console.log(id + " " + divElement.getTotalLength());
     return divElement.getTotalLength();
   };
 
@@ -1029,7 +987,6 @@ function RouteFinder({
       distance: distances[tempEndNode],
       path: shortestPath,
     };
-    console.log(results);
     // Log the shortest path & the end node's distance from the start node
     return results.distance;
   };
@@ -1639,7 +1596,7 @@ function RouteFinder({
         <g id="toilets">
           <path
             className="cls-3"
-            id="K619"
+            id="V62"
             d="M1460.08 1985.19L1308.95 1985.19 1308.95 1912.66 1475.9 1912.66 1523.04 1959.81 1497.66 1985.19 1460.08 1985.19z"
           />
           <path
@@ -1649,7 +1606,7 @@ function RouteFinder({
           />
           <path
             className="cls-3"
-            id="K625"
+            id="V63"
             transform="rotate(-45 1476.136 896.725)"
             d="M1709.54 686.49H1782.27V743.01H1709.54z"
           />
@@ -1778,7 +1735,7 @@ function RouteFinder({
           d="M1238.29 2025.41L1290.77 2025.41"
         />
         <path
-          ref={K613K619}
+          ref={K613V62}
           className="cls-6"
           d="M1398.38 2005.37L1290.77 2005.37"
         />
@@ -1838,12 +1795,12 @@ function RouteFinder({
           d="M1430.73 782.86L1326.58 886.99"
         />
         <path
-          ref={K624K625}
+          ref={K624V63}
           className="cls-6"
           d="M1579.23 634.39L1430.73 782.86"
         />
         <path
-          ref={K625D6571}
+          ref={V63D6571}
           className="cls-6"
           d="M1665.81 547.83L1579.23 634.39"
         />
@@ -1928,7 +1885,7 @@ function RouteFinder({
           d="M1230.25 1004.95L1325.98 1086.94"
         />
         <path
-          ref={K619K618}
+          ref={V62K618}
           className="cls-6"
           d="M1511.72 2005.37L1398.38 2005.37"
         />
@@ -2477,7 +2434,6 @@ function RouteFinder({
           <path className="cls-8" d="M1296.72 744.84L1247.65 744.75" />
           <path className="cls-8" d="M800.82 776.15L783.01 776.11" />
           <path className="cls-8" d="M394.14 776.11L376.33 776.08" />
-          {/*Henkilöstön työtilan ovi <path className="cls-8" d="M284.34 776.09L266.53 776.06" /> */}
           <path className="cls-8" d="M1303.42 572.63L1303.45 554.82" />
           <path className="cls-8" d="M1260.69 1359.22L1260.73 1341.41" />
           <path className="cls-8" d="M1260.69 1741.44L1260.73 1723.63" />
@@ -2562,13 +2518,6 @@ function RouteFinder({
           className="cls-6"
           d="M1359.71 2157.02L1290.91 2088.21"
         />
-        {/*
-                    <path
-                    ref={K511R521}
-                    className="cls-6"
-                    d="M1238.22 2087.03L1290.77 2087.03"
-                />
-                */}
         <path
           ref={K510R522}
           className="cls-6"
@@ -2816,7 +2765,8 @@ function RouteFinder({
           className="cls-6"
           d="M670.93 898.47L579.85 807.39"
         />
-        <path ref={K530K538} className="cls-6" d="M397.9 900.71L490.4 808.2" />{" "}
+        <path ref={K530K538} className="cls-6" d="M397.9 900.71L490.4 808.2" />
+        {" "}
         {/* 30-38 */}
         <path ref={K538K539} className="cls-6" d="M343.9 954.71L397.9 900.71" />
         <path

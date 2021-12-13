@@ -104,16 +104,16 @@ g {
   stroke-width: 8px !important;
   stroke: rgb(0, 0, 0);
   stroke-linejoin: round;
-  fill: #44ffd1;
+  fill: #19f311;
   transition: fill 0.3s;
 }
 
 .cls-5-available:active {
-  fill: rgb(59, 253, 166);
+  fill: rgb(131, 245, 150);
 }
 
 .cls-5-available:hover {
-  fill: rgb(59, 253, 166);
+  fill: rgb(131, 245, 150);
 }
 
 /* Lines */
