@@ -289,7 +289,9 @@ function RouteFinder({
   setButtonStyles,
 }: propTypes) {
   const classes7: any = useRef();
-  const [seventhFloorRoomsArray, setSeventhFloorRoomsArray] = useState<roomsArray[]>([]);
+  const [seventhFloorRoomsArray, setSeventhFloorRoomsArray] = useState<
+    roomsArray[]
+  >([]);
 
   // Making refs to all the lines from svg so we can use them later to display and hide lines by their id
   // Floor 7
@@ -1201,16 +1203,40 @@ function RouteFinder({
         />
 
         {/* Floor 7 */}
-        <path ref={R711X71} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
-        <path ref={R712X71} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
+        <path
+          ref={R711X71}
+          className="cls-6"
+          d="M1430.23 782.65L1326.58 676.66"
+        />
+        <path
+          ref={R712X71}
+          className="cls-6"
+          d="M1430.23 782.65L1326.58 676.66"
+        />
 
         {/* Floor 6*/}
-        <path ref={R611X61} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
-        <path ref={R612X61} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
+        <path
+          ref={R611X61}
+          className="cls-6"
+          d="M1430.23 782.65L1326.58 676.66"
+        />
+        <path
+          ref={R612X61}
+          className="cls-6"
+          d="M1430.23 782.65L1326.58 676.66"
+        />
 
         {/* Floor 5 */}
-        <path ref={R511X51} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
-        <path ref={R512X51} className="cls-6" d="M1430.23 782.65L1326.58 676.66" />
+        <path
+          ref={R511X51}
+          className="cls-6"
+          d="M1430.23 782.65L1326.58 676.66"
+        />
+        <path
+          ref={R512X51}
+          className="cls-6"
+          d="M1430.23 782.65L1326.58 676.66"
+        />
 
         {/* Elevators */}
         <path ref={H21H71} className="cls-6" d="M1272.19 744.84v62.13" />
@@ -1977,24 +2003,32 @@ function RouteFinder({
         </g>
         <g id="toilets">
           <path
+            id="K73"
             className="cls-3"
             d="M340.93 580.27L386.52 625.86 531.02 481.37 485.27 435.63 340.93 580.27z"
           />
           <path
+            id="V71"
             className="cls-3"
             d="M244.2 1916.42L411.61 1916.42 457.86 1962.68 432.38 1988.16 244.1 1988.16 244.2 1916.42z"
           />
         </g>
         <g id="stairs_elevator">
           <path
+            id="R71"
             className="cls-1"
             d="M69.94 636.84L69.94 605.06 1.5 605.06 1.5 752.36 243.61 752.36 243.61 662.42 243.61 646.34 243.61 636.84 69.94 636.84 69.94 616.27"
           />
           <path
+            id="H71"
             className="cls-1"
             d="M178.73 829.37L244.93 829.37 244.93 998.16 177.94 998.16 178.73 829.37z"
           />
-          <path className="cls-1" d="M73.1 2069.32H172.79V2254.27H73.1z" />
+          <path
+            id="R73"
+            className="cls-1"
+            d="M73.1 2069.32H172.79V2254.27H73.1z"
+          />
         </g>
         <g id="walls">
           <path
@@ -2765,8 +2799,7 @@ function RouteFinder({
           className="cls-6"
           d="M670.93 898.47L579.85 807.39"
         />
-        <path ref={K530K538} className="cls-6" d="M397.9 900.71L490.4 808.2" />
-        {" "}
+        <path ref={K530K538} className="cls-6" d="M397.9 900.71L490.4 808.2" />{" "}
         {/* 30-38 */}
         <path ref={K538K539} className="cls-6" d="M343.9 954.71L397.9 900.71" />
         <path
