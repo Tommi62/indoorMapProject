@@ -89,6 +89,7 @@ const NavDrawer = ({
   };
 
   useEffect(() => {
+    console.log("OPEN", open);
     if (open) {
       setPop("0px");
     }
@@ -165,11 +166,9 @@ const NavDrawer = ({
 
   useEffect(() => {
     if (open) {
-      console.log("slider styles true");
       setSliderCSS(true);
     } else {
       setTimeout(() => {
-        console.log("slider styles false");
         setSliderCSS(false);
       }, 200);
     }
