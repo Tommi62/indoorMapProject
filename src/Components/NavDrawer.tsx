@@ -1,20 +1,20 @@
-import {useState, useEffect} from "react";
-import {Global} from "@emotion/react";
-import {styled} from "@mui/material/styles";
+import { useState, useEffect } from "react";
+import { Global } from "@emotion/react";
+import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import {grey} from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import {createTheme, InputAdornment, TextField} from "@material-ui/core";
+import { createTheme, InputAdornment, TextField } from "@material-ui/core";
 import DirectionsIcon from "@mui/icons-material/Directions";
-import {IconButton} from "@mui/material";
+import { IconButton } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const drawerBleeding = 0;
 
-const Root = styled("div")(({theme}) => ({
+const Root = styled("div")(({ theme }) => ({
     height: "100%",
     backgroundColor:
         theme.palette.mode === "light"
@@ -31,11 +31,11 @@ const buttonTheme = createTheme({
     },
 });
 
-const StyledBox = styled(Box)(({theme}) => ({
+const StyledBox = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
 }));
 
-const Puller = styled(Box)(({theme}) => ({
+const Puller = styled(Box)(({ theme }) => ({
     width: 30,
     height: 6,
     backgroundColor: theme.palette.mode === "light" ? grey[300] : grey[900],
@@ -60,16 +60,16 @@ interface propTypes {
 }
 
 const NavDrawer = ({
-                       navigateTo,
-                       navigateFrom,
-                       setClickLocation,
-                       popupID,
-                       clickLocation,
-                       open,
-                       setOpen,
-                       end,
-                       start,
-                   }: propTypes) => {
+    navigateTo,
+    navigateFrom,
+    setClickLocation,
+    popupID,
+    clickLocation,
+    open,
+    setOpen,
+    end,
+    start,
+}: propTypes) => {
     const matches = useMediaQuery("(max-width:600px)");
     const [from, setFrom] = useState("KMU21");
     const [to, setTo] = useState("KMU21");
@@ -102,23 +102,15 @@ const NavDrawer = ({
         navigateTo(handleTo);
         navigateFrom(handleFrom);
         setOpen(false);
-
-        console.log("navigate", handleTo, handleFrom);
     };
 
     const setFromLocation = () => {
         setSelectedInput("from");
         setClickLocation(true);
         setOpen(false);
-        console.log(popupID);
     };
 
     useEffect(() => {
-        console.log("popup shouldvisible", clickLocation);
-    }, [clickLocation]);
-
-    useEffect(() => {
-        console.log("idchange", popupID, clickLocation, selectedInput);
         if (clickLocation !== false) {
             if (selectedInput === "to") {
                 setTo("KM" + popupID);
@@ -135,7 +127,6 @@ const NavDrawer = ({
         setSelectedInput("to");
         setClickLocation(true);
         setOpen(false);
-        console.log(popupID);
     };
 
     useEffect(() => {
@@ -147,11 +138,9 @@ const NavDrawer = ({
 
     useEffect(() => {
         if (open) {
-            console.log("slider styles true");
             setSliderCSS(true);
         } else {
             setTimeout(() => {
-                console.log("slider styles false");
                 setSliderCSS(false);
             }, 200);
         }
@@ -161,7 +150,7 @@ const NavDrawer = ({
         <Root>
             {matches ? (
                 <>
-                    <CssBaseline/>
+                    <CssBaseline />
                     {sliderCSS && (
                         <Global
                             styles={{
@@ -188,7 +177,7 @@ const NavDrawer = ({
                         }}
                         onClick={toggleDrawer(true)}
                     >
-                        <DirectionsIcon className="dirIcon"/>
+                        <DirectionsIcon className="dirIcon" />
                     </IconButton>
 
                     <SwipeableDrawer
@@ -210,7 +199,7 @@ const NavDrawer = ({
                                 borderTopRightRadius: 8,
                             }}
                         >
-                            <Puller/>
+                            <Puller />
                         </StyledBox>
                         <StyledBox
                             sx={{
@@ -295,7 +284,7 @@ const NavDrawer = ({
                 </>
             ) : (
                 <>
-                    <CssBaseline/>
+                    <CssBaseline />
                     {sliderCSS && (
                         <Global
                             styles={{
@@ -330,7 +319,7 @@ const NavDrawer = ({
                         }}
                         onClick={toggleDrawer(true)}
                     >
-                        <DirectionsIcon className="dirIcon"/>
+                        <DirectionsIcon className="dirIcon" />
                     </IconButton>
                     <SwipeableDrawer
                         anchor="right"

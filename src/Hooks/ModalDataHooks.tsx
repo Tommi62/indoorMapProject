@@ -38,15 +38,12 @@ const useModalData = () => {
             }
             if (requestObject.realization.length === 0) {
                 if (keyword.startsWith('KM')) {
-                    console.log('ROOM', keyword);
                     requestObject.room.push(keyword);
                 } else {
-                    console.log('GROUP', keyword);
                     requestObject.group.push(keyword);
                 }
             }
             const reservations = await postGetMetropoliaData(requestObject);
-            console.log('RESERVATIONS', reservations);
             let reservationsArray = [];
             if (reservations.reservations.length !== 0) {
                 for (let i = 0; i < reservations.reservations.length; i++) {

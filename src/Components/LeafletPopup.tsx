@@ -5,8 +5,6 @@ import { Popup } from "react-leaflet";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import "moment/locale/fi";
-import { gridClasses } from "@mui/material";
-import { ClassNames } from "@emotion/react";
 
 interface resources {
   code: string,

@@ -3,7 +3,7 @@ import MapColorcodeSVG from "./MapColorcodeSVG";
 import { Button, ButtonGroup } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Menu, MenuItem} from "@mui/material";
+import { Menu, MenuItem } from "@mui/material";
 import moment from "moment";
 import "moment/locale/fi";
 import data from "../Data/classrooms.json";
@@ -45,10 +45,6 @@ interface resourcesArray {
   id: string,
   name: string,
   type: string,
-}
-
-interface classesArray {
-  resources: resourcesArray[];
 }
 
 interface navigateToNextClass {

@@ -1,18 +1,16 @@
 import {
     AppBar,
     InputBase,
-    Paper,
     Toolbar,
-    Typography,
 } from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
-import {alpha} from "@material-ui/core/styles/colorManipulator";
+import { makeStyles } from "@material-ui/core/styles";
+import { alpha } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";
 import useForm from "../Hooks/FormHooks";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import ShortcutButton from "./ShortcutButton";
-import {useModalData} from "../Hooks/ModalDataHooks";
-import {Button, IconButton, Menu, Drawer, Box} from "@mui/material";
+import { useModalData } from "../Hooks/ModalDataHooks";
+import { Button, IconButton, Menu, Drawer, Box } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuIcon from "@material-ui/icons/Menu";
 import data from "../Data/classrooms.json";
@@ -85,18 +83,18 @@ interface propTypes {
 }
 
 const Nav = ({
-                 setModalOpen,
-                 setModalContent,
-                 setKeyWord,
-                 updateShortcuts,
-                 setRestaurantMenu,
-                 setMarker,
-                 floorSelect,
-                 setFloorSelect,
-             }: propTypes) => {
+    setModalOpen,
+    setModalContent,
+    setKeyWord,
+    updateShortcuts,
+    setRestaurantMenu,
+    setMarker,
+    floorSelect,
+    setFloorSelect,
+}: propTypes) => {
     const classes = useStyles();
     const defaultShortcuts = ["Ruokalista"];
-    const {getModalData} = useModalData();
+    const { getModalData } = useModalData();
     const [shortcutArray, setShortcutArray] = useState<string[]>([]);
     const [openDrawer, setOpenDrawer] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -175,7 +173,7 @@ const Nav = ({
                 if (rel === 0) {
                     continue;
                 }
-                results.push({relevance: rel, entry: data[i][j]}); // matches found, add to results and store relevance
+                results.push({ relevance: rel, entry: data[i][j] }); // matches found, add to results and store relevance
             }
         }
 
@@ -184,7 +182,6 @@ const Nav = ({
         for (let i = 0; i < results.length; i++) {
             final.push(results[i].entry); // remove relevance since it is no longer needed
         }
-        console.log("UNIQ", uniq(final));
         return uniq(final);
     }
 
@@ -194,22 +191,18 @@ const Nav = ({
             if (result !== undefined) {
                 setFloorSelect(string.substring(3).charAt(0));
             }
-            console.log(result);
             setMarker(result);
             return true;
         } else if (string === "VESSA" || string === "WC" || string === "TOILET") {
             const result = searchJson("V" + floorSelect);
-            console.log(result);
             setMarker(result);
             return true;
         } else if (string === "HISSI" || string === "ELEVATOR") {
             const result = searchJson("H" + floorSelect);
-            console.log(result);
             setMarker(result);
             return true;
         } else if (string === "PORTAAT" || string === "STAIRS") {
             const result = searchJson("S" + floorSelect);
-            console.log(result);
             setMarker(result);
             return true;
         } else return false;
@@ -234,14 +227,14 @@ const Nav = ({
                         setModalOpen(true);
                     }
                 }
-                setInputs({searchTerm: ""});
+                setInputs({ searchTerm: "" });
             }
         } catch (error: any) {
             console.log(error.message);
         }
     };
 
-    const {inputs, setInputs, handleInputChange, handleSubmit} = useForm(
+    const { inputs, setInputs, handleInputChange, handleSubmit } = useForm(
         doSearch,
         {
             searchTerm: "",
@@ -262,9 +255,9 @@ const Nav = ({
                             color="inherit"
                             aria-label="open drawer"
                             onClick={toggleDrawer(true)}
-                            sx={{mr: 2, display: {xs: "block", sm: "none"}}}
+                            sx={{ mr: 2, display: { xs: "block", sm: "none" } }}
                         >
-                            <MenuIcon/>
+                            <MenuIcon />
                         </IconButton>
 
                         {/* The outside of the drawer */}
@@ -301,10 +294,11 @@ const Nav = ({
                                     "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 1%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
                             }}
                             alt="Metropolia logo"
-                            sx={{display: {xs: "none", sm: "block"}}}
+                            sx={{ display: { xs: "none", sm: "block" } }}
+                            onClick={refresh}
                         ></Box>
 
-                        <div className={classes.grow}/>
+                        <div className={classes.grow} />
                         {shortcutArray.length !== 0 && (
                             <>
                                 <Button
@@ -315,7 +309,7 @@ const Nav = ({
                                     disableElevation
                                     aria-expanded={open ? "true" : undefined}
                                     onClick={handleClick}
-                                    endIcon={<KeyboardArrowDownIcon/>}
+                                    endIcon={<KeyboardArrowDownIcon />}
                                     className={classes.scButton}
                                 >
                                     Shortcuts
@@ -346,10 +340,10 @@ const Nav = ({
                         )}
 
                         <div className={classes.search}
-                             id="basic-button">
+                            id="basic-button">
                             <form onSubmit={handleSubmit}>
                                 <div className={classes.searchIcon}>
-                                    <SearchIcon/>
+                                    <SearchIcon />
                                 </div>
                                 <InputBase
                                     placeholder="Search…"
