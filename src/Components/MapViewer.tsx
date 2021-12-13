@@ -3,9 +3,7 @@ import MapColorcodeSVG from "./MapColorcodeSVG";
 import { Button, ButtonGroup } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
-import { Menu, MenuItem, unstable_composeClasses } from "@mui/material";
-import ArrowDropDownCircle from "@mui/icons-material/ArrowDropDownCircle";
+import { Menu, MenuItem} from "@mui/material";
 import moment from "moment";
 import "moment/locale/fi";
 import data from "../Data/classrooms.json";
@@ -123,14 +121,6 @@ const MapViewer = ({
     }
   }, [floorSelect]);
 
-  useEffect(() => {
-    try {
-      console.log(buttonStyles);
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  }, [buttonStyles]);
-
   const navigateTo = (id: string) => {
     setClosePopup(Date.now());
     setShowNav(false);
@@ -214,7 +204,6 @@ const MapViewer = ({
           }
         }
       }
-      console.log("Rooms available", roomArray);
       setAvailableRooms(roomArray);
       handleClose();
     } catch (error: any) {
@@ -280,8 +269,6 @@ const MapViewer = ({
           nextClassArray.sort((a: any, b: any) =>
             a.startDate > b.startDate ? 1 : b.startDate > a.startDate ? -1 : 0
           );
-          console.log("NEXTCLASSARRAY", nextClassArray);
-
           let finalNextClassArray = [];
           let count = -1;
           let alreadyExists = false;
@@ -312,7 +299,6 @@ const MapViewer = ({
               break;
             }
           }
-          console.log("FinalNextClassArray", finalNextClassArray);
           goToMyNextClass(finalNextClassArray);
         } else {
           setModalOpen(true);
@@ -362,10 +348,6 @@ const MapViewer = ({
     setModalOpen(true);
     handleClose();
   };
-
-  useEffect(() => {
-    console.log("styles", buttonStyles);
-  }, [buttonStyles]);
 
   useEffect(() => {
     try {
