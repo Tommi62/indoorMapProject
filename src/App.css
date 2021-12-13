@@ -2,7 +2,7 @@
   text-align: center;
 }
 * {
-  font-family: 'Oswald', sans-serif!important;
+  font-family: "Oswald", sans-serif !important;
 }
 
 .App-logo {
@@ -207,8 +207,9 @@ g {
 }
 
 .MuiDrawer-root > .MuiPaper-root {
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
   height: 100% !important;
-  border-radius: 8px !important;
 }
 
 .colorCode .colorCodeSVG {
@@ -258,6 +259,10 @@ g {
 
 .blink span {
   animation: blinker 1s linear infinite;
+}
+
+.blinkOnce {
+  animation: blinker 0.8s linear;
 }
 
 .endButton:active span {
@@ -453,23 +458,23 @@ div[role="navigation"] {
 }
 
 .grHeader {
-  margin-bottom: 0.5rem!important;
-  line-height: 1.2rem!important;
+  margin-bottom: 0.5rem !important;
+  line-height: 1.2rem !important;
 }
 
 .grItem {
-  margin: 0.2rem 0!important;
+  margin: 0.2rem 0 !important;
 }
 
 .deleteIcon {
-  font-size: 1.3rem!important;
+  font-size: 1.3rem !important;
   cursor: pointer;
 }
 
 .noOwnListHeader {
-  text-align: center!important;
-  margin-bottom: 0.5rem!important;
-  line-height: 1.2!important;
+  text-align: center !important;
+  margin-bottom: 0.5rem !important;
+  line-height: 1.2 !important;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -511,22 +516,22 @@ div[role="navigation"] {
   }
 
   .grHeader {
-    font-size: 0.9rem!important;
+    font-size: 0.9rem !important;
   }
 
   .grItem {
-    font-size: 0.7rem!important;
+    font-size: 0.7rem !important;
   }
 
   .ddMenuButton {
-    font-size: 0.8rem!important;
+    font-size: 0.8rem !important;
   }
 
   .noOwnListHeader {
-    font-size: 1rem!important;
+    font-size: 1rem !important;
   }
 
   .noOwnListText {
-    font-size: 0.8rem!important;
+    font-size: 0.8rem !important;
   }
 }

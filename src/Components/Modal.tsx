@@ -259,7 +259,7 @@ const Modal = ({
             </Typography>
             <Grid container item direction="column">
               {showGroupsAndRealizations.map((item) => (
-                <Grid container item justifyContent="space-between">
+                <Grid key={item} container item justifyContent="space-between">
                   <Typography className={'grItem'} variant="body1" component="div">
                     {item}
                   </Typography>

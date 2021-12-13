@@ -7,24 +7,24 @@ import moment from "moment";
 import "moment/locale/fi";
 
 interface resources {
-  code: string,
-  id: string,
-  name: string,
-  type: string,
+  code: string;
+  id: string;
+  name: string;
+  type: string;
 }
 
 interface nextClassArray {
-  startDate: string,
-  endDate: string,
-  subject: string,
-  resources: resources[],
+  startDate: string;
+  endDate: string;
+  subject: string;
+  resources: resources[];
 }
 
 interface parsedArray {
-  subject: string,
-  time: string,
-  room: string,
-  roomCode: string,
+  subject: string;
+  time: string;
+  room: string;
+  roomCode: string;
 }
 
 interface propTypes {
@@ -53,27 +53,33 @@ function LeafletPopup({
   setAnotherClass,
 }: propTypes) {
   const [parsedArray, setParsedArray] = useState<parsedArray[]>([]);
-  const [anotherClassesArray, setAnotherClassesArray] = useState<parsedArray[]>([]);
+  const [anotherClassesArray, setAnotherClassesArray] = useState<parsedArray[]>(
+    []
+  );
 
   useEffect(() => {
     try {
       if (nextClassArray.length > 0) {
         let array = [];
         for (let i = 0; i < nextClassArray.length; i++) {
-          const now = moment().format('YYYY-MM-DD');
-          const now2 = moment().locale('fi').format('LT');
-          const timeNow = now + 'T' + now2;
-          let fullTime = '';
+          const now = moment().format("YYYY-MM-DD");
+          const now2 = moment().locale("fi").format("LT");
+          const timeNow = now + "T" + now2;
+          let fullTime = "";
           if (nextClassArray[i].startDate < timeNow) {
-            fullTime = 'Now';
+            fullTime = "Now";
           } else {
-            const time = moment(nextClassArray[i].startDate).format('DD.MM.YYYY');
-            const time2 = moment(nextClassArray[i].startDate).locale('fi').format('LT');
-            fullTime = time + ' ' + time2;
+            const time = moment(nextClassArray[i].startDate).format(
+              "DD.MM.YYYY"
+            );
+            const time2 = moment(nextClassArray[i].startDate)
+              .locale("fi")
+              .format("LT");
+            fullTime = time + " " + time2;
           }
-          let room = '';
+          let room = "";
           for (let j = 0; j < nextClassArray[i].resources.length; j++) {
-            if (nextClassArray[i].resources[j].type === 'room') {
+            if (nextClassArray[i].resources[j].type === "room") {
               room = nextClassArray[i].resources[j].code;
             }
           }
@@ -83,7 +89,7 @@ function LeafletPopup({
             time: fullTime,
             room: room,
             roomCode: roomCode,
-          }
+          };
           array.push(arrayObject);
         }
         setParsedArray(array);
@@ -103,15 +109,19 @@ function LeafletPopup({
     const anotherClassObject = {
       roomCode: roomCode,
       update: Date.now(),
-    }
+    };
     setAnotherClass(anotherClassObject);
   };
 
   return (
-    <Popup position={popupPosition} onClose={handlePopupClose} className="popup">
+    <Popup
+      position={popupPosition}
+      onClose={handlePopupClose}
+      className="popup"
+    >
       {nextClassArray.length > 0 ? (
         <>
-          {parsedArray.length > 0 &&
+          {parsedArray.length > 0 && (
             <Grid container direction="column" className="popupGrid">
               <Grid item>
                 <Typography
@@ -124,26 +134,43 @@ function LeafletPopup({
                   <b>Room:</b> {parsedArray[0].room}
                 </Typography>
               </Grid>
-              {anotherClassesArray.length > 0 &&
+              {anotherClassesArray.length > 0 && (
                 <>
                   <Grid item>
-                    <Typography variant="body1" component="div" className="popupText">
+                    <Typography
+                      variant="body1"
+                      component="div"
+                      className="popupText"
+                    >
                       <br></br>You also have other classes at the same time:
                     </Typography>
                   </Grid>
                   {anotherClassesArray.map((item) => (
                     <Grid container item direction="row">
-                      <Typography variant="body1" component="div" className="popupText">
-                        <br></br><b>Subject:</b> {item.subject}<br></br>
-                        <b>Room:</b> {item.room}<br></br>
+                      <Typography
+                        variant="body1"
+                        component="div"
+                        className="popupText"
+                      >
+                        <br></br>
+                        <b>Subject:</b> {item.subject}
+                        <br></br>
+                        <b>Room:</b> {item.room}
+                        <br></br>
                       </Typography>
-                      <Button variant="outlined" className="popupButton" onClick={() => goToAnotherClass(item.roomCode)}>Go to this class</Button>
+                      <Button
+                        variant="outlined"
+                        className="popupButton"
+                        onClick={() => goToAnotherClass(item.roomCode)}
+                      >
+                        Go to this class
+                      </Button>
                     </Grid>
-                  ))}{' '}
+                  ))}{" "}
                 </>
-              }
+              )}
             </Grid>
-          }
+          )}
         </>
       ) : (
         <>
@@ -173,7 +200,7 @@ function LeafletPopup({
                 )}
               </>
             )}
-          {popupID.charAt(0) === "V" && (
+          {(popupID.charAt(0) === "V" || popupID.charAt(0) === "K") && (
             <>
               <Typography>{"WC"}</Typography>
               {!showNav ? (
@@ -215,7 +242,7 @@ function LeafletPopup({
               )}
             </>
           )}
-          {(popupID.charAt(0) === "R" || popupID.charAt(0) === "K") && (
+          {popupID.charAt(0) === "R" && (
             <>
               <Typography>{"STAIRS"}</Typography>
               {!showNav ? (
@@ -258,11 +285,9 @@ function LeafletPopup({
             </>
           )}
         </>
-      )
-      }
-    </Popup >
+      )}
+    </Popup>
   );
 }
 
 export default LeafletPopup;
-

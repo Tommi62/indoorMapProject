@@ -1,8 +1,4 @@
-import {
-    AppBar,
-    InputBase,
-    Toolbar,
-} from "@material-ui/core";
+import { AppBar, InputBase, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { alpha } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";
@@ -142,15 +138,15 @@ const Nav = ({
         let word_index = value.indexOf(" " + keyword); // index of the keyword if it is not on the first index, but a word
 
         if (index === 0)
-            // value starts with keyword (eg. for 'Dani California' -> searched 'Dan')
+            // value starts with keyword
             return 3;
         // highest relevance
         else if (word_index !== -1)
-            // value doesnt start with keyword, but has the same word somewhere else (eg. 'Dani California' -> searched 'Cali')
+            // value doesnt start with keyword, but has the same word somewhere else
             return 2;
         // medium relevance
         else if (index !== -1)
-            // value contains keyword somewhere (eg. 'Dani California' -> searched 'forn')
+            // value contains keyword somewhere
             return 1;
         // low relevance
         else return 0; // no matches, no relevance
@@ -169,7 +165,6 @@ const Nav = ({
         for (i in data) {
             for (let j = 0; j < data[i].length; j++) {
                 let rel = getRelevance(data[i][j].name, keyword);
-                console.log(rel);
                 if (rel === 0) {
                     continue;
                 }
@@ -341,8 +336,7 @@ const Nav = ({
                             </>
                         )}
 
-                        <div className={classes.search}
-                            id="basic-button">
+                        <div className={classes.search} id="basic-button">
                             <form onSubmit={handleSubmit}>
                                 <div className={classes.searchIcon}>
                                     <SearchIcon />

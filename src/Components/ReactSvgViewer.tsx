@@ -148,7 +148,6 @@ const ReactSvgViewer = ({
       dragend() {
         const marker = markerRef.current;
         if (marker != null) {
-          console.log(marker.getLatLng());
         }
       },
     }),
@@ -399,6 +398,7 @@ const ReactSvgViewer = ({
           marker.map((x: any) => {
             return (
               <Marker
+                key={x}
                 icon={classIcon}
                 position={[x.lat, x.lng]}
                 eventHandlers={eventHandlers}
