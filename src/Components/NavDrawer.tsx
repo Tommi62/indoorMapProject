@@ -6,7 +6,12 @@ import { grey } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { createTheme, InputAdornment, TextField } from "@material-ui/core";
+import {
+  createTheme,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import { IconButton } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -62,8 +67,6 @@ interface propTypes {
 const NavDrawer = ({
   navigateTo,
   navigateFrom,
-  setFloor,
-  setMarker,
   setClickLocation,
   popupID,
   clickLocation,
@@ -75,7 +78,10 @@ const NavDrawer = ({
   const matches = useMediaQuery("(max-width:600px)");
   const [from, setFrom] = useState("KMU21");
   const [to, setTo] = useState("KMU21");
+  const [toClass, setToClass] = useState("");
+  const [fromClass, setFromClass] = useState("");
   const [selectedInput, setSelectedInput] = useState("");
+  const [pop, setPop] = useState("0px");
   const [sliderCSS, setSliderCSS] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -83,7 +89,9 @@ const NavDrawer = ({
   };
 
   useEffect(() => {
-    console.log("toggled", open);
+    if (open) {
+      setPop("0px");
+    }
   }, [open]);
 
   useEffect(() => {
@@ -109,6 +117,7 @@ const NavDrawer = ({
   };
 
   const setFromLocation = () => {
+    setPop("100px");
     setSelectedInput("from");
     setClickLocation(true);
     setOpen(false);
@@ -116,24 +125,31 @@ const NavDrawer = ({
   };
 
   useEffect(() => {
-    console.log("popup shouldvisible", clickLocation);
-  }, [clickLocation]);
-
-  useEffect(() => {
     console.log("idchange", popupID, clickLocation, selectedInput);
     if (clickLocation !== false) {
       if (selectedInput === "to") {
+        setToClass("blinkOnce");
         setTo("KM" + popupID);
         setOpen(true);
+        setPop("0px");
+        setTimeout(() => {
+          setToClass("");
+        }, 1000);
       }
       if (selectedInput === "from") {
+        setFromClass("blinkOnce");
         setFrom("KM" + popupID);
         setOpen(true);
+        setPop("0px");
+        setTimeout(() => {
+          setFromClass("");
+        }, 1000);
       }
     }
   }, [popupID]);
 
   const setToLocation = () => {
+    setPop("100px");
     setSelectedInput("to");
     setClickLocation(true);
     setOpen(false);
@@ -161,6 +177,22 @@ const NavDrawer = ({
 
   return (
     <Root>
+      <StyledBox
+        sx={{
+          position: "absolute",
+          top: pop,
+          left: "50%",
+          zIndex: "1000",
+          transform: "translate(-50%, -50%)",
+          padding: "1rem",
+          borderRadius: "8px",
+          color: "gray",
+          border: "1px solid #ebebeb",
+          transition: "0.5s top",
+        }}
+      >
+        <Typography>Click a room to select</Typography>
+      </StyledBox>
       {matches ? (
         <>
           <CssBaseline />
@@ -186,13 +218,12 @@ const NavDrawer = ({
               zIndex: 1000,
               background: "rgba(255, 255, 255, 0.9)",
               maxWidth: "40px",
-              maxHeight: "40px"
+              maxHeight: "40px",
             }}
             onClick={toggleDrawer(true)}
           >
             <DirectionsIcon className="dirIcon" />
           </IconButton>
-
           <SwipeableDrawer
             anchor="bottom"
             open={open}
@@ -233,6 +264,7 @@ const NavDrawer = ({
               >
                 <TextField
                   id="outlined-basic"
+                  className={fromClass}
                   onChange={(e: any) => {
                     setFrom(e.target.value);
                   }}
@@ -253,6 +285,7 @@ const NavDrawer = ({
                 ></TextField>
                 <TextField
                   id="outlined-basic"
+                  className={toClass}
                   onChange={(e: any) => {
                     setTo(e.target.value);
                   }}
@@ -328,7 +361,7 @@ const NavDrawer = ({
               zIndex: 1000,
               background: "rgba(255, 255, 255, 0.9)",
               maxWidth: "40px",
-              maxHeight: "40px"
+              maxHeight: "40px",
             }}
             onClick={toggleDrawer(true)}
           >
@@ -370,6 +403,7 @@ const NavDrawer = ({
               >
                 <TextField
                   id="outlined-basic"
+                  className={fromClass}
                   onChange={(e: any) => {
                     setFrom(e.target.value);
                     toggleDrawer(true);
@@ -391,6 +425,7 @@ const NavDrawer = ({
                 ></TextField>
                 <TextField
                   id="outlined-basic"
+                  className={toClass}
                   onChange={(e: any) => {
                     setTo(e.target.value);
                     toggleDrawer(true);

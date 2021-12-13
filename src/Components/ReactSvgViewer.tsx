@@ -310,9 +310,6 @@ const ReactSvgViewer = ({
 
   let classIcon = L.icon({
     iconUrl: markerIcon,
-    /*toilet https://cdn-icons.flaticon.com/png/512/2274/premium/2274172.png?token=exp=1637933882~hmac=b648cf3c448c8f637db40d26f39eb3c7 */
-    /*stairs https://cdn-icons-png.flaticon.com/512/734/734548.png */
-    /*elevator https://cdn-icons.flaticon.com/png/512/2460/premium/2460777.png?token=exp=1637933983~hmac=f68906f7ad55a15740a0de2b9dfb8c8f */
     iconSize: [50, 50], // size of the icon
     iconAnchor: [25, 50], // point of the icon which will correspond to marker's location
   });
@@ -352,21 +349,6 @@ const ReactSvgViewer = ({
           console.log(e);
         }
       },
-      /* layerremove(e: any) {
-        try {
-          const xlat = e.target.getBounds()._northEast.lat;
-          const xlng = e.target.getBounds()._northEast.lng;
-          const ylat = e.target.getBounds()._southWest.lat;
-          const ylng = e.target.getBounds()._southWest.lng;
-          console.log("remove eventti", xlat, xlng, ylat, ylng);
-          setBounds([
-            [xlat, xlng],
-            [ylat, ylng],
-          ]);
-        } catch (e) {
-          console.log(e);
-        }
-      }, */
     }),
     []
   );
