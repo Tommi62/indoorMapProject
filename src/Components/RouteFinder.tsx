@@ -1077,7 +1077,6 @@ function RouteFinder({
 
   const returnShortestPath = (from: string, to: string) => {
     objIterator(graph);
-    console.log("from", from, "to", to);
     const data = [];
     data.push({
       from: from + "1",
@@ -1129,8 +1128,6 @@ function RouteFinder({
     const shortestRoute = data.reduce(function (prev, curr) {
       return prev.length < curr.length ? prev : curr;
     });
-    console.log(data);
-    console.log(shortestRoute);
     if (shortestRoute.length !== "Infinity") {
       flashButtons(from, to);
     }
@@ -1150,7 +1147,6 @@ function RouteFinder({
   useEffect(() => {
     try {
       const rects = classes7;
-      console.log(rects);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -1586,6 +1582,7 @@ function RouteFinder({
         <g id="classes">
           {seventhFloorRoomsArray.map((item) => (
             <Room
+              key={item.id}
               className={item.className}
               id={item.id}
               transform={item.transform}
@@ -1968,6 +1965,7 @@ function RouteFinder({
         <g id="classes" ref={classes7}>
           {seventhFloorRoomsArray.map((item) => (
             <Room
+              key={item.id}
               className={item.className}
               id={item.id}
               transform={item.transform}
@@ -2386,6 +2384,7 @@ function RouteFinder({
         <g id="classes">
           {seventhFloorRoomsArray.map((item) => (
             <Room
+              key={item.id}
               className={item.className}
               id={item.id}
               transform={item.transform}

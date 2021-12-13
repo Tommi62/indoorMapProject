@@ -58,7 +58,6 @@ const FazerMenu = () => {
         (async () => {
             try {
                 const menu = await getFazerModalData('en');
-                console.log('FAZER', menu);
                 let count = 0;
                 for (let i = 0; i < menu.length; i++) {
                     if (menu[i].SetMenus.length > 0) {
@@ -89,7 +88,7 @@ const FazerMenu = () => {
                 setDay('Tomorrow');
             } else {
                 const date = wholeMenu[dayIndex + 1].Date;
-                const formattedDate = moment(date).format('MMMM DD YYYY');
+                const formattedDate = moment(date).format('DD.MM.YYYY');
                 setDay(formattedDate);
             }
             setDayIndex(dayIndex + 1);
@@ -109,7 +108,7 @@ const FazerMenu = () => {
                 setDay('Today');
             } else {
                 const date = wholeMenu[dayIndex - 1].Date;
-                const formattedDate = moment(date).format('MMMM DD YYYY');
+                const formattedDate = moment(date).format('DD.MM.YYYY');
                 setDay(formattedDate);
             }
             setDayIndex(dayIndex - 1);
@@ -131,9 +130,9 @@ const FazerMenu = () => {
                     </Grid>
                     <Grid className={classes.listContainer} container item direction="column" wrap="nowrap">
                         {oneDayMenu.map((item) => (
-                            <List style={{ display: 'flex', flexDirection: 'column' }}>
+                            <List key={item.Components[0]} style={{ display: 'flex', flexDirection: 'column' }}>
                                 {item.Components.map((item2) => (
-                                    <ListItem className={classes.listItem}>{item2}</ListItem>
+                                    <ListItem key={item2} className={classes.listItem}>{item2}</ListItem>
                                 ))}{' '}
                             </List>
                         ))}{' '}

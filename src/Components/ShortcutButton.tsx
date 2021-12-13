@@ -16,7 +16,7 @@ const ShortcutButton = ({ name, type, setModalContent, setModalOpen, setKeyWord,
     const { getModalData } = useModalData();
 
     const getDataAndOpenModal = async () => {
-        if (name === 'Ruokalista') {
+        if (name === 'Fazer Menu') {
             setRestaurantMenu(true);
         } else {
             const modalData = await getModalData(name);

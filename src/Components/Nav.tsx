@@ -93,7 +93,7 @@ const Nav = ({
     setFloorSelect,
 }: propTypes) => {
     const classes = useStyles();
-    const defaultShortcuts = ["Ruokalista"];
+    const defaultShortcuts = ["Fazer Menu"];
     const { getModalData } = useModalData();
     const [shortcutArray, setShortcutArray] = useState<string[]>([]);
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -212,7 +212,7 @@ const Nav = ({
         try {
             if (inputs.searchTerm !== "") {
                 const str = inputs.searchTerm.replace(/ /g, "");
-                if (str === "fazer") {
+                if (str === "fazer" || str === "menu") {
                     setRestaurantMenu(true);
                     setModalOpen(true);
                 } else {
@@ -270,6 +270,7 @@ const Nav = ({
                             <Box>
                                 {shortcutArray.map((item) => (
                                     <ShortcutButton
+                                        key={item}
                                         name={item}
                                         type="drawer"
                                         setModalContent={setModalContent}
@@ -325,6 +326,7 @@ const Nav = ({
                                 >
                                     {shortcutArray.map((item) => (
                                         <ShortcutButton
+                                            key={item}
                                             name={item}
                                             type="dropdown"
                                             setModalContent={setModalContent}

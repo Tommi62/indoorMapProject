@@ -81,10 +81,6 @@ const NavDrawer = ({
     };
 
     useEffect(() => {
-        console.log("toggled", open);
-    }, [open]);
-
-    useEffect(() => {
         if (end !== "") {
             setTo("KM" + end);
         }
@@ -130,7 +126,6 @@ const NavDrawer = ({
     };
 
     useEffect(() => {
-        console.log("clicklocation", clickLocation);
         if (!clickLocation) {
             setSelectedInput("");
         }
